@@ -53,8 +53,10 @@
 
     <div class="flex">
         @include('theme::partials.sidebar')
-        <div>
+        <div class="flex-1">
             @include('theme::partials.header')
+
+            @yield('header')
 
             <main class="flex-grow overflow-x-hidden">
                 @yield('content')

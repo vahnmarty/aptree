@@ -2306,6 +2306,14 @@ select {
   padding-top: 2rem;
   padding-bottom: 2rem;
 }
+.py-32 {
+  padding-top: 8rem;
+  padding-bottom: 8rem;
+}
+.py-12 {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
 .pb-10 {
   padding-bottom: 2.5rem;
 }
@@ -2428,6 +2436,12 @@ select {
 }
 .pt-8 {
   padding-top: 2rem;
+}
+.pl-12 {
+  padding-left: 3rem;
+}
+.pl-4 {
+  padding-left: 1rem;
 }
 .text-left {
   text-align: left;
@@ -2670,6 +2684,26 @@ select {
 .text-yellow-400 {
   --tw-text-opacity: 1;
   color: rgb(250 204 21 / var(--tw-text-opacity));
+}
+.text-green-600 {
+  --tw-text-opacity: 1;
+  color: rgb(22 163 74 / var(--tw-text-opacity));
+}
+.text-emerald-400 {
+  --tw-text-opacity: 1;
+  color: rgb(52 211 153 / var(--tw-text-opacity));
+}
+.text-emerald-600 {
+  --tw-text-opacity: 1;
+  color: rgb(5 150 105 / var(--tw-text-opacity));
+}
+.text-emerald-900 {
+  --tw-text-opacity: 1;
+  color: rgb(6 78 59 / var(--tw-text-opacity));
+}
+.text-emerald-800 {
+  --tw-text-opacity: 1;
+  color: rgb(6 95 70 / var(--tw-text-opacity));
 }
 .underline {
   text-decoration-line: underline;
@@ -3721,6 +3755,12 @@ svg {
          column-gap: 2rem;
   }
 
+  .sm\:truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
   .sm\:rounded {
     border-radius: 0.25rem;
   }
@@ -3832,6 +3872,10 @@ svg {
 
   .sm\:leading-none {
     line-height: 1;
+  }
+
+  .sm\:leading-9 {
+    line-height: 2.25rem;
   }
 }
 
