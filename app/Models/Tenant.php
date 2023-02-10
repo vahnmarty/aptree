@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Wave\Plan;
+use App\Models\TenantUser;
 use Stancl\Tenancy\Contracts\TenantWithDatabase;
 use Stancl\Tenancy\Database\Concerns\HasDomains;
 use Stancl\Tenancy\Database\Concerns\HasDatabase;
@@ -24,5 +25,12 @@ class Tenant extends BaseTenant implements TenantWithDatabase
     public function plan()
     {
         return $this->belongsTo(Plan::class);
+    }
+
+    public function users()
+    {
+        return $this->run(function () {
+            return TenantUser::get();
+        });
     }
 }
