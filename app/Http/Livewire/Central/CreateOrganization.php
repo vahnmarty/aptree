@@ -64,14 +64,14 @@ class CreateOrganization extends Component implements HasForms
         $tenant->run(function() use($user) {
 
             // Create Tenant User
-            $tenant_user = new TenantUser;
-            $tenant_user->name = $user->name;
-            $tenant_user->email = $user->email;
-            $tenant_user->password = $user->password;
-            $tenant_user->save();
+            // $tenant_user = new TenantUser;
+            // $tenant_user->name = $user->name;
+            // $tenant_user->email = $user->email;
+            // $tenant_user->password = $user->password;
+            // $tenant_user->save();
 
-            $this->createRoles();
-            $tenant_user->assignRole('admin');
+            // $this->createRoles();
+            // $tenant_user->assignRole('admin');
             
         });
 

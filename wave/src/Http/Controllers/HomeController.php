@@ -15,6 +15,10 @@ class HomeController extends Controller
      */
     public function index()
     {
+        if(tenancy()->tenant){
+            return redirect('dashboard');
+        }
+
     	if(setting('auth.dashboard_redirect', true) != "null"){
     		if(!Auth::guest()){
     			return redirect('dashboard');

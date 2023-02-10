@@ -30,7 +30,7 @@ class Tenant extends BaseTenant implements TenantWithDatabase
     public function users()
     {
         return $this->run(function () {
-            return TenantUser::get();
+            return User::get();
         });
     }
 
