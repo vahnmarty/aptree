@@ -11,7 +11,7 @@
 
 @section('content')
 
-<div class="px-8 py-12 bg-gray-50">
+<div class="px-8 py-12 bg-gray-100">
 
 	<section>
 		<div class="pb-6 border-b-2 border-gray-300">

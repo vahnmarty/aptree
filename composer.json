@@ -20,6 +20,7 @@
         "laravel/framework": "^9.11",
         "laravel/tinker": "^2.7",
         "livewire/livewire": "^2.4",
+        "stancl/tenancy": "^3.6",
         "tcg/voyager": "1.5.x-dev",
         "tymon/jwt-auth": "@dev"
     },
