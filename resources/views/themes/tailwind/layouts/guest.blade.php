@@ -42,8 +42,8 @@
         <meta name="description" content="{{ $seo->description }}">
     @endif
 
-    <!-- Styles -->
-    <link href="{{ asset('themes/' . $theme->folder . '/css/app.css') }}" rel="stylesheet">
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @livewireStyles
 </head>
 <body class="flex flex-col min-h-screen bg-white @if(config('wave.dev_bar')){{ 'pb-10' }}@endif">
 
@@ -64,10 +64,9 @@
         @include('theme::partials.announcements')
     @endif
 
-    <!-- Scripts -->
-    <script src="{{ asset('themes/' . $theme->folder . '/js/app.js') }}"></script>
-
     @yield('javascript')
+
+    @livewireScripts
 
     @if(setting('site.google_analytics_tracking_id', ''))
         <!-- Global site tag (gtag.js) - Google Analytics -->
