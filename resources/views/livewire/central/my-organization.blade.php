@@ -22,7 +22,6 @@
             @livewire('central.create-organization')
         </div>
     </x-modal>
-
     <div class="px-8 py-12 bg-gray-100">
         <section>
             <div class="pb-6">
@@ -93,46 +92,37 @@
                                             class="absolute right-0 z-20 w-48 py-1 mt-2 overflow-y-auto origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                                             role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button"
                                             tabindex="-1" style="display: none;">
-                                            <a href="https://aptree.dev/dashboard/teams/manchester-united"
-                                                class="inline-flex px-4 py-2 text-sm text-gray-700 hover:text-indigo-600"
-                                                role="menuitem" tabindex="-1" id="user-menu-item-0">
-                                                <svg class="w-5 h-5 mr-2 text-gray-500" xmlns="http://www.w3.org/2000/svg"
-                                                    viewBox="0 0 24 24" fill="currentColor">
-                                                    <path d="M12 15a3 3 0 100-6 3 3 0 000 6z"></path>
-                                                    <path fill-rule="evenodd"
-                                                        d="M1.323 11.447C2.811 6.976 7.028 3.75 12.001 3.75c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113-1.487 4.471-5.705 7.697-10.677 7.697-4.97 0-9.186-3.223-10.675-7.69a1.762 1.762 0 010-1.113zM17.25 12a5.25 5.25 0 11-10.5 0 5.25 5.25 0 0110.5 0z"
-                                                        clip-rule="evenodd"></path>
-                                                </svg>
+                                            <div class="flex flex-col">
+                                                <a href="{{ $tenant->getUrl() }}"
+                                                    class="inline-flex px-4 py-2 text-sm text-gray-700 hover:text-indigo-600"
+                                                    role="menuitem" tabindex="-1" id="user-menu-item-0">
+                                                    <svg class="w-5 h-5 mr-2 text-gray-500"
+                                                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                                        fill="currentColor">
+                                                        <path d="M12 15a3 3 0 100-6 3 3 0 000 6z"></path>
+                                                        <path fill-rule="evenodd"
+                                                            d="M1.323 11.447C2.811 6.976 7.028 3.75 12.001 3.75c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113-1.487 4.471-5.705 7.697-10.677 7.697-4.97 0-9.186-3.223-10.675-7.69a1.762 1.762 0 010-1.113zM17.25 12a5.25 5.25 0 11-10.5 0 5.25 5.25 0 0110.5 0z"
+                                                            clip-rule="evenodd"></path>
+                                                    </svg>
 
-                                                View
-                                            </a>
+                                                    View
+                                                </a>
 
-                                            <a href="https://aptree.dev/dashboard/teams/edit/4"
-                                                class="inline-flex px-4 py-2 text-sm text-gray-700 hover:text-indigo-600"
-                                                role="menuitem" tabindex="-1" id="user-menu-item-0">
-                                                <svg class="w-5 h-5 mr-2 text-gray-500" xmlns="http://www.w3.org/2000/svg"
-                                                    viewBox="0 0 20 20" fill="currentColor">
-                                                    <path
-                                                        d="M2.695 14.763l-1.262 3.154a.5.5 0 00.65.65l3.155-1.262a4 4 0 001.343-.885L17.5 5.5a2.121 2.121 0 00-3-3L3.58 13.42a4 4 0 00-.885 1.343z">
-                                                    </path>
-                                                </svg>
+                                                <button x-on:click="$wire.emitTo('global.team.remove', 'deleteTeam', 4)"
+                                                    type="button"
+                                                    class="inline-flex px-4 py-2 text-sm text-gray-700 hover:text-indigo-600"
+                                                    role="menuitem" tabindex="-1" id="user-menu-item-0">
+                                                    <svg class="w-5 h-5 mr-2 text-gray-500"
+                                                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                                        fill="currentColor">
+                                                        <path fill-rule="evenodd"
+                                                            d="M16.5 4.478v.227a48.816 48.816 0 013.878.512.75.75 0 11-.256 1.478l-.209-.035-1.005 13.07a3 3 0 01-2.991 2.77H8.084a3 3 0 01-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 01-.256-1.478A48.567 48.567 0 017.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 013.369 0c1.603.051 2.815 1.387 2.815 2.951zm-6.136-1.452a51.196 51.196 0 013.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 00-6 0v-.113c0-.794.609-1.428 1.364-1.452zm-.355 5.945a.75.75 0 10-1.5.058l.347 9a.75.75 0 101.499-.058l-.346-9zm5.48.058a.75.75 0 10-1.498-.058l-.347 9a.75.75 0 001.5.058l.345-9z"
+                                                            clip-rule="evenodd"></path>
+                                                    </svg>
 
-                                                Edit Overview
-                                            </a>
-
-                                            <button x-on:click="$wire.emitTo('global.team.remove', 'deleteTeam', 4)"
-                                                type="button"
-                                                class="inline-flex px-4 py-2 text-sm text-gray-700 hover:text-indigo-600"
-                                                role="menuitem" tabindex="-1" id="user-menu-item-0">
-                                                <svg class="w-5 h-5 mr-2 text-gray-500" xmlns="http://www.w3.org/2000/svg"
-                                                    viewBox="0 0 24 24" fill="currentColor">
-                                                    <path fill-rule="evenodd"
-                                                        d="M16.5 4.478v.227a48.816 48.816 0 013.878.512.75.75 0 11-.256 1.478l-.209-.035-1.005 13.07a3 3 0 01-2.991 2.77H8.084a3 3 0 01-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 01-.256-1.478A48.567 48.567 0 017.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 013.369 0c1.603.051 2.815 1.387 2.815 2.951zm-6.136-1.452a51.196 51.196 0 013.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 00-6 0v-.113c0-.794.609-1.428 1.364-1.452zm-.355 5.945a.75.75 0 10-1.5.058l.347 9a.75.75 0 101.499-.058l-.346-9zm5.48.058a.75.75 0 10-1.498-.058l-.347 9a.75.75 0 001.5.058l.345-9z"
-                                                        clip-rule="evenodd"></path>
-                                                </svg>
-
-                                                Delete
-                                            </button>
+                                                    Request for Delete
+                                                </button>
+                                            </div>
 
                                         </div>
                                     </span>
