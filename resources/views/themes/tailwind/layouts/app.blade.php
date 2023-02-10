@@ -43,7 +43,7 @@
     @endif
 
     <!-- Styles -->
-    <link href="{{ asset('themes/' . $theme->folder . '/css/app.css') }}" rel="stylesheet">
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="flex flex-col min-h-screen bg-white @if(config('wave.dev_bar')){{ 'pb-10' }}@endif">
 

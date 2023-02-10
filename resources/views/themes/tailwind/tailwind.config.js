@@ -2,6 +2,7 @@ module.exports = {
     content: [
         './**/*.php',
         './*.php',
+        './././**/*.blade.php',
         './assets/**/*.scss',
         './assets/**/*.js',
     ],
