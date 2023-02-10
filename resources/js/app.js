@@ -1,8 +1,14 @@
 import Alpine from 'alpinejs'
-import axios from 'axios';
+import FormsAlpinePlugin from '../../vendor/filament/forms/dist/module.esm'
+import NotificationsAlpinePlugin from '../../vendor/filament/notifications/dist/module.esm'
+
+Alpine.plugin(FormsAlpinePlugin)
+Alpine.plugin(NotificationsAlpinePlugin)
+
+window.Alpine = Alpine
+
 
 window.Alpine = Alpine;
-window.axios = axios;
 
 window.url = document.querySelector("meta[name='url']").getAttribute("content");
 window.csrf = document.querySelector("meta[name='csrf-token']").getAttribute("content");

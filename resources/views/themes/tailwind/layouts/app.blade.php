@@ -44,8 +44,9 @@
 
     <!-- Styles -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @livewireStyles
 </head>
-<body class="flex flex-col min-h-screen bg-white @if(config('wave.dev_bar')){{ 'pb-10' }}@endif">
+<body class="flex flex-col min-h-screen bg-gray-100 @if(config('wave.dev_bar')){{ 'pb-10' }}@endif">
 
     @if(config('wave.demo') && Request::is('/'))
         @include('theme::partials.demo-header')
@@ -56,7 +57,9 @@
         <div class="flex-1">
             @include('theme::partials.header')
 
-            @yield('header')
+            <div class="bg-white">
+                @yield('header')
+            </div>
 
             <main class="flex-grow overflow-x-hidden">
                 @yield('content')
@@ -72,10 +75,9 @@
         @include('theme::partials.announcements')
     @endif
 
-    <!-- Scripts -->
-    <script src="{{ asset('themes/' . $theme->folder . '/js/app.js') }}"></script>
-
     @yield('javascript')
+
+    @livewireScripts
 
     @if(setting('site.google_analytics_tracking_id', ''))
         <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -106,6 +108,13 @@
         <script>setTimeout(function(){ popToast("{{ session('message_type') }}", "{{ session('message') }}"); }, 10);</script>
     @endif
     @waveCheckout
+
+    <script>
+        Livewire.on('toast', data => {
+            popToast($data['type'], $data['message']);
+        });
+        
+    </script>
 
 </body>
 </html>

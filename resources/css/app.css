@@ -1,3 +1,6 @@
+@import '../../vendor/filament/forms/dist/module.esm.css';
+
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -67,4 +70,13 @@ svg {
     background-size: 1.5em 1.5em;
     padding:.5rem 2.5rem .5rem .75rem;
     background-repeat: no-repeat;
+}
+
+
+.btn-primary{
+  @apply inline-flex items-center px-4 py-2 font-medium text-white rounded-md bg-emerald-700 hover:bg-emerald-800 ;
+}
+
+.btn-primary:focus{
+  @apply outline-none ring-2 ring-cyan-500 ring-offset-2;
 }
