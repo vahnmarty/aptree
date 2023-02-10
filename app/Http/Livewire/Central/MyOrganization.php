@@ -8,6 +8,10 @@ use Auth;
 
 class MyOrganization extends Component
 {
+    protected $listeners = ['refreshParent' => '$refresh'];
+
+    public $tenants = [];
+
     public function render()
     {
         $this->getTenants();

@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Notifications\Notifiable;
 use Wave\User as Authenticatable;
+//use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
@@ -42,4 +43,9 @@ class User extends Authenticatable
     protected $casts = [
         'trial_ends_at' => 'datetime',
     ];
+
+    public function getUsername()
+    {
+        return $this->username ?? $this->email;
+    }
 }

@@ -5,15 +5,15 @@ namespace App\Http\Livewire\Central;
 use Auth;
 use Wave\Plan;
 use Faker\Factory;
+use App\Models\User;
 use App\Models\Tenant;
 use Livewire\Component;
-use App\Models\TenantUser;
-use Spatie\Permission\Models\Role;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Components\TextInput;
 use Database\Seeders\TenantUsersTableSeeder;
 use Filament\Forms\Concerns\InteractsWithForms;
+use App\Models\Role;
 
 class CreateOrganization extends Component implements HasForms 
 {
@@ -61,22 +61,25 @@ class CreateOrganization extends Component implements HasForms
 
         // Add Default User
         $user = Auth::user();
-        $tenant->run(function() use($user) {
+        try {
+            $tenant->run(function() use($user) {
+                $this->createRoles();
+                $tenant_user = User::create($user->only('name', 'email', 'password', 'email_verified_at'));
+                $tenant_user->setRole('admin');
+                
+            });
+    
+            $this->dispatchBrowserEvent('closemodal-create');
+            $this->dispatchBrowserEvent('toast', ['type' => 'success', 'message' => 'Organization created successfully!']);
 
-            // Create Tenant User
-            // $tenant_user = new TenantUser;
-            // $tenant_user->name = $user->name;
-            // $tenant_user->email = $user->email;
-            // $tenant_user->password = $user->password;
-            // $tenant_user->save();
-
-            // $this->createRoles();
-            // $tenant_user->assignRole('admin');
+            $this->emitUp('refreshParent');
             
-        });
+        } catch (\Throwable $th) {
 
-        $this->dispatchBrowserEvent('closemodal-create');
-        $this->dispatchBrowserEvent('toast', ['type' => 'success', 'message' => 'Organization created successfully!']);
+            $tenant->delete();
+            throw $th;
+        }
+        
     }
 
     public function generateDomain($tenant)
@@ -86,8 +89,8 @@ class CreateOrganization extends Component implements HasForms
 
     public function createRoles()
     {
-        $role = Role::firstOrCreate(['name' => 'admin']);
-        $role = Role::firstOrCreate(['name' => 'instructor']);
-        $role = Role::firstOrCreate(['name' => 'student']);
+        $role = Role::create(['name' => 'admin', 'display_name' => 'Admin']);
+        $role = Role::create(['name' => 'instructor', 'display_name' => 'Instructor']);
+        $role = Role::create(['name' => 'student', 'display_name' => 'Student']);
     }
 }

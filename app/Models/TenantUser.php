@@ -8,8 +8,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class TenantUser extends Model
 {
-    protected $guard_name = 'web';
-    
     use HasFactory;
 
     use HasRoles;

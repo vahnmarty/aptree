@@ -33,7 +33,7 @@
                 class="absolute top-0 right-0 w-56 mt-20 origin-top-right transform rounded-xl" x-cloak>
 
                 <div class="bg-white border border-gray-100 shadow-md rounded-xl" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
-                    <a href="{{ route('wave.profile', auth()->user()->username) }}" class="block px-4 py-3 text-gray-700 hover:text-gray-800">
+                    <a href="{{ route('wave.profile', auth()->user()->getUsername()) }}" class="block px-4 py-3 text-gray-700 hover:text-gray-800">
 
                         <span class="block text-sm font-medium leading-tight truncate">
                             {{ auth()->user()->name }}
@@ -57,7 +57,7 @@
                         @if( !auth()->guest() && auth()->user()->can('browse_admin') )
                             <a href="{{ route('voyager.dashboard') }}" class="block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900"><i class="fa fa-bolt"></i> Admin</a>
                         @endif
-                        <a href="{{ route('wave.profile', auth()->user()->username) }}" class="block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900">My Profile</a>
+                        <a href="{{ route('wave.profile', auth()->user()->getUsername()) }}" class="block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900">My Profile</a>
                         <a href="{{ route('wave.settings') }}" class="block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900">Settings</a>
 
                     </div>

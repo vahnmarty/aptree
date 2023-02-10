@@ -15,7 +15,7 @@
     </header>
 @endsection
 
-@section('content')
+<div>
     <x-modal ref="create">
         <x-slot name="title">{{ __('Create Organization') }}</x-slot>
         <div class="py-6">
@@ -158,4 +158,4 @@
         </section>
 
     </div>
-@endsection
+</div>

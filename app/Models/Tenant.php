@@ -36,6 +36,6 @@ class Tenant extends BaseTenant implements TenantWithDatabase
 
     public function getUrl()
     {
-        return $this->domains()->first()->getUrl();
+        return $this->domains()->first()?->getUrl();
     }
 }

@@ -63,6 +63,7 @@
 
             <main class="flex-grow overflow-x-hidden">
                 @yield('content')
+                {{ $slot ?? '' }}
             </main>
         </div>
     </div>
@@ -71,13 +72,16 @@
 
     @include('theme::partials.footer')
 
+    @if(tenancy()->tenant)
+
+    @else
     @if(!auth()->guest() && auth()->user()->hasAnnouncements())
         @include('theme::partials.announcements')
+    @endif
     @endif
 
     @yield('javascript')
 
-    @livewireScripts
 
     @if(setting('site.google_analytics_tracking_id', ''))
         <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -109,12 +113,17 @@
     @endif
     @waveCheckout
 
+    @livewireScripts
+
+
     <script>
         Livewire.on('toast', data => {
             popToast($data['type'], $data['message']);
         });
         
     </script>
+
+
 
 </body>
 </html>
