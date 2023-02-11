@@ -45,6 +45,12 @@
     <!-- Styles -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
+
+    <style>
+        [x-cloak]{
+            display: none !important;
+        }
+    </style>
 </head>
 <body class="flex flex-col min-h-screen bg-gray-100 @if(config('wave.dev_bar')){{ 'pb-10' }}@endif">
 
@@ -53,7 +59,11 @@
     @endif
 
     <div class="flex">
+        @if(tenancy()->tenant)
+        @include('theme::partials.sidebar_tenant')
+        @else
         @include('theme::partials.sidebar')
+        @endif
         <div class="flex-1">
             @include('theme::partials.header')
 

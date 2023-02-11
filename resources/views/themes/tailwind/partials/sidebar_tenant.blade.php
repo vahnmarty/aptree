@@ -1,9 +1,12 @@
-<div class="w-64 max-h-screen min-h-screen border-r">
-    <div class="flex flex-col flex-grow min-h-screen py-5 overflow-y-auto bg-white shadow">
-        <div class="flex items-center flex-shrink-0 px-4">
-            <button x-on:click="$store.sidebarExpanded.toggle()" type="button">
-              <img class="flex-shrink-0 w-auto h-8" src="{{ global_asset('img/logo.png') }}" alt="Company name">
-            </button>
+<div class="w-64 min-h-screen bg-white border-r">
+    <div class="flex flex-col flex-grow min-h-screen py-5 overflow-y-auto bg-white">
+        <div class="px-4">
+            <div class="flex items-center p-2 bg-gray-200 rounded-md">
+              <button x-on:click="$store.sidebarExpanded.toggle()" type="button">
+                <img class="flex-shrink-0 w-auto h-8" src="{{ global_asset('img/logo.png') }}" alt="Company name">
+              </button>
+              <p class="ml-3">{{ tenancy()->tenant->name }}</p>
+            </div>
         </div>
 
         <nav class="flex flex-col flex-1 mt-5 overflow-y-auto divide-y divide-gray-300" aria-label="Sidebar">
@@ -20,7 +23,19 @@
                 <span x-show="$store.sidebarExpanded.on">Home</span>
             </a>
 
-            @if(tenancy()->tenant)
+            <a href="{{ route('courses.index') }}"
+                class="{{ request()->routeIs('courses.index*') ? 'border-l-4 border-orange-400 bg-gray-100 text-black' : 'text-gray-500 hover:bg-gray-100' }} group flex items-center px-2 py-2 text-sm leading-6 font-medium">
+
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="flex-shrink-0 w-6 h-6 ml-1 mr-4 text-gray-500">
+                  <path d="M11.7 2.805a.75.75 0 01.6 0A60.65 60.65 0 0122.83 8.72a.75.75 0 01-.231 1.337 49.949 49.949 0 00-9.902 3.912l-.003.002-.34.18a.75.75 0 01-.707 0A50.009 50.009 0 007.5 12.174v-.224c0-.131.067-.248.172-.311a54.614 54.614 0 014.653-2.52.75.75 0 00-.65-1.352 56.129 56.129 0 00-4.78 2.589 1.858 1.858 0 00-.859 1.228 49.803 49.803 0 00-4.634-1.527.75.75 0 01-.231-1.337A60.653 60.653 0 0111.7 2.805z" />
+                  <path d="M13.06 15.473a48.45 48.45 0 017.666-3.282c.134 1.414.22 2.843.255 4.285a.75.75 0 01-.46.71 47.878 47.878 0 00-8.105 4.342.75.75 0 01-.832 0 47.877 47.877 0 00-8.104-4.342.75.75 0 01-.461-.71c.035-1.442.121-2.87.255-4.286A48.4 48.4 0 016 13.18v1.27a1.5 1.5 0 00-.14 2.508c-.09.38-.222.753-.397 1.11.452.213.901.434 1.346.661a6.729 6.729 0 00.551-1.608 1.5 1.5 0 00.14-2.67v-.645a48.549 48.549 0 013.44 1.668 2.25 2.25 0 002.12 0z" />
+                  <path d="M4.462 19.462c.42-.419.753-.89 1-1.394.453.213.902.434 1.347.661a6.743 6.743 0 01-1.286 1.794.75.75 0 11-1.06-1.06z" />
+                </svg>
+
+                <!-- label here -->
+                <span x-show="$store.sidebarExpanded.on">Course Builder</span>
+            </a>
+
             <a href="{{ url('dashboard.template-library') }}"
                 class="{{ request()->routeIs('dashboard.template-library*') ? 'border-l-4 border-orange-400 bg-gray-100 text-black' : 'text-gray-500 hover:bg-gray-100' }} group flex items-center px-2 py-2 text-sm leading-6 font-medium">
                 <svg class="flex-shrink-0 w-6 h-6 ml-1 mr-4 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
@@ -42,22 +57,16 @@
                 <!-- label here -->
                 <span x-show="$store.sidebarExpanded.on">Teams </span>
             </a>
-            @else
 
-            <a href="{{ route('organization') }}"
-                class="{{ request()->routeIs('organization*') ? 'border-l-4 border-orange-400 bg-gray-100 text-black' : 'text-gray-500 hover:bg-gray-100' }} group flex items-center px-2 py-2 text-sm leading-6 font-medium">
-
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="flex-shrink-0 w-6 h-6 ml-1 mr-4 text-gray-500">
-                  <path d="M15.75 8.25a.75.75 0 01.75.75c0 1.12-.492 2.126-1.27 2.812a.75.75 0 11-.992-1.124A2.243 2.243 0 0015 9a.75.75 0 01.75-.75z" />
-                  <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM4.575 15.6a8.25 8.25 0 009.348 4.425 1.966 1.966 0 00-1.84-1.275.983.983 0 01-.97-.822l-.073-.437c-.094-.565.25-1.11.8-1.267l.99-.282c.427-.123.783-.418.982-.816l.036-.073a1.453 1.453 0 012.328-.377L16.5 15h.628a2.25 2.25 0 011.983 1.186 8.25 8.25 0 00-6.345-12.4c.044.262.18.503.389.676l1.068.89c.442.369.535 1.01.216 1.49l-.51.766a2.25 2.25 0 01-1.161.886l-.143.048a1.107 1.107 0 00-.57 1.664c.369.555.169 1.307-.427 1.605L9 13.125l.423 1.059a.956.956 0 01-1.652.928l-.679-.906a1.125 1.125 0 00-1.906.172L4.575 15.6z" clip-rule="evenodd" />
+            <a href="{{ url('dashboard.my-profile') }}"
+                class="{{ request()->routeIs('dashboard.my-profile*') ? 'border-l-4 border-orange-400 bg-gray-100 text-black' : 'text-gray-500 hover:bg-gray-100' }} group flex items-center px-2 py-2 text-sm leading-6 font-medium">
+                <svg class="flex-shrink-0 w-6 h-6 ml-1 mr-4 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+                    <path fill-rule="evenodd" d="M7.5 6a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM3.751 20.105a8.25 8.25 0 0116.498 0 .75.75 0 01-.437.695A18.683 18.683 0 0112 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 01-.437-.695z" clip-rule="evenodd" />
                 </svg>
-                
 
                 <!-- label here -->
-                <span x-show="$store.sidebarExpanded.on">Organization </span>
+                <span x-show="$store.sidebarExpanded.on">My Profile </span>
             </a>
-
-            @endif
             
 
           </div>
@@ -65,7 +74,6 @@
           <div  class="flex flex-shrink-0 pt-6 pb-5 mt-6">
             <div class="flex-shrink-0 w-full px-2 space-y-1">
 
-              @if(tenancy()->tenant)
               <a href="{{ url('dashboard.administer.billing') }}"
                 class="flex items-center px-2 py-2 text-sm font-medium leading-6 text-gray-500 rounded-md group hover:bg-gray-100">
 
@@ -78,16 +86,6 @@
               </a>
               <a href="{{ url('dashboard.administer.billing') }}"
                 class="flex items-center px-2 py-2 text-sm font-medium leading-6 text-gray-500 rounded-md group hover:bg-gray-100">
-
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="flex-shrink-0 w-6 h-6 ml-1 mr-4 text-gray-500">
-                  <path d="M4.5 6.375a4.125 4.125 0 118.25 0 4.125 4.125 0 01-8.25 0zM14.25 8.625a3.375 3.375 0 116.75 0 3.375 3.375 0 01-6.75 0zM1.5 19.125a7.125 7.125 0 0114.25 0v.003l-.001.119a.75.75 0 01-.363.63 13.067 13.067 0 01-6.761 1.873c-2.472 0-4.786-.684-6.76-1.873a.75.75 0 01-.364-.63l-.001-.122zM17.25 19.128l-.001.144a2.25 2.25 0 01-.233.96 10.088 10.088 0 005.06-1.01.75.75 0 00.42-.643 4.875 4.875 0 00-6.957-4.611 8.586 8.586 0 011.71 5.157v.003z" />
-                </svg>
-                
-                <span x-show="$store.sidebarExpanded.on">Members </span>
-              </a>
-              @else
-              <a href="{{ url('dashboard.administer.billing') }}"
-                class="flex items-center px-2 py-2 text-sm font-medium leading-6 text-gray-500 rounded-md group hover:bg-gray-100">
                 <svg class="flex-shrink-0 w-6 h-6 ml-1 mr-4 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M4.5 3.75a3 3 0 00-3 3v.75h21v-.75a3 3 0 00-3-3h-15z" />
                     <path fill-rule="evenodd" d="M22.5 9.75h-21v7.5a3 3 0 003 3h15a3 3 0 003-3v-7.5zm-18 3.75a.75.75 0 01.75-.75h6a.75.75 0 010 1.5h-6a.75.75 0 01-.75-.75zm.75 2.25a.75.75 0 000 1.5h3a.75.75 0 000-1.5h-3z" clip-rule="evenodd" />
@@ -96,7 +94,6 @@
                 <span x-show="$store.sidebarExpanded.on">Billing </span>
               </a>
 
-              @endif
               <a href="{{ url('dashboard.administer.invitations') }}"
                 class="flex items-center px-2 py-2 text-sm font-medium leading-6 text-gray-500 rounded-md group hover:bg-gray-100">
                 <svg class="flex-shrink-0 w-6 h-6 ml-1 mr-4 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">

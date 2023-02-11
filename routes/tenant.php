@@ -3,10 +3,12 @@
 declare(strict_types=1);
 
 use Wave\Facades\Wave;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Livewire\Tenant\Courses\CreateCourse;
+use App\Http\Livewire\Tenant\Courses\ManageCourses;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
-use Illuminate\Support\Facades\Auth;
 /*
 |--------------------------------------------------------------------------
 | Tenant Routes
@@ -25,6 +27,11 @@ Route::middleware([
     PreventAccessFromCentralDomains::class,
 ])->group(function () {
     Auth::routes();
+
+    Route::group(['prefix' => 'courses', 'middleware' => ['auth']], function(){
+        Route::get('/', ManageCourses::class)->name('courses.index');
+        Route::get('/create', CreateCourse::class)->name('courses.create');
+    });
 
 
     /*
