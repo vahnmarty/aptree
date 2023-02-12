@@ -18,9 +18,13 @@
             </div>
             
         </nav>
-        <section class="grid grid-cols-6 py-6">
-            <form action="" class="col-span-4">
+        <section class="mt-8">
+            <form action="">
                 {{ $this->form }}
+
+                <div class="mt-8">
+                    <button type="submit" class="btn-primary">Save & Continue</button>
+                </div>
             </form>
         </section>
     </div>
