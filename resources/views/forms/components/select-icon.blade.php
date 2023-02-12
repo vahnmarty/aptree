@@ -36,8 +36,8 @@
                 </button>
             </div>
         </div>
-        <div x-cloak x-show="isOpen" class="absolute left-0 right-0 z-10 h-16 bg-white border border-gray-300 rounded-md shadow-sm">
-            <div class="grid grid-cols-3 gap-3 p-3">
+        <div x-cloak x-show="isOpen" class="absolute left-0 right-0 z-10 w-64 h-16 bg-white border border-gray-300 rounded-md shadow-sm">
+            <div class="grid grid-cols-5 gap-6 p-3">
                 <button type="button" x-on:click="setState('lightning')">
                     <x-icons.icon-lightning class="w-6 h-6 text-gray-500 hover:text-emerald-900"/>
                 </button>

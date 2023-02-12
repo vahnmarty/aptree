@@ -2,8 +2,13 @@
 
 namespace App\Http\Livewire\Tenant\Courses;
 
+use Str;
+use App\Models\Tag;
 use App\Models\User;
+use App\Models\Course;
+use App\Models\Tenant;
 use Livewire\Component;
+use App\Enums\CourseStatus;
 use App\Models\CourseCategory;
 use Filament\Forms\Components\Grid;
 use App\Forms\Components\SelectIcon;
@@ -21,16 +26,25 @@ use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 
 class CreateCourse extends Component implements HasForms
 {
+    public Tenant $tenant;
+    
     use InteractsWithForms;
 
+    public $course;
+
     public $title, $icon = 'education', $passing_score = 70;
-    public $category, $estimated_time_complete, $instructors = [], $description, $tags = [];
-    public $is_required_passing_modules;
-    public $attachment;
+    public $category, $estimated_time, $instructors = [], $description, $tags = [];
+    public $required_passing_modules;
+    public $image;
     
     public function render()
     {
         return view('livewire.tenant.courses.create-course');
+    }
+
+    public function mount()
+    {
+        $this->tenant = tenant();
     }
 
     protected function getFormSchema(): array
@@ -45,8 +59,10 @@ class CreateCourse extends Component implements HasForms
                             TextInput::make('title')
                                 ->label('Course Title')
                                 ->placeholder('Enter your course title')
-                                ->columnSpan(4),
+                                ->columnSpan(4)
+                                ->required(),
                             SelectIcon::make('icon')
+                                ->required()
                                 ->columnSpan(1),
                             Select::make('category')
                                 ->options(function(){
@@ -54,12 +70,13 @@ class CreateCourse extends Component implements HasForms
                                         return CourseCategory::get()->pluck('name', 'id');
                                     });
                                 })
+                                ->required()
                                 ->preload()
                                 ->searchable()
                                 ->columnSpan(3),
-                            TimePicker::make('estimated_time_complete')
+                            TimePicker::make('estimated_time')
                                 ->placeholder('HH::mm')->withoutSeconds()->columnSpan(2),
-                            Select::make('instructor')
+                            Select::make('instructors')
                                 ->multiple()
                                 ->searchable()
                                 ->preload()
@@ -67,13 +84,18 @@ class CreateCourse extends Component implements HasForms
                                 ->columnSpan('full'),
                             Textarea::make('description')
                                 ->placeholder('Enter description')
+                                ->required()
                                 ->columnSpan('full'),
                             Select::make('tags')
                                 ->label('Keywords')
                                 ->multiple()
                                 ->searchable()
                                 ->preload()
-                                ->options([])
+                                ->options(function(){
+                                    return tenancy()->central(function ($tenant) {
+                                        return Tag::get()->pluck('name', 'id');
+                                    });
+                                })
                                 ->columnSpan('full'),
                             Select::make('passing_score')
                                 ->label('Set passing score')
@@ -82,14 +104,15 @@ class CreateCourse extends Component implements HasForms
                                 ->options(function(){
                                     return $this->getScorePercentages();
                                 })
+                                ->required()
                                 ->default(10),
-                            Toggle::make('is_required_passing_modules')->label('Require Passing all Modules?')->inline()->columnSpan(3)
+                            Toggle::make('required_passing_modules')->label('Require Passing all Modules?')->inline()->columnSpan(3)
                             ]),
                         ])->columnSpan(3),
                     SimpleFieldset::make('Media')
                         ->columnSpan(2)
                         ->schema([
-                            SpatieMediaLibraryFileUpload::make('avatar')
+                            FileUpload::make('image')
                             ->label('Upload course image')
                             ->columnSpan('full')
                         ]),
@@ -108,9 +131,39 @@ class CreateCourse extends Component implements HasForms
 
         return $array;
     }
+    
 
     public function submit()
     {
 
+        $data = $this->validate();
+
+        try {
+
+            $this->tenant->run(function() use ($data) {
+            
+                $course = new Course;
+                $course->title = $data['title'];
+                $course->slug = Str::slug($data['title']);
+                $course->icon = $data['icon'];
+                $course->description = $data['description'];
+                $course->estimated_time = $data['estimated_time'];
+                $course->required_passing_modules = $data['required_passing_modules'];
+                $course->passing_score = $data['passing_score'];
+                $course->status = CourseStatus::Draft;
+                $course->save();
+                
+
+            });
+
+            $this->emit('toast', ['type' => 'success', 'message' => 'Course created successfully!']);
+
+            return redirect()->route('courses.show', ['id' => $course->id]);
+
+
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+        
     }
 }
