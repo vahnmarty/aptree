@@ -16,12 +16,16 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\TimePicker;
 use Filament\Forms\Concerns\InteractsWithForms;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 
 class CreateCourse extends Component implements HasForms
 {
     use InteractsWithForms;
 
     public $title, $icon = 'education', $passing_score = 70;
+    public $category, $estimated_time_complete, $instructors = [], $description, $tags = [];
+    public $is_required_passing_modules;
+    public $attachment;
     
     public function render()
     {
@@ -77,9 +81,9 @@ class CreateCourse extends Component implements HasForms
                     SimpleFieldset::make('Media')
                         ->columnSpan(2)
                         ->schema([
-                            FileUpload::make('attachment')
-                                ->label('Upload course image')
-                                ->columnSpan('full')
+                            SpatieMediaLibraryFileUpload::make('avatar')
+                            ->label('Upload course image')
+                            ->columnSpan('full')
                         ]),
                 ]),
         ];
@@ -95,5 +99,10 @@ class CreateCourse extends Component implements HasForms
         }
 
         return $array;
+    }
+
+    public function submit()
+    {
+
     }
 }

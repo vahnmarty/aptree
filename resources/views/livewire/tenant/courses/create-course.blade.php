@@ -19,7 +19,7 @@
             
         </nav>
         <section class="mt-8">
-            <form action="">
+            <form action="" wire:submit.prevent="submit">
                 {{ $this->form }}
 
                 <div class="mt-8">
