@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Tenant\Courses;
 
 use App\Models\User;
 use Livewire\Component;
+use App\Models\CourseCategory;
 use Filament\Forms\Components\Grid;
 use App\Forms\Components\SelectIcon;
 use Filament\Forms\Components\Select;
@@ -48,7 +49,14 @@ class CreateCourse extends Component implements HasForms
                             SelectIcon::make('icon')
                                 ->columnSpan(1),
                             Select::make('category')
-                                ->options([])->columnSpan(3),
+                                ->options(function(){
+                                    return tenancy()->central(function ($tenant) {
+                                        return CourseCategory::get()->pluck('name', 'id');
+                                    });
+                                })
+                                ->preload()
+                                ->searchable()
+                                ->columnSpan(3),
                             TimePicker::make('estimated_time_complete')
                                 ->placeholder('HH::mm')->withoutSeconds()->columnSpan(2),
                             Select::make('instructor')
