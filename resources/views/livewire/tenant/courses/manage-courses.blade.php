@@ -45,7 +45,7 @@
                                 aria-current="page">
                                 View All
                                 <span
-                                    class="@if ($filter == '') text-indigo-600 bg-indigo-100 @else text-gray-900 bg-gray-200 @endif ml-1 hidden rounded-full py-0.5 px-2.5 text-xs font-medium md:inline-block">4</span>
+                                    class="@if ($filter == '') text-indigo-600 bg-indigo-100 @else text-gray-900 bg-gray-200 @endif ml-1 hidden rounded-full py-0.5 px-2.5 text-xs font-medium md:inline-block">{{ count($courses) }}</span>
                             </a>
 
                             <a href="?filter=published"
@@ -92,6 +92,54 @@
                 </div>
             </div>
 
+        </section>
+
+        <section class="mt-8 text-emerald-900">
+            <div class="grid grid-cols-3 gap-6">
+                @foreach($courses as $course)
+                <div class="p-4 bg-white border rounded-md shadow-md">
+                    <div>
+                        <x-heroicon-s-academic-cap class="w-10 h-10 text-gray-600"/>
+                    </div>
+                    <p class="mt-1 text-orange-600">Course</p>
+                    <h3 class="mt-2 text-lg font-bold">{{ $course->title }}</h3>
+                    <div class="text-gray-600">{{ Str::limit($course->description, 100) }}</div>
+                    <div class="flex items-center justify-between mt-4">
+                        <div class="flex gap-3">
+                            <div class="flex items-center gap-1">
+                                <x-heroicon-o-template class="w-4 h-4 text-gray-400"/>
+                                <span class="text-sm">{{ $course->modules()->count() }} modules</span>
+                            </div>
+                            <div class="flex items-center gap-1">
+                                <x-heroicon-o-clock class="w-4 h-4 text-gray-400"/>
+                                <span class="text-sm">{{ Carbon\Carbon::parse($course->estimated_time)->format('H:i') }} minutes</span>
+                            </div>
+                        </div>
+                        <x-dropdown>
+                            <x-slot name="button">
+                                <button>
+                                    <x-heroicon-s-dots-vertical class="w-4 h-4 text-gray-400"/>
+                                </button>
+                            </x-slot>
+                            <div>
+                                <a href="{{ route('courses.contents', $course->id) }}" class="flex items-center px-4 py-2 text-sm text-gray-700 group" role="menuitem"
+                                    tabindex="-1" id="menu-item-0">
+                                    <!-- Heroicon name: mini/pencil-square -->
+                                    <svg class="w-5 h-5 mr-3 text-gray-400 group-hover:text-gray-500" xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                        <path
+                                            d="M5.433 13.917l1.262-3.155A4 4 0 017.58 9.42l6.92-6.918a2.121 2.121 0 013 3l-6.92 6.918c-.383.383-.84.685-1.343.886l-3.154 1.262a.5.5 0 01-.65-.65z" />
+                                        <path
+                                            d="M3.5 5.75c0-.69.56-1.25 1.25-1.25H10A.75.75 0 0010 3H4.75A2.75 2.75 0 002 5.75v9.5A2.75 2.75 0 004.75 18h9.5A2.75 2.75 0 0017 15.25V10a.75.75 0 00-1.5 0v5.25c0 .69-.56 1.25-1.25 1.25h-9.5c-.69 0-1.25-.56-1.25-1.25v-9.5z" />
+                                    </svg>
+                                    Edit Contents
+                                </a>
+                            </div>
+                        </x-dropdown>
+                    </div>
+                </div>
+                @endforeach
+            </div>
         </section>
     </div>
 </div>

@@ -71,7 +71,7 @@
                 @yield('header')
             </div>
 
-            <main class="flex-grow overflow-x-hidden">
+            <main class="flex-grow">
                 @yield('content')
                 {{ $slot ?? '' }}
             </main>
