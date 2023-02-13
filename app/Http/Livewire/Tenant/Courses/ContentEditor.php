@@ -19,7 +19,7 @@ class ContentEditor extends Component implements HasForms
 {
     use InteractsWithForms;
 
-    public $type, $layout, $title;
+    public $type, $layout, $title, $image, $content;
 
     protected $listeners = ['setContentType' => 'setType'];
     
@@ -32,6 +32,7 @@ class ContentEditor extends Component implements HasForms
     {
         return [
             Grid::make(2)
+                ->reactive()
                 ->schema([
                     TextInput::make('title')->required(),
                     Select::make('layout')
@@ -81,23 +82,30 @@ class ContentEditor extends Component implements HasForms
             return Fieldset::make('content')
                 ->label('Image Only')
                 ->schema([
-                    FileUpload::make('image')->columnSpan('full')
-                    ->extraAttributes(['class' => 'bg-gray-100'])
-                    ->imagePreviewHeight('100')
-                    ->loadingIndicatorPosition('left')
-                    ->panelAspectRatio('4:1')
-                    ->panelLayout('integrated')
-                    ->removeUploadedFileButtonPosition('right')
-                    ->uploadButtonPosition('left')
-                    ->uploadProgressIndicatorPosition('left')
+                    $this->getFieldFileUpload()
                 ]);
         }
 
         return Fieldset::make('default');
     }
 
+    public function getFieldFileUpload()
+    {
+        return FileUpload::make('image')->columnSpan('full')
+                ->extraAttributes(['class' => 'bg-gray-100'])
+                ->imagePreviewHeight('100')
+                ->loadingIndicatorPosition('left')
+                ->panelAspectRatio('4:1')
+                ->panelLayout('integrated')
+                ->removeUploadedFileButtonPosition('right')
+                ->uploadButtonPosition('left')
+                ->uploadProgressIndicatorPosition('left');
+    }
+
     public function setType($type)
     {
+        $this->reset('layout');
+
         $this->type = $type;
 
         switch ($type) {
@@ -107,16 +115,21 @@ class ContentEditor extends Component implements HasForms
 
             case 'text-image':
                 $this->layout = ContentLayout::LeftTextRightImage;
+                break;
 
             case 'text':
                 $this->layout = ContentLayout::TextOnly;
+                break;
 
             case 'image':
                 $this->layout = ContentLayout::ImageOnly;
+                break;
             
             default:
                 break;
         }
+
+        $this->getContentForm();
         
     }
 }
