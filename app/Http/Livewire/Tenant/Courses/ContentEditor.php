@@ -63,7 +63,7 @@ class ContentEditor extends Component implements HasForms
                 ->label('Text & Image')
                 ->schema([
                     Textarea::make('content')->placeholder('Enter description here'),
-                    
+                    FileUpload::make('image'),
                 ]);
         }
 
