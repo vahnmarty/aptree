@@ -31,4 +31,10 @@ class CourseContents extends Component
         $this->module_id = $id;
         $this->selected_module = Module::find($id);
     }
+
+    public function createContent($type)
+    {
+
+        $this->dispatchBrowserEvent('openmodal-content');
+    }
 }

@@ -75,18 +75,26 @@
                 </div>
                 <div class="col-span-4">
                     @if ($module_id)
-                        <div class="min-h-[16rem] rounded-md border bg-white">
+                        <div class="bg-white border rounded-md">
                             <header class="p-4">
                                 <h2 class="font-bold text-emerald-900">{{ $selected_module->title }}</h2>
                             </header>
                             <div class="p-4">
-                                <div class="p-4 border-2 rounded-md border-emerald-700">
+                                <div class="p-2 border-2 rounded-md border-emerald-700">
                                     <div class="flex items-center justify-between">
                                         <div class="flex items-center">
                                             <x-heroicon-s-plus class="w-5 h-5" />
                                             <p class="text-sm">Add a New Card</p>
                                         </div>
                                         <div class="flex gap-1">
+                                            <x-modal-lg ref="content">
+                                                <x-slot name="title">
+                                                    Content Editor
+                                                </x-slot>
+                                                <div class="pt-4">
+                                                    @livewire('tenant.courses.content-editor', ['module_id' => $module->id])
+                                                </div>
+                                            </x-modal-lg>
                                             <x-dropup>
                                                 <x-slot name="button">
                                                     <button @click="open = !open"
@@ -96,8 +104,9 @@
                                                 </x-slot>
                                                 <div class="relative px-3 py-3 bg-gray-300 rounded-md shadow-xs">
                                                     <div class="flex flex-col space-y-1">
-
                                                         <button type="button"
+                                                            x-on:click="hide()"
+                                                            wire:click="createContent('image-text')"
                                                             class="p-2 bg-white border rounded-md hover:bg-emerald-50">
                                                             <div class="flex">
                                                                 <x-heroicon-s-photograph class="w-4 h-4" />
@@ -105,6 +114,8 @@
                                                             </div>
                                                         </button>
                                                         <button type="button"
+                                                            x-on:click="hide()"
+                                                            wire:click="createContent('text-image')"
                                                             class="p-2 bg-white border rounded-md hover:bg-emerald-50">
                                                             <div class="flex">
                                                                 <x-heroicon-s-menu-alt-2 class="w-4 h-4" />
@@ -112,12 +123,16 @@
                                                             </div>
                                                         </button>
                                                         <button type="button"
+                                                            x-on:click="hide()"
+                                                            wire:click="createContent('text')"
                                                             class="flex justify-center p-2 text-center bg-white border rounded-md hover:bg-emerald-50">
                                                             <div class="flex">
                                                                 <x-heroicon-s-menu-alt-2 class="w-4 h-4" />
                                                             </div>
                                                         </button>
                                                         <button type="button"
+                                                            x-on:click="hide()"
+                                                            wire:click="createContent('image')"
                                                             class="flex justify-center p-2 text-center bg-white border rounded-md hover:bg-emerald-50">
                                                             <div class="flex">
                                                                 <x-heroicon-s-photograph class="w-4 h-4" />

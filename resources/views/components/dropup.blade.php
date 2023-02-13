@@ -2,7 +2,15 @@
     <div class="flex-shrink-0 block group">
         <div class="flex items-center">
             <div @click.away="open = false" class="relative"
-                x-data="{ open: false }">
+                x-data="{ 
+                        open: false,
+                        hide(){
+                            this.open = false;
+                        },
+                        show(){
+                            this.open = true;
+                        }
+                    }">
                 <div class="relative">
                     <div x-show="open"
                         x-transition:enter="transition ease-out duration-100"
