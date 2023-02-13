@@ -40,7 +40,7 @@
                                 </button>
                             </div>
                         </header>
-                        <div x-data="{ module_id: @entangle('module_id') }" class="px-4 py-4">
+                        <div x-data="{ module_id: @entangle('module_id') }" class="px-4 py-4 space-y-2">
                             @forelse($course->modules as $module)
                                 <div wire:click="selectModule({{ $module->id }})"
                                     :class="module_id == {{ $module->id }} ? 'border-2 border-orange-400' : ''"
@@ -77,7 +77,7 @@
                     @if ($module_id)
                         <div class="min-h-[16rem] rounded-md border bg-white">
                             <header class="p-4">
-                                <h2 class="font-bold text-emerald-900">{{ $module->title }}</h2>
+                                <h2 class="font-bold text-emerald-900">{{ $selected_module->title }}</h2>
                             </header>
                             <div class="p-4">
                                 <div class="p-4 border-2 rounded-md border-emerald-700">

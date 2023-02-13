@@ -128,7 +128,7 @@
 
     <script>
         Livewire.on('toast', data => {
-            popToast($data['type'], $data['message']);
+            popToast(data['type'], data['message']);
         });
         
     </script>

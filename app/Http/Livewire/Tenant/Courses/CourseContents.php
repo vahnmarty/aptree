@@ -10,7 +10,7 @@ class CourseContents extends Component
 {
     public $course;
 
-    public $module_id;
+    public $module_id, $selected_module;
 
     protected $listeners = [ 'refreshParent' => '$refresh'];
 
@@ -26,7 +26,9 @@ class CourseContents extends Component
 
     public function selectModule($id)
     {
+        $this->reset('selected_module');
+
         $this->module_id = $id;
-        $this->module = Module::find($id);
+        $this->selected_module = Module::find($id);
     }
 }

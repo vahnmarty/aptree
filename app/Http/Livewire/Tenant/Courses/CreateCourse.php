@@ -25,9 +25,7 @@ use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 
 class CreateCourse extends Component implements HasForms
-{
-    public Tenant $tenant;
-    
+{   
     use InteractsWithForms;
 
     public $course;
@@ -44,7 +42,7 @@ class CreateCourse extends Component implements HasForms
 
     public function mount()
     {
-        $this->tenant = tenant();
+        
     }
 
     protected function getFormSchema(): array
@@ -138,32 +136,21 @@ class CreateCourse extends Component implements HasForms
 
         $data = $this->validate();
 
-        try {
 
-            $this->tenant->run(function() use ($data) {
-            
-                $course = new Course;
-                $course->title = $data['title'];
-                $course->slug = Str::slug($data['title']);
-                $course->icon = $data['icon'];
-                $course->description = $data['description'];
-                $course->estimated_time = $data['estimated_time'];
-                $course->required_passing_modules = $data['required_passing_modules'];
-                $course->passing_score = $data['passing_score'];
-                $course->status = CourseStatus::Draft;
-                $course->save();
-                
+        $course = new Course;
+        $course->title = $data['title'];
+        $course->slug = Str::slug($data['title']);
+        $course->icon = $data['icon'];
+        $course->description = $data['description'];
+        $course->estimated_time = $data['estimated_time'];
+        $course->required_passing_modules = $data['required_passing_modules'];
+        $course->passing_score = $data['passing_score'];
+        $course->status = CourseStatus::Draft;
+        $course->save();
 
-            });
+        //$this->emit('toast', ['type' => 'success', 'message' => 'Course created successfully!']);
 
-            $this->emit('toast', ['type' => 'success', 'message' => 'Course created successfully!']);
+        return redirect()->route('courses.contents', ['id' => $course->id]);
 
-            return redirect()->route('courses.contents', ['id' => $course->id]);
-
-
-        } catch (\Throwable $th) {
-            throw $th;
-        }
-        
     }
 }

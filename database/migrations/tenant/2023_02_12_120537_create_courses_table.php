@@ -18,12 +18,12 @@ return new class extends Migration
             $table->unsignedBigInteger('original_id')->nullable();
             $table->string('title');
             $table->string('slug');
-            $table->string('icon');
+            $table->string('icon')->nullable();
             $table->string('image')->nullable();
             $table->longtext('description');
-            $table->time('estimated_time');
-            $table->boolean('required_passing_modules');
-            $table->integer('passing_score');
+            $table->time('estimated_time')->nullable();
+            $table->boolean('required_passing_modules')->nullable();
+            $table->integer('passing_score')->nullable();
             $table->string('status')->nullable();
             $table->timestamp('cloned_at')->nullable();
             $table->string('tenant_id')->nullable();

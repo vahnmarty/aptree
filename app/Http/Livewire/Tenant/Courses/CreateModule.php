@@ -54,7 +54,7 @@ class CreateModule extends Component implements HasForms
 
         $this->emit('toast', ['type' => 'success', 'message' => 'Module created successfully!']);
 
-        $this->emit('closemodal-module-create');
+        $this->dispatchBrowserEvent('closemodal-module-create');
         
         $this->emitUp('refreshParent');
     }
