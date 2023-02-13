@@ -111,6 +111,7 @@ class CreateCourse extends Component implements HasForms
                         ->columnSpan(2)
                         ->schema([
                             FileUpload::make('image')
+                            ->image()
                             ->label('Upload course image')
                             ->columnSpan('full')
                         ]),
@@ -134,19 +135,25 @@ class CreateCourse extends Component implements HasForms
     public function submit()
     {
 
-        $data = $this->validate();
+        $this->validate();
+
+        $data = $this->form->getState();
 
 
         $course = new Course;
         $course->title = $data['title'];
-        $course->slug = Str::slug($data['title']);
         $course->icon = $data['icon'];
         $course->description = $data['description'];
         $course->estimated_time = $data['estimated_time'];
         $course->required_passing_modules = $data['required_passing_modules'];
         $course->passing_score = $data['passing_score'];
+        $course->image = $data['image'];
         $course->status = CourseStatus::Draft;
+        $course->slug = Str::slug($data['title']);
         $course->save();
+
+        // Add Categories
+        // Add Instructors
 
         //$this->emit('toast', ['type' => 'success', 'message' => 'Course created successfully!']);
 

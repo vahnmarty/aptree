@@ -43,6 +43,7 @@ class CreateModule extends Component implements HasForms
 
     public function submit()
     {
+        
         $data = $this->validate();
 
         $this->tenant->run(function() use($data){
@@ -52,6 +53,9 @@ class CreateModule extends Component implements HasForms
             $module->save();
         });
 
+
+        return redirect(request()->header('Referer'));
+        
         $this->emit('toast', ['type' => 'success', 'message' => 'Module created successfully!']);
 
         $this->dispatchBrowserEvent('closemodal-module-create');

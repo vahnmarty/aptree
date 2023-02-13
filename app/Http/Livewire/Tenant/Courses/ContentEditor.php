@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Tenant\Courses;
 
 use Closure;
+use App\Models\Module;
 use Livewire\Component;
 use App\Enums\ContentLayout;
 use Filament\Forms\Components\Grid;
@@ -28,6 +29,11 @@ class ContentEditor extends Component implements HasForms
         return view('livewire.tenant.courses.content-editor');
     }
 
+    public function mount($module_id)
+    {
+        $this->setModule($module_id);
+    }
+
     protected function getFormSchema(): array
     {
         return [
@@ -36,6 +42,7 @@ class ContentEditor extends Component implements HasForms
                 ->schema([
                     TextInput::make('title')->required(),
                     Select::make('layout')
+                        ->required()
                         ->reactive()
                         ->options(ContentLayout::asSelectArray())
                         ->afterStateUpdated(function (Closure $set, Closure $get, $state) {
@@ -53,8 +60,8 @@ class ContentEditor extends Component implements HasForms
             return Fieldset::make('content')
                 ->label('Image & Text')
                 ->schema([
-                    FileUpload::make('image'),
-                    Textarea::make('content')->placeholder('Enter description here')
+                    FileUpload::make('image')->image()->required(),
+                    Textarea::make('content')->placeholder('Enter description here')->required(),
                 ]);
         }
 
@@ -63,8 +70,8 @@ class ContentEditor extends Component implements HasForms
             return Fieldset::make('content')
                 ->label('Text & Image')
                 ->schema([
-                    Textarea::make('content')->placeholder('Enter description here'),
-                    FileUpload::make('image'),
+                    Textarea::make('content')->placeholder('Enter description here')->required(),
+                    FileUpload::make('image')->image()->required(),
                 ]);
         }
 
@@ -73,7 +80,7 @@ class ContentEditor extends Component implements HasForms
             return Fieldset::make('content')
                 ->label('Text Only')
                 ->schema([
-                    Textarea::make('content')->placeholder('Enter description here')->columnSpan('full'),
+                    Textarea::make('content')->placeholder('Enter description here')->columnSpan('full')->required(),
                 ]);
         }
 
@@ -82,7 +89,7 @@ class ContentEditor extends Component implements HasForms
             return Fieldset::make('content')
                 ->label('Image Only')
                 ->schema([
-                    $this->getFieldFileUpload()
+                    $this->getFieldFileUpload()->required()
                 ]);
         }
 
@@ -100,6 +107,11 @@ class ContentEditor extends Component implements HasForms
                 ->removeUploadedFileButtonPosition('right')
                 ->uploadButtonPosition('left')
                 ->uploadProgressIndicatorPosition('left');
+    }
+
+    public function setModule($id)
+    {
+        $this->module = Module::find($id);
     }
 
     public function setType($type)
@@ -131,5 +143,10 @@ class ContentEditor extends Component implements HasForms
 
         $this->getContentForm();
         
+    }
+
+    public function save()
+    {
+        $data = $this->validate();
     }
 }
