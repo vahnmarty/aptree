@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('module_id');
             $table->string('type')->comment('Enum');
+            $table->string('layout')->nullable();
             $table->json('content');
             $table->string('video')->nullable();
             $table->string('document')->nullable();

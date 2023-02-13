@@ -34,6 +34,8 @@ class CourseContents extends Component
 
     public function createContent($type)
     {
+        // Emit to ContentEditor
+        $this->emit('setContentType', $type);
 
         $this->dispatchBrowserEvent('openmodal-content');
     }
