@@ -84,3 +84,7 @@ svg {
 .btn-default{
   @apply inline-flex items-center px-4 py-2 font-medium text-gray-700 bg-gray-100 border border-gray-300 rounded-md hover:bg-gray-300;
 }
+
+.filepond--drop-label{
+  background-color: #E6E8F0;
+}

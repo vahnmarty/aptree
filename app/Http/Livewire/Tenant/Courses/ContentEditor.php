@@ -81,7 +81,15 @@ class ContentEditor extends Component implements HasForms
             return Fieldset::make('content')
                 ->label('Image Only')
                 ->schema([
-                    FileUpload::make('image')->columnSpan('full'),
+                    FileUpload::make('image')->columnSpan('full')
+                    ->extraAttributes(['class' => 'bg-gray-100'])
+                    ->imagePreviewHeight('100')
+                    ->loadingIndicatorPosition('left')
+                    ->panelAspectRatio('4:1')
+                    ->panelLayout('integrated')
+                    ->removeUploadedFileButtonPosition('right')
+                    ->uploadButtonPosition('left')
+                    ->uploadProgressIndicatorPosition('left')
                 ]);
         }
 
