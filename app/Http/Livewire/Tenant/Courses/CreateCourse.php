@@ -158,7 +158,7 @@ class CreateCourse extends Component implements HasForms
 
             $this->emit('toast', ['type' => 'success', 'message' => 'Course created successfully!']);
 
-            return redirect()->route('courses.show', ['id' => $course->id]);
+            return redirect()->route('courses.contents', ['id' => $course->id]);
 
 
         } catch (\Throwable $th) {
