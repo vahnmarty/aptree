@@ -42,7 +42,8 @@
                         </header>
                         <div x-data="{ module_id: @entangle('module_id') }" class="px-4 py-4 space-y-2">
                             @forelse($course->modules as $module)
-                                <div wire:click="selectModule({{ $module->id }})"
+                                <div wire:key="module-{{ $module->id  . '_' . time() }}"
+                                    wire:click="selectModule({{ $module->id }})"
                                     :class="module_id == {{ $module->id }} ? 'border-2 border-orange-400' : ''"
                                     class="px-2 py-2 border rounded-md cursor-pointer hover:bg-gray-50">
                                     <div class="flex items-center justify-between">
@@ -81,7 +82,8 @@
                             </header>
                             <div class="p-4">
                                 @foreach($selected_module->items as $card)
-                                <div class="px-4 py-2 mb-4 border-2 border-gray-300 rounded-md shadow-sm">
+                                <div wire:key="card-{{ $card->id  . '_' . time() }}"
+                                    class="px-4 py-2 mb-4 border-2 border-gray-300 rounded-md shadow-sm">
                                     <div class="flex items-center justify-between">
                                         <div class="flex items-center">
                                             <x-heroicon-s-menu class="w-6 h-6 mr-4 text-gray-600"/>
@@ -94,7 +96,7 @@
                                             <button type="button">
                                                 <x-heroicon-o-trash class="w-6 h-6 text-gray-600"/>
                                             </button>
-                                            <button type="button">
+                                            <button type="button" wire:click="editContent('{{ $card->id }}')">
                                                 <x-heroicon-o-pencil class="w-6 h-6 text-gray-600"/>
                                             </button>
                                         </div>

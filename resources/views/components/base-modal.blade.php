@@ -1,7 +1,7 @@
 <div x-data="{ 
     isOpen: false,
  }" 
-x-on:openmodal-{{ $ref }}.window="isOpen = true" 
+x-on:openmodal-{{ $ref }}.window="isOpen = true; Livewire.emit('renderComponent')" 
 x-on:closemodal-{{ $ref }}.window="isOpen = false" 
 x-show="isOpen" 
 x-cloak 

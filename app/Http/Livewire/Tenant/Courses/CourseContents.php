@@ -46,4 +46,9 @@ class CourseContents extends Component
 
         $this->dispatchBrowserEvent('openmodal-content');
     }
+
+    public function editContent($module_item_id)
+    {
+        $this->emit('editContent', $module_item_id);
+    }
 }

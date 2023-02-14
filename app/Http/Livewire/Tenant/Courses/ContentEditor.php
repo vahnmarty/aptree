@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Tenant\Courses;
 use Closure;
 use App\Models\Module;
 use Livewire\Component;
+use App\Enums\ActionType;
 use App\Models\ModuleItem;
 use App\Enums\ContentLayout;
 use App\Enums\ModuleItemType;
@@ -23,11 +24,13 @@ class ContentEditor extends Component implements HasForms
 {
     use InteractsWithForms;
 
-    public $module_id;
+    public $module_id, $module_item_id;
 
-    public $type, $layout, $title, $image, $content;
+    public $type, $layout, $title, $image, $content, $video, $document, $order;
 
-    protected $listeners = ['setContentType' => 'setType'];
+    public $action = 'create';
+
+    protected $listeners = ['setContentType' => 'setType', 'editContent', 'renderComponent' => '$refresh'];
     
     public function render()
     {
@@ -56,7 +59,7 @@ class ContentEditor extends Component implements HasForms
                             $this->getContentForm();
                         }),
                 ]),
-            $this->getContentForm()
+            $this->getContentForm()->reactive()
         ];
     }
 
@@ -157,11 +160,40 @@ class ContentEditor extends Component implements HasForms
 
         $data = $this->form->getState();
 
-        $module = Module::find($this->module_id);
+        if($this->action == ActionType::Update)
+        {
+            $module_item = ModuleItem::find($this->module_item_id);
+            $module_item->update($data);
 
-        $module->items()->create($data);
+        }else{
+            $module = Module::find($this->module_id);
+
+            $module->items()->create($data);
+        }
+        
 
         return redirect(request()->header('Referer'));
         
+    }
+
+    public function editContent($module_item_id)
+    {
+        $this->module_item_id = $module_item_id;
+
+        $data = ModuleItem::find($module_item_id);
+
+        $this->action = ActionType::Update;
+
+        $this->form->fill( [
+            'title' => $data->title,
+            'type' => $data->type->value,
+            'layout' => $data->layout,
+            'content' => $data->content,
+            'image' => $data->image
+        ] );
+
+        $this->getContentForm();
+
+        $this->dispatchBrowserEvent('openmodal-content');
     }
 }
