@@ -11,8 +11,8 @@ use BenSampo\Enum\Enum;
  */
 final class ModuleItemType extends Enum
 {
-    const Content = 0;
-    const Video = 1;
-    const Document = 2;
-    const Question = 3;
+    const Content = 1;
+    const Video = 2;
+    const Document = 3;
+    const Question = 4;
 }

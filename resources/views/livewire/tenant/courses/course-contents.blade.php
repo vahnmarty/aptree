@@ -80,6 +80,27 @@
                                 <h2 class="font-bold text-emerald-900">{{ $selected_module->title }}</h2>
                             </header>
                             <div class="p-4">
+                                @foreach($selected_module->items as $card)
+                                <div class="px-4 py-2 mb-4 border-2 border-gray-300 rounded-md shadow-sm">
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center">
+                                            <x-heroicon-s-menu class="w-6 h-6 mr-4 text-gray-600"/>
+                                            <div>
+                                                <p class="text-orange-500">{{ $card->type->key }}</p>
+                                                <p>{{ $card->title }}</p>
+                                            </div>
+                                        </div>
+                                        <div class="flex gap-2">
+                                            <button type="button">
+                                                <x-heroicon-o-trash class="w-6 h-6 text-gray-600"/>
+                                            </button>
+                                            <button type="button">
+                                                <x-heroicon-o-pencil class="w-6 h-6 text-gray-600"/>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                @endforeach
                                 <div class="p-2 border-2 rounded-md border-emerald-700">
                                     <div class="flex items-center justify-between">
                                         <div class="flex items-center">

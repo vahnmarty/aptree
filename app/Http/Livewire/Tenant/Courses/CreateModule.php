@@ -46,12 +46,10 @@ class CreateModule extends Component implements HasForms
         
         $data = $this->validate();
 
-        $this->tenant->run(function() use($data){
-            $module = new Module;
-            $module->course_id = $this->course_id;
-            $module->fill($data);
-            $module->save();
-        });
+        $module = new Module;
+        $module->course_id = $this->course_id;
+        $module->fill($data);
+        $module->save();
 
 
         return redirect(request()->header('Referer'));

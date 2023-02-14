@@ -5,8 +5,11 @@ namespace App\Http\Livewire\Tenant\Courses;
 use Closure;
 use App\Models\Module;
 use Livewire\Component;
+use App\Models\ModuleItem;
 use App\Enums\ContentLayout;
+use App\Enums\ModuleItemType;
 use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Components\Fieldset;
@@ -20,6 +23,8 @@ class ContentEditor extends Component implements HasForms
 {
     use InteractsWithForms;
 
+    public $module_id;
+
     public $type, $layout, $title, $image, $content;
 
     protected $listeners = ['setContentType' => 'setType'];
@@ -31,6 +36,7 @@ class ContentEditor extends Component implements HasForms
 
     public function mount($module_id)
     {
+        $this->type = ModuleItemType::Content;
         $this->setModule($module_id);
     }
 
@@ -40,6 +46,7 @@ class ContentEditor extends Component implements HasForms
             Grid::make(2)
                 ->reactive()
                 ->schema([
+                    Hidden::make('type'),
                     TextInput::make('title')->required(),
                     Select::make('layout')
                         ->required()
@@ -86,7 +93,7 @@ class ContentEditor extends Component implements HasForms
 
         if($this->layout == ContentLayout::ImageOnly)
         {
-            return Fieldset::make('content')
+            return Fieldset::make('image')
                 ->label('Image Only')
                 ->schema([
                     $this->getFieldFileUpload()->required()
@@ -111,14 +118,13 @@ class ContentEditor extends Component implements HasForms
 
     public function setModule($id)
     {
+        $this->module_id = $id;
         $this->module = Module::find($id);
     }
 
     public function setType($type)
     {
         $this->reset('layout');
-
-        $this->type = $type;
 
         switch ($type) {
             case 'image-text':
@@ -145,8 +151,17 @@ class ContentEditor extends Component implements HasForms
         
     }
 
-    public function save()
+    public function submit()
     {
-        $data = $this->validate();
+        $this->validate();
+
+        $data = $this->form->getState();
+
+        $module = Module::find($this->module_id);
+
+        $module->items()->create($data);
+
+        return redirect(request()->header('Referer'));
+        
     }
 }

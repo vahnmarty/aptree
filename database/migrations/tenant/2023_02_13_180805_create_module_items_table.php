@@ -16,9 +16,10 @@ return new class extends Migration
         Schema::create('module_items', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('module_id');
+            $table->string('title');
             $table->string('type')->comment('Enum');
             $table->string('layout')->nullable();
-            $table->json('content')->nullable();
+            $table->longtext('content')->nullable();
             $table->string('image')->nullable();
             $table->string('video')->nullable();
             $table->string('document')->nullable();

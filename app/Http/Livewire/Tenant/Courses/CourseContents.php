@@ -12,6 +12,8 @@ class CourseContents extends Component
 
     public $module_id, $selected_module;
 
+    protected $queryString = ['module_id'];
+
     protected $listeners = [ 'refreshParent' => '$refresh'];
 
     public function render()
@@ -22,6 +24,11 @@ class CourseContents extends Component
     public function mount($id)
     {
         $this->course = Course::with('modules')->find($id);
+
+        if($this->module_id)
+        {
+            $this->selectModule($this->module_id);
+        }
     }
 
     public function selectModule($id)

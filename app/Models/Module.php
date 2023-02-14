@@ -10,4 +10,9 @@ class Module extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    public function items()
+    {
+        return $this->hasMany(ModuleItem::class);
+    }
 }
