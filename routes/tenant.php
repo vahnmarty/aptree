@@ -9,6 +9,7 @@ use App\Http\Livewire\Tenant\Courses\ShowCourse;
 use App\Http\Livewire\Tenant\Courses\CreateCourse;
 use App\Http\Livewire\Tenant\Courses\ManageCourses;
 use App\Http\Livewire\Tenant\Courses\CourseContents;
+use App\Http\Livewire\Tenant\Courses\ModuleItemPreview;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 /*
@@ -35,6 +36,7 @@ Route::middleware([
         Route::get('/create', CreateCourse::class)->name('courses.create');
         Route::get('/{id}', ShowCourse::class)->name('courses.show');
         Route::get('/{id}/contents', CourseContents::class)->name('courses.contents');
+        Route::get('/module-preview/{id}', ModuleItemPreview::class)->name('courses.module-preview');
     });
 
 

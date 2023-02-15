@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Enums\ModuleItemType;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Storage;
 
 class ModuleItem extends Model
 {
@@ -15,4 +16,9 @@ class ModuleItem extends Model
     ];
 
     protected $guarded = [];
+
+    public function getImage()
+    {
+        return Storage::disk('do')->url($this->image);
+    }
 }

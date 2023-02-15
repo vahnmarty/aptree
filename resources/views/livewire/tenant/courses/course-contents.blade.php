@@ -127,7 +127,11 @@
                                             @else
                                             @endif
                                         </div>
-                                        <div class="flex gap-2">
+                                        <div class="flex justify-end gap-2">
+                                            <a href="{{ route('courses.module-preview', $card->id) }}"
+                                                target="_blank">
+                                                <x-heroicon-o-eye class="w-6 h-6 text-gray-600"/>
+                                            </a>
                                             <button type="button">
                                                 <x-heroicon-o-trash class="w-6 h-6 text-gray-600"/>
                                             </button>

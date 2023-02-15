@@ -70,7 +70,7 @@ class ContentEditor extends Component implements HasForms
             return Fieldset::make('content')
                 ->label('Image & Text')
                 ->schema([
-                    FileUpload::make('image')->image()->required(),
+                    $this->getFieldFileUpload(),
                     Textarea::make('content')->placeholder('Enter description here')->required(),
                 ]);
         }
@@ -81,7 +81,7 @@ class ContentEditor extends Component implements HasForms
                 ->label('Text & Image')
                 ->schema([
                     Textarea::make('content')->placeholder('Enter description here')->required(),
-                    FileUpload::make('image')->image()->required(),
+                    $this->getFieldFileUpload()
                 ]);
         }
 
@@ -112,8 +112,9 @@ class ContentEditor extends Component implements HasForms
     public function getFieldFileUpload()
     {
         return FileUpload::make('image')
+                ->image()
                 ->disk('do')
-                ->directory('uploads')
+                ->directory('modules')
                 ->visibility('public')
                 ->columnSpan('full')
                 ->imagePreviewHeight('100')
