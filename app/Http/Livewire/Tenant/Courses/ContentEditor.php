@@ -99,7 +99,10 @@ class ContentEditor extends Component implements HasForms
             return Fieldset::make('image')
                 ->label('Image Only')
                 ->schema([
-                    $this->getFieldFileUpload()->required()
+                    $this->getFieldFileUpload()
+                    ->required(function(){
+                        return $this->action == ActionType::Update ? false : true;
+                    })
                 ]);
         }
 
@@ -108,8 +111,11 @@ class ContentEditor extends Component implements HasForms
 
     public function getFieldFileUpload()
     {
-        return FileUpload::make('image')->columnSpan('full')
-                ->extraAttributes(['class' => 'bg-gray-100'])
+        return FileUpload::make('image')
+                ->disk('do')
+                ->directory('uploads')
+                ->visibility('public')
+                ->columnSpan('full')
                 ->imagePreviewHeight('100')
                 ->loadingIndicatorPosition('left')
                 ->panelAspectRatio('4:1')
@@ -151,6 +157,8 @@ class ContentEditor extends Component implements HasForms
         }
 
         $this->getContentForm();
+
+        $this->dispatchBrowserEvent('openmodal-content');
         
     }
 
@@ -162,6 +170,10 @@ class ContentEditor extends Component implements HasForms
 
         if($this->action == ActionType::Update)
         {
+            if(empty($data['image'])){
+                unset($data['image']);
+            }
+            
             $module_item = ModuleItem::find($this->module_item_id);
             $module_item->update($data);
 
@@ -184,13 +196,12 @@ class ContentEditor extends Component implements HasForms
 
         $this->action = ActionType::Update;
 
-        $this->form->fill( [
+        $this->form->fill([
             'title' => $data->title,
             'type' => $data->type->value,
             'layout' => $data->layout,
             'content' => $data->content,
-            'image' => $data->image
-        ] );
+        ]);
 
         $this->getContentForm();
 

@@ -53,7 +53,10 @@
                                         </div>
                                         <div>
                                             <button type="button">
-                                                <x-heroicon-o-trash class="w-6 h-6 text-gray-500 text-gray-900" />
+                                                <x-heroicon-o-pencil class="w-6 h-6 text-gray-500 hover:text-gray-900" />
+                                            </button>
+                                            <button type="button">
+                                                <x-heroicon-o-trash class="w-6 h-6 text-gray-500 hover:text-gray-900" />
                                             </button>
                                         </div>
                                     </div>
@@ -84,13 +87,45 @@
                                 @foreach($selected_module->items as $card)
                                 <div wire:key="card-{{ $card->id  . '_' . time() }}"
                                     class="px-4 py-2 mb-4 border-2 border-gray-300 rounded-md shadow-sm">
-                                    <div class="flex items-center justify-between">
-                                        <div class="flex items-center">
+                                    <div class="grid items-center grid-cols-5 gap-4">
+                                        <div class="flex col-span-2">
                                             <x-heroicon-s-menu class="w-6 h-6 mr-4 text-gray-600"/>
                                             <div>
                                                 <p class="text-orange-500">{{ $card->type->key }}</p>
                                                 <p>{{ $card->title }}</p>
                                             </div>
+                                        </div>
+                                        <div class="flex justify-start col-span-2">
+                                            @if($card->type->value == \App\Enums\ModuleItemType::Content)
+                                                @if($card->layout == \App\Enums\ContentLayout::LeftImageRightText)
+                                                <div class="p-2 border rounded-md bg-emerald-50">
+                                                    <div class="flex">
+                                                        <x-heroicon-s-photograph class="w-7 h-7" />
+                                                        <x-heroicon-s-menu-alt-2 class="w-7 h-7" />
+                                                    </div>
+                                                </div>
+                                                @elseif($card->layout == \App\Enums\ContentLayout::LeftTextRightImage)
+                                                <div class="p-2 border rounded-md bg-emerald-50">
+                                                    <div class="flex">
+                                                        <x-heroicon-s-menu-alt-2 class="w-7 h-7" />
+                                                        <x-heroicon-s-photograph class="w-7 h-7" />
+                                                    </div>
+                                                </div>
+                                                @elseif($card->layout == \App\Enums\ContentLayout::TextOnly)
+                                                <div class="p-2 border rounded-md bg-emerald-50">
+                                                    <div class="flex">
+                                                        <x-heroicon-s-menu-alt-2 class="w-7 h-7" />
+                                                    </div>
+                                                </div>
+                                                @elseif($card->layout == \App\Enums\ContentLayout::ImageOnly)
+                                                <div class="p-2 border rounded-md bg-emerald-50">
+                                                    <div class="flex">
+                                                        <x-heroicon-s-photograph class="w-7 h-7" />
+                                                    </div>
+                                                </div>
+                                                @endif
+                                            @else
+                                            @endif
                                         </div>
                                         <div class="flex gap-2">
                                             <button type="button">
