@@ -42,7 +42,6 @@
             <section class="max-w-4xl px-4 mx-auto">
                 <div class="flex justify-center">
                     <iframe src="{{ $module->video_embed_url }}" height="400" width="700" title="Video Preview" allow="fullscreen"></iframe>
-                    
                 </div>
                 <div class="flex flex-col items-center justify-center mt-4">
                     <h2 class="text-lg font-bold">{{ $module->title }}</h2>
