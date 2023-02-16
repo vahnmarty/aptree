@@ -82,4 +82,9 @@ class CourseContents extends Component
 
         return redirect()->route('courses.contents', $this->course->id);
     }
+
+    public function createQuestion($type)
+    {
+        $this->emit('createQuestion', $type);
+    }
 }

@@ -22,4 +22,9 @@ class ModuleItem extends Model
     {
         return Storage::disk('do')->url($this->image);
     }
+
+    public function question()
+    {
+        return $this->hasOne(Question::class);
+    }
 }
