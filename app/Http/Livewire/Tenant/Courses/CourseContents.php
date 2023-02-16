@@ -5,6 +5,8 @@ namespace App\Http\Livewire\Tenant\Courses;
 use App\Models\Course;
 use App\Models\Module;
 use Livewire\Component;
+use App\Models\ModuleItem;
+use App\Enums\ModuleItemType;
 
 class CourseContents extends Component
 {
@@ -18,6 +20,11 @@ class CourseContents extends Component
 
     public function render()
     {
+        if($this->module_id)
+        {
+            $this->selectModule($this->module_id);
+        }
+        
         return view('livewire.tenant.courses.course-contents');
     }
 
@@ -25,11 +32,10 @@ class CourseContents extends Component
     {
         $this->course = Course::with('modules')->find($id);
 
-        if($this->module_id)
-        {
-            $this->selectModule($this->module_id);
-        }
+        
     }
+    
+    
 
     public function selectModule($id)
     {
@@ -47,8 +53,23 @@ class CourseContents extends Component
         $this->dispatchBrowserEvent('openmodal-content');
     }
 
-    public function editContent($module_item_id)
+    public function editCard($module_item_id)
     {
-        $this->emit('editContent', $module_item_id);
+        $module = ModuleItem::find($module_item_id);
+
+        if($module->type->value == ModuleItemType::Content){
+            $this->emit('editContent', $module_item_id);
+        }
+
+        if($module->type->value == ModuleItemType::Document){
+            $this->emit('editDocument', $module_item_id);
+        }
+    }
+
+    public function deleteCard($module_item_id)
+    {
+        ModuleItem::destroy($module_item_id);
+
+        $this->emit('toast', ['type' => 'success', 'Deleted!']);
     }
 }

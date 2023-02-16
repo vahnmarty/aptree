@@ -88,3 +88,7 @@ svg {
 .filepond--drop-label{
   background-color: #E6E8F0;
 }
+
+.btn-warning{
+  @apply inline-flex items-center px-4 py-2 font-medium text-white bg-orange-700 rounded-md hover:bg-orange-800 ;
+}

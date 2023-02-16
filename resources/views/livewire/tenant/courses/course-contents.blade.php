@@ -124,6 +124,12 @@
                                                     </div>
                                                 </div>
                                                 @endif
+                                            @elseif($card->type->value == \App\Enums\ModuleItemType::Document)
+                                            <div class="p-2 border rounded-md bg-emerald-50">
+                                                <div class="flex">
+                                                    <x-heroicon-s-document-text class="w-7 h-7" />
+                                                </div>
+                                            </div>
                                             @else
                                             @endif
                                         </div>
@@ -132,10 +138,12 @@
                                                 target="_blank">
                                                 <x-heroicon-o-eye class="w-6 h-6 text-gray-600"/>
                                             </a>
-                                            <button type="button">
+                                            <button x-data
+                                                x-on:click="if(confirm('Continue delete?')){ $wire.deleteCard('{{ $card->id }}') }"
+                                                type="button" >
                                                 <x-heroicon-o-trash class="w-6 h-6 text-gray-600"/>
                                             </button>
-                                            <button type="button" wire:click="editContent('{{ $card->id }}')">
+                                            <button type="button" wire:click="editCard('{{ $card->id }}')">
                                                 <x-heroicon-o-pencil class="w-6 h-6 text-gray-600"/>
                                             </button>
                                         </div>
@@ -149,6 +157,8 @@
                                             <p class="text-sm">Add a New Card</p>
                                         </div>
                                         <div class="flex gap-1">
+
+                                            <!-- Modals -->
                                             <x-modal-lg ref="content">
                                                 <x-slot name="title">
                                                     Content Editor
@@ -157,6 +167,17 @@
                                                     @livewire('tenant.courses.content-editor', ['module_id' => $module->id])
                                                 </div>
                                             </x-modal-lg>
+                                            <x-modal ref="upload">
+                                                <x-slot name="title">
+                                                    Upload Document
+                                                </x-slot>
+                                                <div class="pt-4">
+                                                    @livewire('tenant.courses.upload-document', ['module_id' => $module_id])
+                                                </div>
+                                            </x-modal>
+                                            
+                                            <!-- Modals -->
+
                                             <x-dropup>
                                                 <x-slot name="button">
                                                     <button @click="open = !open"
@@ -236,6 +257,7 @@
                                                 <div class="relative w-32 px-3 py-3 bg-gray-300 rounded-md shadow-xs">
                                                     <div class="flex flex-col space-y-1">
                                                         <button type="button"
+                                                            x-on:click="$dispatch('openmodal-upload')"
                                                             class="p-2 text-sm bg-white border rounded-md hover:bg-emerald-50">
                                                             <span>Upload</span>
                                                         </button>
