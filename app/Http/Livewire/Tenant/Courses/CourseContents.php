@@ -34,8 +34,6 @@ class CourseContents extends Component
 
         
     }
-    
-    
 
     public function selectModule($id)
     {
@@ -76,5 +74,12 @@ class CourseContents extends Component
     public function editModule($module_id)
     {
         $this->emit('editModule', $module_id);
+    }
+
+    public function deleteModule($module_id)
+    {
+        Module::destroy($module_id);
+
+        return redirect()->route('courses.contents', $this->course->id);
     }
 }

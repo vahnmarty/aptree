@@ -67,7 +67,10 @@
                                                 aria-title="Edit Module">
                                                 <x-heroicon-o-pencil class="w-6 h-6 text-gray-500 hover:text-gray-900" />
                                             </button>
-                                            <button type="button" aria-title="Delete Module">
+                                            <button type="button" 
+                                                x-data
+                                                x-on:click="if(confirm('Confirm Delete?')){ $wire.deleteModule('{{ $module->id }}') }"
+                                                aria-title="Delete Module">
                                                 <x-heroicon-o-trash class="w-6 h-6 text-gray-500 hover:text-gray-900" />
                                             </button>
                                         </div>
