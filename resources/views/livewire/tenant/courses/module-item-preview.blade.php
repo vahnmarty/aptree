@@ -1,3 +1,7 @@
+@push('head-scripts')
+<script src="https://unpkg.com/@api.video/player-sdk" defer></script>
+@endpush
+
 <div class="min-h-screen py-4 bg-gray-200 h-100">
     <div class="px-8 mx-auto max-w-7xl">
         <div class="p-2 text-white bg-red-500 border rounded-md">
@@ -33,6 +37,17 @@
                     </div>
                 </div>
                 @endif
+            </section>
+            @elseif($module->type->value == \App\Enums\ModuleItemType::Video)
+            <section class="max-w-4xl px-4 mx-auto">
+                <div class="flex justify-center">
+                    <iframe src="{{ $module->video_embed_url }}" height="400" width="700" title="Video Preview" allow="fullscreen"></iframe>
+                    
+                </div>
+                <div class="flex flex-col items-center justify-center mt-4">
+                    <h2 class="text-lg font-bold">{{ $module->title }}</h2>
+                    <div>{!! $module->content !!}</div>
+                </div>
             </section>
             @endif
         </div>

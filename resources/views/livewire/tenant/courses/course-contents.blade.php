@@ -130,7 +130,12 @@
                                                     <x-heroicon-s-document-text class="w-7 h-7" />
                                                 </div>
                                             </div>
-                                            @else
+                                            @elseif($card->type->value == \App\Enums\ModuleItemType::Video)
+                                            <div class="p-2 border rounded-md bg-emerald-50">
+                                                <div class="flex">
+                                                    <x-heroicon-s-video-camera class="w-7 h-7" />
+                                                </div>
+                                            </div>
                                             @endif
                                         </div>
                                         <div class="flex justify-end gap-2">
