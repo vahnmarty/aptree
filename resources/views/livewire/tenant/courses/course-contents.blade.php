@@ -44,7 +44,7 @@
                             @forelse($course->modules as $module)
                                 <div wire:key="module-{{ $module->id  . '_' . time() }}"
                                     wire:click="selectModule({{ $module->id }})"
-                                    :class="module_id == {{ $module->id }} ? 'border-2 border-orange-400' : ''"
+                                    :class="module_id == {{ $module->id }} ? 'border-2 border-orange-400 bg-orange-50' : ''"
                                     class="px-2 py-2 border rounded-md cursor-pointer hover:bg-gray-50">
                                     <div class="flex items-center justify-between">
                                         <div class="flex items-center">
