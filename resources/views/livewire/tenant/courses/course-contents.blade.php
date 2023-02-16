@@ -164,7 +164,7 @@
                                                     Content Editor
                                                 </x-slot>
                                                 <div class="pt-4">
-                                                    @livewire('tenant.courses.content-editor', ['module_id' => $module->id])
+                                                    @livewire('tenant.courses.content-editor', ['moduleId' => $module->id])
                                                 </div>
                                             </x-modal-lg>
                                             <x-modal ref="upload">
@@ -172,9 +172,18 @@
                                                     Upload Document
                                                 </x-slot>
                                                 <div class="pt-4">
-                                                    @livewire('tenant.courses.upload-document', ['module_id' => $module_id])
+                                                    @livewire('tenant.courses.upload-document', ['moduleId' => $module_id])
                                                 </div>
                                             </x-modal>
+
+                                            <x-modal-lg ref="video">
+                                                <x-slot name="title">
+                                                    Add Video
+                                                </x-slot>
+                                                <div class="pt-4">
+                                                    @livewire('tenant.courses.video-editor', ['moduleId' => $module_id])
+                                                </div>
+                                            </x-modal-lg>
                                             
                                             <!-- Modals -->
 
@@ -235,6 +244,7 @@
                                                 <div class="relative w-32 px-3 py-3 bg-gray-300 rounded-md shadow-xs">
                                                     <div class="flex flex-col space-y-1">
                                                         <button type="button"
+                                                            x-on:click="$dispatch('openmodal-video'); hide()"
                                                             class="p-2 text-sm bg-white border rounded-md hover:bg-emerald-50">
                                                             <span>Add Video</span>
                                                         </button>

@@ -13,6 +13,7 @@ class ModuleItem extends Model
 
     protected $casts = [
         'type' => ModuleItemType::class,
+        'video_response' => 'array'
     ];
 
     protected $guarded = [];

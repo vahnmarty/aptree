@@ -29,9 +29,9 @@ class UploadDocument extends Component implements HasForms
         return view('livewire.tenant.courses.upload-document');
     }
 
-    public function mount($module_id)
+    public function mount($moduleId)
     {
-        $this->module_id = $module_id;
+        $this->module_id = $moduleId;
         $this->type = ModuleItemType::Document; 
     }
 

@@ -37,10 +37,10 @@ class ContentEditor extends Component implements HasForms
         return view('livewire.tenant.courses.content-editor');
     }
 
-    public function mount($module_id)
+    public function mount($moduleId)
     {
         $this->type = ModuleItemType::Content;
-        $this->setModule($module_id);
+        $this->setModule($moduleId);
     }
 
     protected function getFormSchema(): array

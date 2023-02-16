@@ -33,6 +33,11 @@ return [
 
     'sparkpost' => [
         'secret' => env('SPARKPOST_SECRET'),
+    ],
+
+    'apivideo' => [
+        'key' => env('APIVIDEO_KEY'),
+        'upload_token' => env('APIVIDEO_UPLOAD_TOKEN')
     ]
 
 ];
