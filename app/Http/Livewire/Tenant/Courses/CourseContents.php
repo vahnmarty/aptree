@@ -72,4 +72,9 @@ class CourseContents extends Component
 
         $this->emit('toast', ['type' => 'success', 'Deleted!']);
     }
+
+    public function editModule($module_id)
+    {
+        $this->emit('editModule', $module_id);
+    }
 }

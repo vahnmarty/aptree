@@ -15,6 +15,16 @@
         </div>
     </x-modal>
 
+
+    <x-modal ref="module-edit">
+        <x-slot name="title">
+            Edit Module
+        </x-slot>
+        <div class="pt-4">
+            @livewire('tenant.courses.edit-module')
+        </div>
+    </x-modal>
+
     <div class="px-8 py-12 bg-gray-100 text-emerald-900">
         <nav class="flex items-center space-x-4" aria-label="Tabs">
 
@@ -52,10 +62,12 @@
                                             <p>{{ $module->title }}</p>
                                         </div>
                                         <div>
-                                            <button type="button">
+                                            <button type="button"
+                                                wire:click="editModule(`{{ $module->id }}`)"
+                                                aria-title="Edit Module">
                                                 <x-heroicon-o-pencil class="w-6 h-6 text-gray-500 hover:text-gray-900" />
                                             </button>
-                                            <button type="button">
+                                            <button type="button" aria-title="Delete Module">
                                                 <x-heroicon-o-trash class="w-6 h-6 text-gray-500 hover:text-gray-900" />
                                             </button>
                                         </div>
