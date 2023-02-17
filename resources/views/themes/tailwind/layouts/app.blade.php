@@ -93,7 +93,7 @@
     @endif
 
     @yield('javascript')
-
+    
 
     @if(setting('site.google_analytics_tracking_id', ''))
         <!-- Global site tag (gtag.js) - Google Analytics -->

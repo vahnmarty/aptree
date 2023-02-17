@@ -12,7 +12,7 @@
                     Content Editor
                 </x-slot>
                 <div class="pt-4">
-                    @livewire('tenant.courses.content-editor', ['moduleId' => $module->id])
+                    @livewire('tenant.courses.content-editor', ['moduleId' => $module_id])
                 </div>
             </x-modal-lg>
             <x-modal ref="upload">

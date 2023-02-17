@@ -51,13 +51,18 @@
                                 </button>
                             </div>
                         </header>
-                        <div x-data="{ module_id: @entangle('module_id') }" class="px-4 py-4 space-y-2">
-                            @forelse($course->modules as $module)
-                                <div wire:key="module-{{ $module->id  . '_' . time() }}"
+                        <div x-data="{ module_id: @entangle('module_id') }" class="px-4 py-4">
+                            @if(count($modules))
+                            <div wire:sortable="updateModuleOrder" class="space-y-2">
+                                @foreach($modules as $module)
+                                <div
+                                    wire:sortable.item="{{ $module->id }}"
+                                    wire:key="module-{{ $module->id  . '_' . time() }}"
                                     wire:click="selectModule({{ $module->id }})"
                                     :class="module_id == {{ $module->id }} ? 'border-2 border-orange-400 bg-orange-50' : ''"
                                     class="px-2 py-2 border rounded-md cursor-pointer hover:bg-gray-50">
-                                    <div class="flex items-center justify-between">
+                                    <div 
+                                        class="flex items-center justify-between">
                                         <div class="flex items-center">
                                             <x-heroicon-o-menu class="w-6 h-6 mr-2 text-gray-900" />
                                             <p>{{ $module->title }}</p>
@@ -77,19 +82,21 @@
                                         </div>
                                     </div>
                                 </div>
-                            @empty
-                                <div class="bg-gray-100">
-                                    <button x-data x-on:click="$dispatch('openmodal-module-create')" type="button"
-                                        class="relative block w-full p-12 text-center border-2 border-gray-300 border-dashed rounded-lg hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                                        <svg class="w-12 h-12 mx-auto text-gray-400" stroke="currentColor"
-                                            fill="none" viewBox="0 0 48 48" aria-hidden="true">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M8 14v20c0 4.418 7.163 8 16 8 1.381 0 2.721-.087 4-.252M8 14c0 4.418 7.163 8 16 8s16-3.582 16-8M8 14c0-4.418 7.163-8 16-8s16 3.582 16 8m0 0v14m0-4c0 4.418-7.163 8-16 8S8 28.418 8 24m32 10v6m0 0v6m0-6h6m-6 0h-6" />
-                                        </svg>
-                                        <span class="block mt-2 text-sm font-medium text-gray-900">Add New Module</span>
-                                    </button>
-                                </div>
-                            @endforelse
+                                @endforeach
+                            </div>
+                            @else
+                            <div class="bg-gray-100">
+                                <button x-data x-on:click="$dispatch('openmodal-module-create')" type="button"
+                                    class="relative block w-full p-12 text-center border-2 border-gray-300 border-dashed rounded-lg hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                                    <svg class="w-12 h-12 mx-auto text-gray-400" stroke="currentColor"
+                                        fill="none" viewBox="0 0 48 48" aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M8 14v20c0 4.418 7.163 8 16 8 1.381 0 2.721-.087 4-.252M8 14c0 4.418 7.163 8 16 8s16-3.582 16-8M8 14c0-4.418 7.163-8 16-8s16 3.582 16 8m0 0v14m0-4c0 4.418-7.163 8-16 8S8 28.418 8 24m32 10v6m0 0v6m0-6h6m-6 0h-6" />
+                                    </svg>
+                                    <span class="block mt-2 text-sm font-medium text-gray-900">Add New Module</span>
+                                </button>
+                            </div>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -106,55 +113,7 @@
                                     <div class="flex items-center justify-between gap-4">
                                         <div class="flex col-span-3">
                                             <div class="mr-4">
-                                                <div class="flex justify-start col-span-2">
-                                                    @if($card->type->value == \App\Enums\ModuleItemType::Content)
-                                                        @if($card->layout == \App\Enums\ContentLayout::LeftImageRightText)
-                                                        <div class="p-2 border rounded-md bg-emerald-50">
-                                                            <div class="flex">
-                                                                <x-heroicon-s-photograph class="w-7 h-7" />
-                                                                <x-heroicon-s-menu-alt-2 class="w-7 h-7" />
-                                                            </div>
-                                                        </div>
-                                                        @elseif($card->layout == \App\Enums\ContentLayout::LeftTextRightImage)
-                                                        <div class="p-2 border rounded-md bg-emerald-50">
-                                                            <div class="flex">
-                                                                <x-heroicon-s-menu-alt-2 class="w-7 h-7" />
-                                                                <x-heroicon-s-photograph class="w-7 h-7" />
-                                                            </div>
-                                                        </div>
-                                                        @elseif($card->layout == \App\Enums\ContentLayout::TextOnly)
-                                                        <div class="p-2 border rounded-md bg-emerald-50">
-                                                            <div class="flex">
-                                                                <x-heroicon-s-menu-alt-2 class="w-7 h-7" />
-                                                            </div>
-                                                        </div>
-                                                        @elseif($card->layout == \App\Enums\ContentLayout::ImageOnly)
-                                                        <div class="p-2 border rounded-md bg-emerald-50">
-                                                            <div class="flex">
-                                                                <x-heroicon-s-photograph class="w-7 h-7" />
-                                                            </div>
-                                                        </div>
-                                                        @endif
-                                                    @elseif($card->type->value == \App\Enums\ModuleItemType::Document)
-                                                    <div class="p-2 border rounded-md bg-emerald-50">
-                                                        <div class="flex">
-                                                            <x-heroicon-s-document-text class="w-7 h-7" />
-                                                        </div>
-                                                    </div>
-                                                    @elseif($card->type->value == \App\Enums\ModuleItemType::Video)
-                                                    <div class="p-2 border rounded-md bg-emerald-50">
-                                                        <div class="flex">
-                                                            <x-heroicon-s-video-camera class="w-7 h-7" />
-                                                        </div>
-                                                    </div>
-                                                @elseif($card->type->value == \App\Enums\ModuleItemType::Question)
-                                                    <div class="p-2 border rounded-md bg-emerald-50">
-                                                        <div class="flex">
-                                                            <x-heroicon-s-question-mark-circle class="w-7 h-7" />
-                                                        </div>
-                                                    </div>
-                                                    @endif
-                                                </div>
+                                                @include('livewire.tenant.courses.partials.icon_card')
                                             </div>
                                             <div>
                                                 <p class="text-orange-500">{{ $card->type->key }}</p>

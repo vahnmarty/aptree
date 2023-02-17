@@ -1,4 +1,4 @@
-<div class="w-64 min-h-screen bg-white border-r">
+<div class="hidden w-64 min-h-screen bg-white border-r lg:block">
     <div class="flex flex-col flex-grow min-h-screen py-5 overflow-y-auto bg-white">
         <div class="px-4">
             <div class="flex items-center p-2 bg-gray-200 rounded-md">

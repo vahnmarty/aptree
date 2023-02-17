@@ -10,7 +10,7 @@ use App\Enums\ModuleItemType;
 
 class CourseContents extends Component
 {
-    public $course;
+    public $course, $modules = [];
 
     public $module_id, $selected_module;
 
@@ -20,19 +20,19 @@ class CourseContents extends Component
 
     public function render()
     {
-        if($this->module_id)
-        {
+        if($this->module_id){
             $this->selectModule($this->module_id);
         }
+
+        $this->modules = $this->course->modules()->orderBy('order')->get();
+
         
         return view('livewire.tenant.courses.course-contents');
     }
 
     public function mount($id)
     {
-        $this->course = Course::with('modules')->find($id);
-
-        
+        $this->course = Course::find($id);
     }
 
     public function selectModule($id)
@@ -86,5 +86,15 @@ class CourseContents extends Component
     public function createQuestion($type)
     {
         $this->emit('createQuestion', $type);
+    }
+
+    public function updateModuleOrder($data)
+    {
+        foreach($data as $item)
+        {
+            $module = Module::find($item['value']);
+            $module->order = $item['order'];
+            $module->save();
+        }
     }
 }
