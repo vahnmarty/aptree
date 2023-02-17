@@ -103,64 +103,66 @@
                                 @foreach($selected_module->items as $card)
                                 <div wire:key="card-{{ $card->id  . '_' . time() }}"
                                     class="px-4 py-2 mb-4 border-2 border-gray-300 rounded-md shadow-sm">
-                                    <div class="grid items-center grid-cols-5 gap-4">
-                                        <div class="flex col-span-2">
-                                            <x-heroicon-s-menu class="w-6 h-6 mr-4 text-gray-600"/>
+                                    <div class="flex items-center justify-between gap-4">
+                                        <div class="flex col-span-3">
+                                            <div class="mr-4">
+                                                <div class="flex justify-start col-span-2">
+                                                    @if($card->type->value == \App\Enums\ModuleItemType::Content)
+                                                        @if($card->layout == \App\Enums\ContentLayout::LeftImageRightText)
+                                                        <div class="p-2 border rounded-md bg-emerald-50">
+                                                            <div class="flex">
+                                                                <x-heroicon-s-photograph class="w-7 h-7" />
+                                                                <x-heroicon-s-menu-alt-2 class="w-7 h-7" />
+                                                            </div>
+                                                        </div>
+                                                        @elseif($card->layout == \App\Enums\ContentLayout::LeftTextRightImage)
+                                                        <div class="p-2 border rounded-md bg-emerald-50">
+                                                            <div class="flex">
+                                                                <x-heroicon-s-menu-alt-2 class="w-7 h-7" />
+                                                                <x-heroicon-s-photograph class="w-7 h-7" />
+                                                            </div>
+                                                        </div>
+                                                        @elseif($card->layout == \App\Enums\ContentLayout::TextOnly)
+                                                        <div class="p-2 border rounded-md bg-emerald-50">
+                                                            <div class="flex">
+                                                                <x-heroicon-s-menu-alt-2 class="w-7 h-7" />
+                                                            </div>
+                                                        </div>
+                                                        @elseif($card->layout == \App\Enums\ContentLayout::ImageOnly)
+                                                        <div class="p-2 border rounded-md bg-emerald-50">
+                                                            <div class="flex">
+                                                                <x-heroicon-s-photograph class="w-7 h-7" />
+                                                            </div>
+                                                        </div>
+                                                        @endif
+                                                    @elseif($card->type->value == \App\Enums\ModuleItemType::Document)
+                                                    <div class="p-2 border rounded-md bg-emerald-50">
+                                                        <div class="flex">
+                                                            <x-heroicon-s-document-text class="w-7 h-7" />
+                                                        </div>
+                                                    </div>
+                                                    @elseif($card->type->value == \App\Enums\ModuleItemType::Video)
+                                                    <div class="p-2 border rounded-md bg-emerald-50">
+                                                        <div class="flex">
+                                                            <x-heroicon-s-video-camera class="w-7 h-7" />
+                                                        </div>
+                                                    </div>
+                                                @elseif($card->type->value == \App\Enums\ModuleItemType::Question)
+                                                    <div class="p-2 border rounded-md bg-emerald-50">
+                                                        <div class="flex">
+                                                            <x-heroicon-s-question-mark-circle class="w-7 h-7" />
+                                                        </div>
+                                                    </div>
+                                                    @endif
+                                                </div>
+                                            </div>
                                             <div>
                                                 <p class="text-orange-500">{{ $card->type->key }}</p>
                                                 <p>{{ $card->title }}</p>
                                             </div>
                                         </div>
-                                        <div class="flex justify-start col-span-2">
-                                            @if($card->type->value == \App\Enums\ModuleItemType::Content)
-                                                @if($card->layout == \App\Enums\ContentLayout::LeftImageRightText)
-                                                <div class="p-2 border rounded-md bg-emerald-50">
-                                                    <div class="flex">
-                                                        <x-heroicon-s-photograph class="w-7 h-7" />
-                                                        <x-heroicon-s-menu-alt-2 class="w-7 h-7" />
-                                                    </div>
-                                                </div>
-                                                @elseif($card->layout == \App\Enums\ContentLayout::LeftTextRightImage)
-                                                <div class="p-2 border rounded-md bg-emerald-50">
-                                                    <div class="flex">
-                                                        <x-heroicon-s-menu-alt-2 class="w-7 h-7" />
-                                                        <x-heroicon-s-photograph class="w-7 h-7" />
-                                                    </div>
-                                                </div>
-                                                @elseif($card->layout == \App\Enums\ContentLayout::TextOnly)
-                                                <div class="p-2 border rounded-md bg-emerald-50">
-                                                    <div class="flex">
-                                                        <x-heroicon-s-menu-alt-2 class="w-7 h-7" />
-                                                    </div>
-                                                </div>
-                                                @elseif($card->layout == \App\Enums\ContentLayout::ImageOnly)
-                                                <div class="p-2 border rounded-md bg-emerald-50">
-                                                    <div class="flex">
-                                                        <x-heroicon-s-photograph class="w-7 h-7" />
-                                                    </div>
-                                                </div>
-                                                @endif
-                                            @elseif($card->type->value == \App\Enums\ModuleItemType::Document)
-                                            <div class="p-2 border rounded-md bg-emerald-50">
-                                                <div class="flex">
-                                                    <x-heroicon-s-document-text class="w-7 h-7" />
-                                                </div>
-                                            </div>
-                                            @elseif($card->type->value == \App\Enums\ModuleItemType::Video)
-                                            <div class="p-2 border rounded-md bg-emerald-50">
-                                                <div class="flex">
-                                                    <x-heroicon-s-video-camera class="w-7 h-7" />
-                                                </div>
-                                            </div>
-                                        @elseif($card->type->value == \App\Enums\ModuleItemType::Question)
-                                            <div class="p-2 border rounded-md bg-emerald-50">
-                                                <div class="flex">
-                                                    <x-heroicon-s-question-mark-circle class="w-7 h-7" />
-                                                </div>
-                                            </div>
-                                            @endif
-                                        </div>
-                                        <div class="flex justify-end gap-2">
+                                       
+                                        <div class="flex gap-2">
                                             <a href="{{ route('courses.module-preview', $card->id) }}"
                                                 target="_blank">
                                                 <x-heroicon-o-eye class="w-6 h-6 text-gray-600"/>
