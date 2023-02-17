@@ -96,4 +96,9 @@ class CourseContents extends Component
     {
         Module::setNewOrder($data);
     }
+
+    public function reorderModuleItems($data)
+    {
+        ModuleItem::setNewOrder($data);
+    }
 }

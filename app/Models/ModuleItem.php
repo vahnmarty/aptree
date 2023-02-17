@@ -2,18 +2,26 @@
 
 namespace App\Models;
 
-use App\Enums\ModuleItemType;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Storage;
+use App\Enums\ModuleItemType;
+use Spatie\EloquentSortable\Sortable;
+use Illuminate\Database\Eloquent\Model;
+use Spatie\EloquentSortable\SortableTrait;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class ModuleItem extends Model
+class ModuleItem extends Model implements Sortable
 {
+    use SortableTrait;
     use HasFactory;
 
     protected $casts = [
         'type' => ModuleItemType::class,
         'video_response' => 'array'
+    ];
+
+    public $sortable = [
+        'order_column_name' => 'order',
+        'sort_when_creating' => true,
     ];
 
     protected $guarded = [];

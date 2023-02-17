@@ -109,10 +109,15 @@
                             <header class="p-4">
                                 <h2 class="font-bold text-emerald-900">{{ $selected_module->title }}</h2>
                             </header>
-                            <div class="p-4">
-                                @foreach($selected_module->items as $card)
-                                <div wire:key="card-{{ $card->id  . '_' . time() }}"
-                                    class="px-4 py-2 mb-4 border-2 border-gray-300 rounded-md shadow-sm">
+                            <div wire:sortable 
+                                 wire:end.stop="reorderModuleItems($event.target.sortable.toArray())"  
+                                class="p-4">
+                                @foreach($selected_module->items()->ordered()->get() as $card)
+                                <div 
+                                    wire:sortable.item="{{ $card->id }}"
+                                    wire:sortable.handle
+                                    wire:key="card-{{ $card->id  . '_' . time() }}"
+                                    class="px-4 py-2 mb-4 border-2 border-gray-300 rounded-md shadow-sm cursor-pointer">
                                     <div class="flex items-center justify-between gap-4">
                                         <div class="flex col-span-3">
                                             <div class="mr-4">
