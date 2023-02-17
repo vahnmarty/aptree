@@ -5,7 +5,9 @@ namespace App\Http\Livewire\Tenant\Courses;
 use Closure;
 use App\Models\Module;
 use Livewire\Component;
+use App\Models\Question;
 use App\Enums\ActionType;
+use App\Models\ModuleItem;
 use App\Enums\QuestionType;
 use App\Enums\ModuleItemType;
 use Filament\Forms\Components\Grid;
@@ -29,7 +31,9 @@ class QuestionEditor extends Component implements HasForms
 
     public $title, $type, $answers = [], $description, $explanation, $display_explanation;
 
-    protected $listeners = [ 'createQuestion' => 'create' ];
+    public $module_item_id, $question_id;
+
+    protected $listeners = [ 'createQuestion' => 'create' , 'editQuestion' => 'edit'];
     
     public function render()
     {
@@ -39,13 +43,39 @@ class QuestionEditor extends Component implements HasForms
     public function mount($moduleId)
     {
         $this->module_id = $moduleId;
-        $this->answers = $this->getDefaultAnswers();
+
+        if($this->action == ActionType::Create){
+            $this->answers = $this->getDefaultAnswers();
+        }
+        
     }
 
     public function create($type)
     {
         $this->action = ActionType::Create;
         $this->type = $type;
+        $this->dispatchBrowserEvent('openmodal-question');
+    }
+
+    public function edit($id)
+    {
+        $this->action = ActionType::Update;
+        $this->module_item_id = $id;
+        $moduleItem = ModuleItem::find($id);
+        $question = $moduleItem->question;
+        $this->question_id = $question->id;
+
+
+        $this->form->fill([
+            'title' => $question->title,
+            'description' => $question->description,
+            'explanation' => $question->explanation,
+            'display_explanation' => $question->display_explanation,
+            'answers' => $question->getAnswerArray()
+        ]);
+
+        dd($this->form->getState()['answers']);
+
         $this->dispatchBrowserEvent('openmodal-question');
     }
 
@@ -99,10 +129,8 @@ class QuestionEditor extends Component implements HasForms
         return [ 'Correct Answer 1' => true, 'Wrong Answer 1' => false, 'Wrong Answer 2' => false];
     }
 
-    public function submit()
+    public function store()
     {
-        $this->validate();
-
         $data = $this->form->getState();
 
         $module = Module::find($this->module_id);
@@ -129,6 +157,53 @@ class QuestionEditor extends Component implements HasForms
         }
 
         return redirect(request()->header('Referer'));
+    }
+
+    public function update()
+    {
+        $data = $this->form->getState();
+
+        $module_item = ModuleItem::find($this->module_item_id);
+        $question = Question::find($this->question_id);
+
+        $module_item->update([
+            'title' => $data['title'],
+        ]);
+
+        $question->update([
+            'title' => $data['title'],
+            'description' => $data['description'],
+            'explanation' => $data['explanation'],
+            'display_explanation' => $data['display_explanation'],
+        ]);
+
+        $question->answers()->delete();
+
+        foreach($this->answers as $answerText => $answerValue)
+        {
+            $question->answers()->create([
+                'answer' => $answerText,
+                'is_correct' => $answerValue ? true : false
+            ]);
+        }
+
+        return redirect(request()->header('Referer'));
+    }
+
+    public function submit()
+    {
+        $this->validate();
+
+        
+
+        if($this->action == ActionType::Update)
+        {
+            return $this->update();
+        }else{
+            return $this->store();
+        }
+
+        
         
     }
     

@@ -62,6 +62,10 @@ class CourseContents extends Component
         if($module->type->value == ModuleItemType::Document){
             $this->emit('editDocument', $module_item_id);
         }
+
+        if($module->type->value == ModuleItemType::Question){
+            $this->emit('editQuestion', $module_item_id);
+        }
     }
 
     public function deleteCard($module_item_id)
@@ -90,6 +94,7 @@ class CourseContents extends Component
 
     public function updateModuleOrder($data)
     {
+        dd($data);
         foreach($data as $item)
         {
             $module = Module::find($item['value']);

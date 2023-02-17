@@ -53,10 +53,11 @@
                         </header>
                         <div x-data="{ module_id: @entangle('module_id') }" class="px-4 py-4">
                             @if(count($modules))
-                            <div wire:sortable="updateModuleOrder" class="space-y-2">
+                            <div wire:sortable class="space-y-2">
                                 @foreach($modules as $module)
                                 <div
                                     wire:sortable.item="{{ $module->id }}"
+                                    wire:sortable.handle
                                     wire:key="module-{{ $module->id  . '_' . time() }}"
                                     wire:click="selectModule({{ $module->id }})"
                                     :class="module_id == {{ $module->id }} ? 'border-2 border-orange-400 bg-orange-50' : ''"

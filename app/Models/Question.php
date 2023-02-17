@@ -15,4 +15,15 @@ class Question extends Model
     {
         return $this->hasMany(Answer::class);
     }
+
+    public function getAnswerArray()
+    {
+        $array = [];
+        foreach($this->answers as $answer)
+        {
+            $array[$answer->answer] = $answer->is_correct;
+        }
+
+        return $array;
+    }
 }
