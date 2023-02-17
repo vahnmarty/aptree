@@ -67,7 +67,6 @@ class QuestionEditor extends Component implements HasForms
                     ->schema([
                         DynamicOption::make('answers')
                         ->keyLabel('Option')
-                        ->reactive()
                         ->valueLabel('Is Correct')
                         ->columnSpan('full')
                         ->addButtonLabel('Add Answer')
@@ -97,7 +96,7 @@ class QuestionEditor extends Component implements HasForms
 
     public function getDefaultAnswers()
     {
-        return [ 'Answer 1' => true, 'Answer 2' => false, 'Answer 3' => false];
+        return [ 'Correct Answer 1' => true, 'Wrong Answer 1' => false, 'Wrong Answer 2' => false];
     }
 
     public function submit()
@@ -125,7 +124,7 @@ class QuestionEditor extends Component implements HasForms
         {
             $question->answers()->create([
                 'answer' => $answerText,
-                'is_correct' => $answerValue
+                'is_correct' => $answerValue ? true : false
             ]);
         }
 

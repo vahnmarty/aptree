@@ -58,7 +58,7 @@
                         <div>
                             <h2 class="font-bold text-gray-900">{{ $module->question->title }}</h2>
                             <div class="mt-8 space-y-4">
-                                @foreach ($module->question->answers as $option)
+                                @foreach ($answers as $option)
                                 <div> 
                                     @if ($selected_answer)
                                     <div class="space-y-4">
