@@ -53,7 +53,9 @@
                         </header>
                         <div x-data="{ module_id: @entangle('module_id') }" class="px-4 py-4">
                             @if(count($modules))
-                            <div wire:sortable class="space-y-2">
+                            <div wire:sortable 
+                                wire:end.stop="reorderTable($event.target.sortable.toArray())" 
+                                class="space-y-2">
                                 @foreach($modules as $module)
                                 <div
                                     wire:sortable.item="{{ $module->id }}"

@@ -92,14 +92,8 @@ class CourseContents extends Component
         $this->emit('createQuestion', $type);
     }
 
-    public function updateModuleOrder($data)
+    public function reorderTable($data)
     {
-        dd($data);
-        foreach($data as $item)
-        {
-            $module = Module::find($item['value']);
-            $module->order = $item['order'];
-            $module->save();
-        }
+        Module::setNewOrder($data);
     }
 }
