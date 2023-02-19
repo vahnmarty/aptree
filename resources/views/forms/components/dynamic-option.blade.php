@@ -94,12 +94,15 @@
                             <td class="text-center whitespace-nowrap">
                                 <input
                                     type="checkbox"
-                                    ref="checkbox"
+                                    x-ref="checkboxes"
                                     x-model="row.value"
                                     x-on:change="
                                         if(row.value){ 
-                                            // TODO
-                                            console.log('Checked');
+                                            rows.forEach((row) => {
+                                                row.value = false;
+                                            });
+
+                                            rows[index]['value'] = true;
                                         } else{
                                           
                                         }
