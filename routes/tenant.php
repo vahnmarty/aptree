@@ -6,6 +6,7 @@ use Wave\Facades\Wave;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Tenant\Courses\ShowCourse;
+use App\Http\Livewire\Tenant\Courses\CoursePlayer;
 use App\Http\Livewire\Tenant\Courses\CreateCourse;
 use App\Http\Livewire\Tenant\Courses\ManageCourses;
 use App\Http\Livewire\Tenant\Courses\CourseContents;
@@ -36,6 +37,7 @@ Route::middleware([
         Route::get('/create', CreateCourse::class)->name('courses.create');
         Route::get('/{id}', ShowCourse::class)->name('courses.show');
         Route::get('/{id}/contents', CourseContents::class)->name('courses.contents');
+        Route::get('/{id}/play', CoursePlayer::class)->name('courses.play');
         Route::get('/module-preview/{id}', ModuleItemPreview::class)->name('courses.module-preview');
     });
 

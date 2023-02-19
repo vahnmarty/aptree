@@ -122,6 +122,11 @@
                                 </button>
                             </x-slot>
                             <div>
+                                <a href="{{ route('courses.show', $course->id) }}" class="flex items-center px-4 py-2 text-sm text-gray-700 group" role="menuitem"
+                                    tabindex="-1" id="menu-item-0">
+                                    <x-heroicon-s-play  class="w-5 h-5 mr-3 text-gray-400 group-hover:text-gray-500"/>
+                                    Play
+                                </a>
                                 <a href="{{ route('courses.contents', $course->id) }}" class="flex items-center px-4 py-2 text-sm text-gray-700 group" role="menuitem"
                                     tabindex="-1" id="menu-item-0">
                                     <!-- Heroicon name: mini/pencil-square -->
