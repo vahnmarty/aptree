@@ -99,7 +99,7 @@ class ContentEditor extends Component implements HasForms
             return Fieldset::make('image')
                 ->label('Image Only')
                 ->schema([
-                    $this->getFieldFileUpload()
+                    $this->getFieldFileUpload()->columnSpan('full')
                     ->required(function(){
                         return $this->action == ActionType::Update ? false : true;
                     })
@@ -116,7 +116,6 @@ class ContentEditor extends Component implements HasForms
                 ->disk('do')
                 ->directory('modules')
                 ->visibility('public')
-                ->columnSpan('full')
                 ->imagePreviewHeight('100')
                 ->loadingIndicatorPosition('left')
                 ->panelAspectRatio('4:1')

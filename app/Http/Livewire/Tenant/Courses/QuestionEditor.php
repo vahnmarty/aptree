@@ -65,7 +65,6 @@ class QuestionEditor extends Component implements HasForms
         $question = $moduleItem->question;
         $this->question_id = $question->id;
 
-
         $this->form->fill([
             'title' => $question->title,
             'description' => $question->description,
@@ -74,7 +73,7 @@ class QuestionEditor extends Component implements HasForms
             'answers' => $question->getAnswerArray()
         ]);
 
-        dd($this->form->getState()['answers']);
+        //dd($question->getAnswerArray(), $this->form->getState());
 
         $this->dispatchBrowserEvent('openmodal-question');
     }
@@ -132,6 +131,7 @@ class QuestionEditor extends Component implements HasForms
     public function store()
     {
         $data = $this->form->getState();
+        
 
         $module = Module::find($this->module_id);
 
@@ -194,6 +194,7 @@ class QuestionEditor extends Component implements HasForms
     {
         $this->validate();
 
+        $form = $this->form->getState();
         
 
         if($this->action == ActionType::Update)

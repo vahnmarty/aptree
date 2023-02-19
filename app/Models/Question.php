@@ -21,7 +21,7 @@ class Question extends Model
         $array = [];
         foreach($this->answers as $answer)
         {
-            $array[$answer->answer] = $answer->is_correct;
+            $array[$answer->answer] = $answer->is_correct ? true : false;
         }
 
         return $array;

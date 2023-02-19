@@ -94,7 +94,16 @@
                             <td class="text-center whitespace-nowrap">
                                 <input
                                     type="checkbox"
+                                    ref="checkbox"
                                     x-model="row.value"
+                                    x-on:change="
+                                        if(row.value){ 
+                                            // TODO
+                                            console.log('Checked');
+                                        } else{
+                                          
+                                        }
+                                    "
                                     x-on:input.debounce.{{ $getDebounce() ?? '500ms' }}="updateState"
                                     {!! ($placeholder = $getValuePlaceholder()) ? "placeholder=\"{$placeholder}\"" : '' !!}
                                     @if ((! $canEditValues()) || $isDisabled())

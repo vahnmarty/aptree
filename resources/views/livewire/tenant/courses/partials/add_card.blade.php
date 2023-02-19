@@ -106,7 +106,8 @@
                             <span>Add Video</span>
                         </button>
                         <button type="button"
-                            class="p-2 text-sm bg-white border rounded-md hover:bg-emerald-50">
+                            disabled
+                            class="p-2 text-sm bg-white border rounded-md opacity-50 cursor-not-allowed hover:bg-emerald-50">
                             <span>Record a Video</span>
                         </button>
                     </div>
