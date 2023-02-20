@@ -2,11 +2,9 @@
 <html lang="{{ app()->getLocale() }}">
 <head>
 
-    @if(isset($seo->title))
-        <title>{{ $seo->title }}</title>
-    @else
-        <title>{{ setting('site.title', 'Laravel Wave') . ' - ' . setting('site.description', 'The Software as a Service Starter Kit built on Laravel & Voyager') }}</title>
-    @endif
+    
+    <title>{{ setting('site.title', 'Aptree') . ' - Course Slider' }}</title>
+    
 
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge"> <!-- † -->

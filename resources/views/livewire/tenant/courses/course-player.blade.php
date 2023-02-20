@@ -1,4 +1,10 @@
 <div class="min-h-screen py-4 bg-gray-100 h-100">
+
+    <button type="button" 
+        class="fixed z-50 p-2 text-gray-900 duration-300 ease-in-out bg-gray-300 rounded-full top-3 right-10 hover:bg-red-500 hover:text-white">
+        <x-heroicon-s-x class="w-4 h-4 "/>
+    </button>
+
     <div class="px-8 pb-32 mx-auto max-w-7xl">
         <section class="flex mt-8 divide-x-2 lg:mt-10 justify-evenly">
             <div class="w-full h-2 bg-orange-400 rounded-l-md "></div>
@@ -48,7 +54,7 @@
         </div>
         @else
             @if($start)
-            <div class="mt-24">
+            <div class="mt-16">
                 <div>
                     @if ($content->type->value == \App\Enums\ModuleItemType::Content)
                         <section class="max-w-4xl px-4 mx-auto">
@@ -199,7 +205,7 @@
     </div>
     <footer class="fixed bottom-0 left-0 right-0 z-20 py-6 bg-white border-t">
         @if($start)
-        <div class="max-w-4xl mx-auto">
+        <div class="max-w-4xl px-6 mx-auto">
             @if($content->type->value == \App\Enums\ModuleItemType::Question )
             <div class="flex items-center justify-between">
                 <h3 class="font-bold text-emerald-900">Question</h3>
@@ -219,7 +225,7 @@
             @endif
         </div>
         @else
-        <div class="max-w-4xl mx-auto">
+        <div class="max-w-4xl px-6 mx-auto">
             <div class="flex items-center justify-between">
                 <h3 class="font-bold text-emerald-900">Course Overview</h3>
                 <div>

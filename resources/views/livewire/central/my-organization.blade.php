@@ -52,7 +52,7 @@
                                         {{ $tenant->plan->name }}
                                     </span>
                                     <h3 class="text-lg font-medium text-aptree-600">
-                                        <a href="https://aptree.dev/dashboard/teams/manchester-united">
+                                        <a href="#">
                                             {{ $tenant->name }}
                                         </a>
                                     </h3>
