@@ -28,7 +28,7 @@ class VideoEditor extends Component  implements HasForms
 
     public $title, $description, $video;
 
-    public $api_video, $ready_for_upload = false, $video_thumbnail, $new_upload;
+    public $api_video, $ready_for_upload = false, $video_thumbnail, $video_url,  $new_upload;
 
     protected $listeners = ['editVideo' => 'edit'];
 
@@ -135,6 +135,7 @@ class VideoEditor extends Component  implements HasForms
         ]);
 
         $this->video_thumbnail = $data->video_thumbnail;
+        $this->video_url = $data->video_player;
 
         $this->dispatchBrowserEvent('openmodal-video');
     }
