@@ -66,6 +66,10 @@ class CourseContents extends Component
         if($module->type->value == ModuleItemType::Question){
             $this->emit('editQuestion', $module_item_id);
         }
+
+        if($module->type->value == ModuleItemType::Video){
+            $this->emit('editVideo', $module_item_id);
+        }
     }
 
     public function deleteCard($module_item_id)

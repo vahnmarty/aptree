@@ -6,6 +6,8 @@ use SplFileObject;
 use App\Models\Module;
 use GuzzleHttp\Client;
 use Livewire\Component;
+use App\Enums\ActionType;
+use App\Models\ModuleItem;
 use App\Enums\ModuleItemType;
 use Livewire\WithFileUploads;
 use Filament\Forms\Contracts\HasForms;
@@ -26,7 +28,9 @@ class VideoEditor extends Component  implements HasForms
 
     public $title, $description, $video;
 
-    public $api_video, $ready_for_upload = false;
+    public $api_video, $ready_for_upload = false, $video_thumbnail, $new_upload;
+
+    protected $listeners = ['editVideo' => 'edit'];
 
     public function render()
     {
@@ -43,6 +47,8 @@ class VideoEditor extends Component  implements HasForms
         if($data){
             $this->api_video = $data;
             $this->ready_for_upload = true;
+            $this->new_upload = true;
+            $this->video_thumbnail = $data['assets']['thumbnail'];
         }
     }
 
@@ -50,7 +56,7 @@ class VideoEditor extends Component  implements HasForms
     {
         return [
             TextInput::make('title')->required(),
-            Textarea::make('description')->required()
+            Textarea::make('description')
         ];
     }
 
@@ -58,6 +64,15 @@ class VideoEditor extends Component  implements HasForms
     {
         $data = $this->form->getState();
 
+        return $this->action == ActionType::Update
+                ? $this->update()
+                : $this->store();
+        
+    }
+
+    public function store()
+    {
+        $data = $this->form->getState();
         $module = Module::find($this->module_id);
         $api_video = $this->api_video;
         $module->items()->create([
@@ -76,41 +91,51 @@ class VideoEditor extends Component  implements HasForms
         return redirect(request()->header('Referer'));
     }
 
-    public function fromSdk()
+    public function update()
     {
-        $httpClient = new Psr18Client();
-        $apiKey = config('services.apivideo.key');
-        $url = 'https://sandbox.api.video';
-        $client = new ApiClient(
-            $url,
-            $apiKey,
-            $httpClient
-        );
+        $data = $this->form->getState();
+        $module_item = ModuleItem::find($this->module_item_id);
 
-        $file = request()->file('video');
-        $fileName = request()->title;
-        $payload = (new VideoCreationPayload())->setTitle($fileName);
-        $payload = $payload->setTitle('Hello');
-        if (isset(request()->description))
-        {
-            $payload->setDescription(request()->description);
-        }
-        if(isset(request()->public))
-        {
-            $payload->setPublic(False);
-        }
-        if(isset(request()->mp4support))
-        {
-            $payload->setMp4support(False);
-        }
-        $video = $client->videos()->create($payload);
-        $filePath = request()->file('video')->getRealPath();
+        $module_item->update([
+            'title' => $data['title'],
+            'content' => $data['description'],
+        ]);
 
-        $response = $client->videos()->upload(
-            $video->getVideoId(),
-            new SplFileObject($filePath)
-        );
+        if($this->api_video)
+        {
+            $api_video = $this->api_video;
 
-        return redirect('/response');
+            $module_item->update([
+                'video_response' => $api_video,
+                'video_id' => $api_video['videoId'],
+                'video_format' => $api_video['mp4Support'] ? 'mp4' : '',
+                'video_embed_url' => $api_video['assets']['player'] ?? '',
+                'video_source' => 'apivideo',
+                'video_player' => $api_video['assets']['player'] ?? '',
+                'video_thumbnail' => $api_video['assets']['thumbnail'] ?? '',
+            ]);
+        }
+
+
+        return redirect(request()->header('Referer'));
+    }
+
+    public function edit($module_item_id)
+    {
+        $this->module_item_id = $module_item_id;
+
+        $data = ModuleItem::find($module_item_id);
+
+        $this->action = ActionType::Update;
+
+        $this->form->fill([
+            'title' => $data->title,
+            'type' => $data->type->value,
+            'content' => $data->content,
+        ]);
+
+        $this->video_thumbnail = $data->video_thumbnail;
+
+        $this->dispatchBrowserEvent('openmodal-video');
     }
 }
