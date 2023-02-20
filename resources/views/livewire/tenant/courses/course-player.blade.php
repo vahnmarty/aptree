@@ -1,6 +1,7 @@
 <div class="min-h-screen py-4 bg-gray-100 h-100">
 
     <button type="button" 
+        wire:click="exit"
         class="fixed z-50 p-2 text-gray-900 duration-300 ease-in-out bg-gray-300 rounded-full top-3 right-10 hover:bg-red-500 hover:text-white">
         <x-heroicon-s-x class="w-4 h-4 "/>
     </button>

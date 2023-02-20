@@ -8,9 +8,12 @@ use App\Models\Course;
 use App\Models\Module;
 use Livewire\Component;
 use App\Models\ModuleItem;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class CoursePlayer extends Component
 {
+    use LivewireAlert;
+    
     public $course;
     public $module, $module_id;
     public $contents = [], $content_index = 0, $content;
@@ -18,6 +21,8 @@ class CoursePlayer extends Component
     public $selected_answer, $is_correct;
 
     protected $queryString = ['module_id'];
+
+    protected $listeners = ['confirmedExit'];
 
     public function render()
     {
@@ -104,5 +109,21 @@ class CoursePlayer extends Component
     public function setContent($content_id)
     {
         $this->content = ModuleItem::find($content_id);
+    }
+
+    public function exit()
+    {
+        $this->confirm("Are you sure you want to exit from this lesson?", [
+            'text' => 'This will redirect you the course page.',
+            'position' => 'center',
+            'showConfirmButton' => true,
+            'confirmButtonText' => 'Yes',
+            'onConfirmed' => 'confirmedExit' 
+        ]);
+    }
+
+    public function confirmedExit()
+    {
+        return redirect()->route('courses.show', $this->course->id);
     }
 }

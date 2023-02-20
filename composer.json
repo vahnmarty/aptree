@@ -21,6 +21,7 @@
         "filament/spatie-laravel-media-library-plugin": "^2.0",
         "guzzlehttp/guzzle": "^7.2",
         "intervention/image": "^2.7",
+        "jantinnerezo/livewire-alert": "^2.2",
         "lab404/laravel-impersonate": "^1.7",
         "laravel/framework": "^9.11",
         "laravel/tinker": "^2.7",
