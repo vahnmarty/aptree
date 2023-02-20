@@ -48,4 +48,14 @@ class User extends Authenticatable
     {
         return $this->username ?? $this->email;
     }
+
+    public function moduleActivity()
+    {
+        return $this->belongsToMany(ModuleItem::class, 'user_module_activity')->withPivot('completed_at');
+    }
+
+    public function quizAnswers()
+    {
+        return $this->belongsToMany(Answer::class, 'user_quiz_answers')->withPivot('is_correct', 'completed_at');
+    }
 }
