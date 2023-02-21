@@ -190,6 +190,8 @@ class ContentEditor extends Component implements HasForms
 
     public function editContent($module_item_id)
     {
+        $this->resetExcept(['module_id', 'module', 'type']);
+
         $this->module_item_id = $module_item_id;
 
         $data = ModuleItem::find($module_item_id);
