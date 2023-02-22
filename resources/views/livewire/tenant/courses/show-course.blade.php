@@ -21,10 +21,14 @@
                     </div>
                 </div>
                 <div class="flex flex-col items-center self-center justify-center">
-                    <a href="{{ route('courses.play', $course->id) }}" class="duration-300 ease-in-out scale-90 hover:scale-100">
+                    <button type="button" wire:click="start" class="duration-300 ease-in-out scale-90 hover:scale-100">
                         <x-heroicon-s-play class="w-32 h-32 text-emerald-800"/>
-                    </a>
+                    </button>
+                    @if($is_enrolled)
+                    <p class="mt-4">Continue</p>
+                    @else
                     <p class="mt-4">Start learning</p>
+                    @endif
                 </div>
             </div>
 

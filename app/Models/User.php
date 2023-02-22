@@ -58,4 +58,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Answer::class, 'user_quiz_answers')->withPivot('is_correct', 'completed_at');
     }
+
+    public function courses()
+    {
+        return $this->belongsToMany(Course::class, 'user_courses')->withTimestamps()->withPivot('started_at', 'completed_at');
+    }
 }
