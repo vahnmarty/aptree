@@ -2,7 +2,7 @@
     <header class="flex justify-between px-8 py-6">
         <h1 class="text-4xl font-bold leading-7 text-emerald-900 sm:leading-9">Teams</h1>
         <div>
-            <button type="button" class="btn-primary">
+            <button x-data x-on:click="$wire.emit('createTeam')" type="button" class="btn-primary">
                 <x-heroicon-o-plus class="w-4 h-4 mr-3 "/>
                 <span>Create Team</span>
             </button>
@@ -11,6 +11,20 @@
 @endsection
 
 <div>
+    
+    <x-modal>
+        <x-slot name="title">Team Editor</x-slot>
+        <div>
+            <form  wire:submit.prevent="submit">
+                {{ $this->form}}
+
+                <div class="mt-8">
+                    <button type="submit" class="btn-primary">Submit</button>
+                </div>
+            </form>
+        </div>
+    </x-modal>
+    
     <div class="px-8 py-12 bg-gray-100">
         <section>
 

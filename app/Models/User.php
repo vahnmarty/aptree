@@ -63,4 +63,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Course::class, 'user_courses')->withTimestamps()->withPivot('completed_at');
     }
+
+    public function teams()
+    {
+        return $this->belongsToMany(Team::class, 'team_user')->withTimestamps();
+    }
 }
