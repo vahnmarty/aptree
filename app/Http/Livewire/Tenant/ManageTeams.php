@@ -11,7 +11,9 @@ use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Components\Textarea;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Contracts\HasTable;
+use Filament\Forms\Components\TagsInput;
 use Filament\Forms\Components\TextInput;
+use Filament\Tables\Actions\ActionGroup;
 use Filament\Tables\Actions\CreateAction;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Filament\Forms\Concerns\InteractsWithForms;
@@ -60,6 +62,23 @@ class ManageTeams extends Component implements HasForms, HasTable
     //         'xl' => 3,
     //     ];
     // }
+
+    protected function getTableActions(): array
+    {
+        return [
+            ActionGroup::make([
+                Action::make('view_invitations')
+                    ->url( fn($record) => route('teams.invitations', $record->id) ),
+                Action::make('invite_users')
+                    ->form([
+                        TagsInput::make('email')->placeholder('Input a valid email address')
+                    ])
+                    ->action(function(){
+
+                    })
+            ])
+        ];
+    }
 
     protected function getTableHeaderActions() : array
     {

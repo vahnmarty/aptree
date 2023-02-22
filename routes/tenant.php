@@ -12,6 +12,7 @@ use App\Http\Livewire\Tenant\ManageTeams;
 use App\Http\Livewire\Tenant\TenantUsers;
 use App\Http\Livewire\Tenant\UserProfile;
 use App\Http\Livewire\Tenant\ManageBilling;
+use App\Http\Livewire\Tenant\TeamInvitations;
 use App\Http\Livewire\Tenant\TemplateLibrary;
 use App\Http\Livewire\Tenant\Courses\EditCourse;
 use App\Http\Livewire\Tenant\Courses\ShowCourse;
@@ -55,6 +56,7 @@ Route::middleware([
 
         Route::get('template-library', TemplateLibrary::class)->name('template.library');
         Route::get('teams', ManageTeams::class)->name('teams.index');
+        Route::get('teams/{id}/invitations', TeamInvitations::class)->name('teams.invitations');
         Route::get('profile', UserProfile::class)->name('profile.index');
         Route::get('settings', TenantSettings::class)->name('settings');
         Route::get('users', TenantUsers::class)->name('users.index');
