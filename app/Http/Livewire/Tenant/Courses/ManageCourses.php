@@ -20,6 +20,6 @@ class ManageCourses extends Component
 
     public function mount()
     {
-        $this->courses = Course::get();
+        $this->courses = Course::latest()->get();
     }
 }

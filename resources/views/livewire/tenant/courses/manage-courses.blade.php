@@ -99,7 +99,11 @@
                 @foreach($courses as $course)
                 <div class="p-4 bg-white border rounded-md shadow-md">
                     <div>
+                        @if($course->icon == 'lightning')
+                        <x-icons.icon-lightning class="w-10 h-10 text-gray-600"/>
+                        @else
                         <x-heroicon-s-academic-cap class="w-10 h-10 text-gray-600"/>
+                        @endif
                     </div>
                     <p class="mt-1 text-orange-600">Course</p>
                     <h3 class="mt-2 text-lg font-bold">{{ $course->title }}</h3>
