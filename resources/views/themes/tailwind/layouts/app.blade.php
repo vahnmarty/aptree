@@ -74,6 +74,7 @@
 
             <div class="bg-white">
                 @yield('header')
+                {{ $header ?? '' }}
             </div>
 
             <main class="flex-grow">
