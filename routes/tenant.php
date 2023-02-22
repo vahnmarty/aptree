@@ -20,6 +20,7 @@ use App\Http\Livewire\Tenant\Courses\CoursePlayer;
 use App\Http\Livewire\Tenant\Courses\CreateCourse;
 use App\Http\Livewire\Tenant\Courses\ManageCourses;
 use App\Http\Livewire\Tenant\Courses\CourseContents;
+use App\Http\Controllers\Tenant\InvitationController;
 use App\Http\Livewire\Tenant\Courses\ModuleItemPreview;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
@@ -64,6 +65,8 @@ Route::middleware([
         Route::get('invitations', Invitations::class)->name('invitations.index');
         Route::get('support', SupportPage::class)->name('support');
     });
+
+    Route::get('invitation/{token}', [InvitationController::class, 'accept']);
 
 
     /*

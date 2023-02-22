@@ -7,6 +7,7 @@ use App\Models\Team;
 use App\Models\User;
 use Livewire\Component;
 use App\Models\Invitation;
+use App\Events\InvitationCreated;
 use Filament\Tables\Actions\Action;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Contracts\HasTable;
@@ -51,12 +52,14 @@ class TeamInvitations extends Component implements HasTable
 
                     if(!$this->hasInvitation($email))
                     {
-                        Invitation::create([
+                        $invitation = Invitation::create([
                             'team_id' => $this->team->id,
                             'email' => $email,
                             'token' => Str::random(40)
                         ]);
 
+                        InvitationCreated::dispatch($invitation);
+                        
                         $this->alert('success', 'Successfully invited ' . $email);
                     }else{
                         
@@ -73,6 +76,19 @@ class TeamInvitations extends Component implements HasTable
             TextColumn::make('email')->searchable(),
             BadgeColumn::make('accepted_at'),
             TextColumn::make('created_at')->label('Invitation sent')->dateTime(),
+        ];
+    }
+
+    protected function getTableActions()
+    {
+        return [
+            Action::make('resend')
+                ->hidden(fn(Invitation $record) : bool => $record->accepted_at ? true : false  )
+                ->action(function(Invitation $record){
+                    event(new InvitationCreated($record));
+                    $this->alert('success', 'Invitation resent to ' . $record->email);
+                })
+                ->button()
         ];
     }
 
