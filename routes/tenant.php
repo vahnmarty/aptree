@@ -5,6 +5,7 @@ declare(strict_types=1);
 use Wave\Facades\Wave;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Livewire\Tenant\TemplateLibrary;
 use App\Http\Livewire\Tenant\Courses\EditCourse;
 use App\Http\Livewire\Tenant\Courses\ShowCourse;
 use App\Http\Livewire\Tenant\Courses\CoursePlayer;
@@ -41,6 +42,11 @@ Route::middleware([
         Route::get('/{id}/contents', CourseContents::class)->name('courses.contents');
         Route::get('/{id}/play', CoursePlayer::class)->name('courses.play');
         Route::get('/module-preview/{id}', ModuleItemPreview::class)->name('courses.module-preview');
+    });
+
+    Route::group(['middleware' => ['auth']], function(){
+
+        Route::get('template-library', TemplateLibrary::class)->name('template.library');
     });
 
 

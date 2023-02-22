@@ -36,8 +36,8 @@
                 <span x-show="$store.sidebarExpanded.on">Course Builder</span>
             </a>
 
-            <a href="{{ url('dashboard.template-library') }}"
-                class="{{ request()->routeIs('dashboard.template-library*') ? 'border-l-4 border-orange-400 bg-gray-100 text-black' : 'text-gray-500 hover:bg-gray-100' }} group flex items-center px-2 py-2 text-sm leading-6 font-medium">
+            <a href="{{ route('template.library') }}"
+                class="{{ request()->routeIs('template-library*') ? 'border-l-4 border-orange-400 bg-gray-100 text-black' : 'text-gray-500 hover:bg-gray-100' }} group flex items-center px-2 py-2 text-sm leading-6 font-medium">
                 <svg class="flex-shrink-0 w-6 h-6 ml-1 mr-4 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
                     <path d="M11.644 1.59a.75.75 0 01.712 0l9.75 5.25a.75.75 0 010 1.32l-9.75 5.25a.75.75 0 01-.712 0l-9.75-5.25a.75.75 0 010-1.32l9.75-5.25z" />
                     <path d="M3.265 10.602l7.668 4.129a2.25 2.25 0 002.134 0l7.668-4.13 1.37.739a.75.75 0 010 1.32l-9.75 5.25a.75.75 0 01-.71 0l-9.75-5.25a.75.75 0 010-1.32l1.37-.738z" />
