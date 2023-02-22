@@ -3,10 +3,15 @@
 declare(strict_types=1);
 
 use Wave\Facades\Wave;
+use App\Http\Livewire\SupportPage;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Livewire\TenantSettings;
 use Illuminate\Support\Facades\Route;
+use App\Http\Livewire\Tenant\Invitations;
 use App\Http\Livewire\Tenant\ManageTeams;
+use App\Http\Livewire\Tenant\TenantUsers;
 use App\Http\Livewire\Tenant\UserProfile;
+use App\Http\Livewire\Tenant\ManageBilling;
 use App\Http\Livewire\Tenant\TemplateLibrary;
 use App\Http\Livewire\Tenant\Courses\EditCourse;
 use App\Http\Livewire\Tenant\Courses\ShowCourse;
@@ -51,6 +56,11 @@ Route::middleware([
         Route::get('template-library', TemplateLibrary::class)->name('template.library');
         Route::get('teams', ManageTeams::class)->name('teams.index');
         Route::get('profile', UserProfile::class)->name('profile.index');
+        Route::get('settings', TenantSettings::class)->name('settings');
+        Route::get('users', TenantUsers::class)->name('users.index');
+        Route::get('billing', ManageBilling::class)->name('billing.index');
+        Route::get('invitations', Invitations::class)->name('invitations.index');
+        Route::get('support', SupportPage::class)->name('support');
     });
 
 

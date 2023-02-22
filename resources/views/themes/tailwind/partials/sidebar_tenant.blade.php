@@ -74,7 +74,7 @@
           <div  class="flex flex-shrink-0 pt-6 pb-5 mt-6">
             <div class="flex-shrink-0 w-full px-2 space-y-1">
 
-              <a href="{{ url('dashboard.administer.billing') }}"
+              <a href="{{ route('settings') }}"
                 class="flex items-center px-2 py-2 text-sm font-medium leading-6 text-gray-500 rounded-md group hover:bg-gray-100">
 
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="flex-shrink-0 w-6 h-6 ml-1 mr-4">
@@ -84,7 +84,18 @@
                 
                 <span x-show="$store.sidebarExpanded.on">Settings </span>
               </a>
-              <a href="{{ url('dashboard.administer.billing') }}"
+
+              <a href="{{ route('users.index') }}"
+                class="flex items-center px-2 py-2 text-sm font-medium leading-6 text-gray-500 rounded-md group hover:bg-gray-100">
+                
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="flex-shrink-0 w-6 h-6 ml-1 mr-4">
+                  <path d="M4.5 6.375a4.125 4.125 0 118.25 0 4.125 4.125 0 01-8.25 0zM14.25 8.625a3.375 3.375 0 116.75 0 3.375 3.375 0 01-6.75 0zM1.5 19.125a7.125 7.125 0 0114.25 0v.003l-.001.119a.75.75 0 01-.363.63 13.067 13.067 0 01-6.761 1.873c-2.472 0-4.786-.684-6.76-1.873a.75.75 0 01-.364-.63l-.001-.122zM17.25 19.128l-.001.144a2.25 2.25 0 01-.233.96 10.088 10.088 0 005.06-1.01.75.75 0 00.42-.643 4.875 4.875 0 00-6.957-4.611 8.586 8.586 0 011.71 5.157v.003z" />
+                </svg>
+                
+                <span x-show="$store.sidebarExpanded.on">Users </span>
+              </a>
+
+              <a href="{{ route('billing.index') }}"
                 class="flex items-center px-2 py-2 text-sm font-medium leading-6 text-gray-500 rounded-md group hover:bg-gray-100">
                 <svg class="flex-shrink-0 w-6 h-6 ml-1 mr-4 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M4.5 3.75a3 3 0 00-3 3v.75h21v-.75a3 3 0 00-3-3h-15z" />
@@ -94,15 +105,17 @@
                 <span x-show="$store.sidebarExpanded.on">Billing </span>
               </a>
 
-              <a href="{{ url('dashboard.administer.invitations') }}"
+              <a href="{{ route('invitations.index') }}"
                 class="flex items-center px-2 py-2 text-sm font-medium leading-6 text-gray-500 rounded-md group hover:bg-gray-100">
                 <svg class="flex-shrink-0 w-6 h-6 ml-1 mr-4 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M3.478 2.405a.75.75 0 00-.926.94l2.432 7.905H13.5a.75.75 0 010 1.5H4.984l-2.432 7.905a.75.75 0 00.926.94 60.519 60.519 0 0018.445-8.986.75.75 0 000-1.218A60.517 60.517 0 003.478 2.405z" />
                 </svg>
 
                 <span x-show="$store.sidebarExpanded.on">Invitations </span>
+
+                <span class="flex items-center justify-center w-5 h-5 ml-4 text-xs text-white bg-red-500 rounded-full ">2</span>
               </a>
-              <a href="#"
+              <a href="{{ route('support') }}"
                 class="flex items-center px-2 py-2 text-sm font-medium leading-6 text-gray-500 rounded-md group hover:bg-gray-100">
                 <svg class="flex-shrink-0 w-6 h-6 ml-1 mr-4 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
                     <path d="M4.913 2.658c2.075-.27 4.19-.408 6.337-.408 2.147 0 4.262.139 6.337.408 1.922.25 3.291 1.861 3.405 3.727a4.403 4.403 0 00-1.032-.211 50.89 50.89 0 00-8.42 0c-2.358.196-4.04 2.19-4.04 4.434v4.286a4.47 4.47 0 002.433 3.984L7.28 21.53A.75.75 0 016 21v-4.03a48.527 48.527 0 01-1.087-.128C2.905 16.58 1.5 14.833 1.5 12.862V6.638c0-1.97 1.405-3.718 3.413-3.979z" />
