@@ -3,6 +3,7 @@
 namespace Wave\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use Auth;
 
 class DashboardController extends Controller
 {
@@ -23,6 +24,8 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('theme::dashboard.index');
+        $courses = Auth::user()->courses()->latest()->get()->take(2);
+
+        return view('theme::dashboard.index', compact('courses'));
     }
 }

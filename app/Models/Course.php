@@ -5,6 +5,7 @@ namespace App\Models;
 use Spatie\Tags\HasTags;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Storage;
 
 class Course extends Model
 {
@@ -41,6 +42,15 @@ class Course extends Model
 
     public function users()
     {
-        return $this->belongsToMany(User::class, 'user_courses');
+        return $this->belongsToMany(User::class, 'user_courses')->withTimestamps()->withPivot('completed_at');
+    }
+
+    public function getImage()
+    {
+        if($this->image){
+            return Storage::disk('do')->url($this->image);
+        }
+
+        return global_asset('img/hero.jpg');
     }
 }
