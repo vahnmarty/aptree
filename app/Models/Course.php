@@ -17,4 +17,25 @@ class Course extends Model
     {
         return $this->hasMany(Module::class);
     }
+
+    public function category()
+    {
+        return tenancy()->central(function(){
+            return $this->belongsTo(CourseCategory::class);
+        });
+    }
+
+    public function subcategories()
+    {
+        return $this->belongsToMany(CourseSubcategory::class, 'course_subcategory');
+        
+        return tenancy()->central(function(){
+            
+        });
+    }
+
+    public function instructors()
+    {
+        return $this->belongsToMany(User::class, 'course_instructors');
+    }
 }

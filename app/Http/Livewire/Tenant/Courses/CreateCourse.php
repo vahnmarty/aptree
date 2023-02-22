@@ -10,6 +10,7 @@ use App\Models\Tenant;
 use Livewire\Component;
 use App\Enums\CourseStatus;
 use App\Models\CourseCategory;
+use App\Models\CourseSubcategory;
 use Filament\Forms\Components\Grid;
 use App\Forms\Components\SelectIcon;
 use Filament\Forms\Components\Select;
@@ -31,7 +32,7 @@ class CreateCourse extends Component implements HasForms
     public $course;
 
     public $title, $icon = 'education', $passing_score = 70;
-    public $category, $estimated_time, $instructors = [], $description, $tags = [];
+    public $category_id, $subcategories = [], $estimated_time, $instructors = [], $description, $tags = [];
     public $required_passing_modules;
     public $image;
     
@@ -62,7 +63,8 @@ class CreateCourse extends Component implements HasForms
                             SelectIcon::make('icon')
                                 ->required()
                                 ->columnSpan(1),
-                            Select::make('category')
+                            Select::make('category_id')
+                                ->label('General Category')
                                 ->options(function(){
                                     return tenancy()->central(function ($tenant) {
                                         return CourseCategory::get()->pluck('name', 'id');
@@ -71,9 +73,20 @@ class CreateCourse extends Component implements HasForms
                                 ->required()
                                 ->preload()
                                 ->searchable()
-                                ->columnSpan(3),
-                            TimePicker::make('estimated_time')
-                                ->placeholder('HH::mm')->withoutSeconds()->columnSpan(2),
+                                ->columnSpan('full'),
+                            Select::make('subcategories')
+                                ->label('Specific Category')
+                                ->multiple()
+                                ->options(function(){
+                                    return tenancy()->central(function ($tenant) {
+                                        return CourseSubcategory::where('course_category_id', $this->category_id)->get()->pluck('name', 'id');
+                                    });
+                                })
+                                ->reactive()
+                                ->required()
+                                ->preload()
+                                ->searchable()
+                                ->columnSpan('full'),
                             Select::make('instructors')
                                 ->multiple()
                                 ->searchable()
@@ -84,19 +97,22 @@ class CreateCourse extends Component implements HasForms
                                 ->placeholder('Enter description')
                                 ->required()
                                 ->columnSpan('full'),
-                            Select::make('tags')
-                                ->label('Keywords')
-                                ->multiple()
-                                ->searchable()
-                                ->preload()
-                                ->options(function(){
-                                    return tenancy()->central(function ($tenant) {
-                                        return Tag::get()->pluck('name', 'id');
-                                    });
-                                })
-                                ->columnSpan('full'),
+                            // Select::make('tags')
+                            //     ->label('Keywords')
+                            //     ->multiple()
+                            //     ->searchable()
+                            //     ->preload()
+                            //     ->options(function(){
+                            //         return tenancy()->central(function ($tenant) {
+                            //             return Tag::get()->pluck('name', 'id');
+                            //         });
+                            //     })
+                            //     ->columnSpan('full'),
+
+                            TimePicker::make('estimated_time')
+                                ->placeholder('HH::mm')->withoutSeconds(),
                             Select::make('passing_score')
-                                ->label('Set passing score')
+                                ->label('Passing score')
                                 ->preload()
                                 ->reactive()
                                 ->options(function(){
@@ -131,19 +147,22 @@ class CreateCourse extends Component implements HasForms
         return $array;
     }
     
+    protected function getFormModel(): string
+    {
+        return Course::class;
+    }
 
     public function submit()
     {
-
-        $this->validate();
-
         $data = $this->form->getState();
 
 
+        # Create Course
         $course = new Course;
         $course->title = $data['title'];
         $course->icon = $data['icon'];
         $course->description = $data['description'];
+        $course->category_id = $data['category_id'];
         $course->estimated_time = $data['estimated_time'];
         $course->required_passing_modules = $data['required_passing_modules'];
         $course->passing_score = $data['passing_score'];
@@ -151,12 +170,18 @@ class CreateCourse extends Component implements HasForms
         $course->status = CourseStatus::Draft;
         $course->slug = Str::slug($data['title']);
         $course->save();
+    
 
-        // Add Categories
-        // Add Instructors
+        try {
+            # Relationships
+            $course->subcategories()->attach($data['subcategories']);
+            $course->instructors()->attach($data['instructors']);
 
-        //$this->emit('toast', ['type' => 'success', 'message' => 'Course created successfully!']);
+        } catch (\Throwable $th) {
 
+            throw $th;
+        }
+        
         return redirect()->route('courses.contents', ['id' => $course->id]);
 
     }
