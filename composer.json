@@ -13,6 +13,7 @@
         "ext-gd": "*",
         "ext-redis": "*",
         "api-video/php-api-client": "^1.2",
+        "aws/aws-sdk-php-laravel": "^3.0",
         "bensampo/laravel-enum": "^6.3",
         "blade-ui-kit/blade-icons": "^1.5",
         "devdojo/app": "0.11.0",

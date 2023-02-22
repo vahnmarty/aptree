@@ -41,6 +41,15 @@
                     @livewire('tenant.courses.question-editor', ['moduleId' => $module_id])
                 </div>
             </x-modal-lg>
+
+            <x-modal-lg ref="ai">
+                <x-slot name="title">
+                    Question Generator
+                </x-slot>
+                <div class="pt-4">
+                    @livewire('tenant.courses.question-generator', ['moduleId' => $module_id])
+                </div>
+            </x-modal-lg>
             
             <!-- Modals -->
 
@@ -149,8 +158,9 @@
                             <span>Multiple Choice</span>
                         </button>
                         <button type="button"
-                            disabled
-                            class="p-2 text-xs bg-white border rounded-md opacity-50 cursor-not-allowed hover:bg-emerald-50">
+                            x-on:click="hide()"
+                            wire:click="createAiQuestion()"
+                            class="p-2 text-xs bg-white border rounded-md hover:bg-emerald-50">
                             <span>AI Question Generator</span>
                         </button>
                         <button type="button"
