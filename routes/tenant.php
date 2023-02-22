@@ -5,6 +5,7 @@ declare(strict_types=1);
 use Wave\Facades\Wave;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Livewire\Tenant\ManageTeams;
 use App\Http\Livewire\Tenant\TemplateLibrary;
 use App\Http\Livewire\Tenant\Courses\EditCourse;
 use App\Http\Livewire\Tenant\Courses\ShowCourse;
@@ -47,6 +48,7 @@ Route::middleware([
     Route::group(['middleware' => ['auth']], function(){
 
         Route::get('template-library', TemplateLibrary::class)->name('template.library');
+        Route::get('teams', ManageTeams::class)->name('teams.index');
     });
 
 
