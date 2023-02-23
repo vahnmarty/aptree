@@ -2,6 +2,7 @@
     <header class="flex justify-between px-8 py-6">
         <h1 class="text-4xl font-bold leading-7 text-emerald-900 sm:leading-9">Course Library</h1>
         <div>
+            @if(auth()->user()->isAdmin())
             <a href="{{ route('courses.create') }}" type="button" class="btn-primary">
                 <svg class="w-5 h-5 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                     stroke-width="1.5" stroke="currentColor">
@@ -11,6 +12,7 @@
 
                 Create Course
             </a>
+            @endif
         </div>
     </header>
 @endsection
@@ -48,6 +50,7 @@
                                     class="@if ($filter == '') text-indigo-600 bg-indigo-100 @else text-gray-900 bg-gray-200 @endif ml-1 hidden rounded-full py-0.5 px-2.5 text-xs font-medium md:inline-block">{{ count($courses) }}</span>
                             </a>
 
+                            @if(Auth::user()->isAdmin())
                             <a href="?filter=published"
                                 class="@if ($filter == 'published') text-indigo-600  @else text-gray-500 @endif flex whitespace-nowrap px-1 py-2 text-sm font-medium"
                                 aria-current="page">
@@ -79,6 +82,7 @@
                                 <span
                                     class="@if ($filter == 'template') text-indigo-600 bg-indigo-100 @else text-gray-900 bg-gray-200 @endif ml-1 hidden rounded-full py-0.5 px-2.5 text-xs font-medium md:inline-block">4</span>
                             </a>
+                            @endif
                         </nav>
                     </div>
                 </div>

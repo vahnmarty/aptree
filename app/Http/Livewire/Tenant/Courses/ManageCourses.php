@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Tenant\Courses;
 
 use App\Models\Course;
 use Livewire\Component;
+use Auth;
 
 class ManageCourses extends Component
 {
@@ -20,6 +21,7 @@ class ManageCourses extends Component
 
     public function mount()
     {
+
         $this->courses = Course::latest()->get();
     }
 }
