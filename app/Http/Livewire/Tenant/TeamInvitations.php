@@ -7,6 +7,7 @@ use App\Models\Team;
 use App\Models\User;
 use Livewire\Component;
 use App\Models\Invitation;
+use App\Mail\InvitationEmail;
 use App\Events\InvitationCreated;
 use Filament\Tables\Actions\Action;
 use Filament\Tables\Columns\TextColumn;
@@ -85,7 +86,7 @@ class TeamInvitations extends Component implements HasTable
             Action::make('resend')
                 ->hidden(fn(Invitation $record) : bool => $record->accepted_at ? true : false  )
                 ->action(function(Invitation $record){
-                    event(new InvitationCreated($record));
+                    InvitationCreated::dispatch($record);
                     $this->alert('success', 'Invitation resent to ' . $record->email);
                 })
                 ->button()

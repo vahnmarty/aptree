@@ -78,6 +78,15 @@ return [
                 'log',
             ],
         ],
+
+        'mailersend' => [
+            'url' => 'https://api.mailersend.com/v1',
+            'token' => env('MAILERSEND_API_KEY'),
+            'transport' => 'mailersend',
+            'templates' => [
+                'invitation' => 'vywj2lpox9j47oqz'
+            ]
+        ],
     ],
 
     /*

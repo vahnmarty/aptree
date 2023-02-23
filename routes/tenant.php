@@ -66,7 +66,7 @@ Route::middleware([
         Route::get('support', SupportPage::class)->name('support');
     });
 
-    Route::get('invitation/{token}', [InvitationController::class, 'accept']);
+    Route::get('invitation/{token}', [InvitationController::class, 'accept'])->name('invitation.accept');
 
 
     /*
