@@ -23,7 +23,6 @@ class ManageCourses extends Component
     public function mount()
     {
         $this->getCourses();
-        
 
         $this->counts['published'] = Course::where('status', CourseStatus::Published)->count();
         $this->counts['draft'] = Course::where('status', CourseStatus::Draft)->count();
