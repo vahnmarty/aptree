@@ -2,9 +2,10 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Validator;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -57,6 +58,14 @@ class AppServiceProvider extends ServiceProvider
             }
 
             return true;
+        });
+
+        Blade::directive('admin', function ($expression) {
+            return auth()->user()->isAdmin();
+        });
+
+        Blade::directive('hasRole', function ($expression) {
+            return auth()->user()->hasRole($expression);
         });
     }
 

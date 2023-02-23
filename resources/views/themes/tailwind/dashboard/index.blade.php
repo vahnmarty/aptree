@@ -13,6 +13,7 @@
 
 <div class="px-8 py-12 bg-gray-100">
 
+	@if(count($courses))
 	<section>
 		<div class="pb-6 border-b-2 border-gray-300">
 			<h3 class="text-xl font-bold text-emerald-800">Courses You're Taking</h3>
@@ -44,6 +45,7 @@
 			@endforeach	
 		</div>
 	</section>
+	@endif
 
 </div>
 
