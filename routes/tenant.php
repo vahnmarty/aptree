@@ -67,6 +67,8 @@ Route::middleware([
     });
 
     Route::get('invitation/{token}', [InvitationController::class, 'accept'])->name('invitation.accept');
+    Route::get('invitation/registration/{token}', [InvitationController::class, 'register'])->name('invitation.register');
+    Route::post('invitation/registration', [InvitationController::class, 'store'])->name('invitation.store');
 
 
     /*
