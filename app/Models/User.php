@@ -68,4 +68,19 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Team::class, 'team_user')->withTimestamps();
     }
+
+    public function isAdmin()
+    {
+        return $this->hasRole('admin');
+    }
+
+    public function isStudent()
+    {
+        return $this->hasRole('student');
+    }
+
+    public function isInstructor()
+    {
+        return $this->hasRole('instructor');
+    }
 }

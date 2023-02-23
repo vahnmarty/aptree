@@ -18,6 +18,7 @@ use Filament\Tables\Actions\CreateAction;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Tables\Concerns\InteractsWithTable;
+use Auth;
 
 class ManageTeams extends Component implements HasForms, HasTable
 {
@@ -32,7 +33,13 @@ class ManageTeams extends Component implements HasForms, HasTable
 
     protected function getTableQuery() 
     {
-        return Team::query();
+        if(Auth::user()->isAdmin()){
+            return Team::query();
+        }
+        
+        return Team::whereHas('users', function($query){
+            $query->where('users.id', Auth::id());
+        });
     } 
 
     protected function getTableColumns(): array 
@@ -77,6 +84,7 @@ class ManageTeams extends Component implements HasForms, HasTable
 
                     })
             ])
+            ->visible(fn(): bool => auth()->user()->isAdmin())
         ];
     }
 
@@ -85,6 +93,7 @@ class ManageTeams extends Component implements HasForms, HasTable
         return [
             CreateAction::make('create')
                 ->label('Create Team')
+                ->visible(fn(): bool => auth()->user()->isAdmin())
                 ->form([
                     TextInput::make('name')->required(),
                     Textarea::make('description'),
