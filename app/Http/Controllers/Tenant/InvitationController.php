@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Invitation;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Auth;
 
 class InvitationController extends Controller
 {
@@ -46,24 +47,24 @@ class InvitationController extends Controller
 
         $invitation = Invitation::whereToken($request->token)->whereEmail($request->email)->firstOrFail();
 
-        if($invitation)
+        # Create User
+
+        $user = new User;
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->avatar = 'users/default.png';
+        $user->password = bcrypt($request->password);
+        $user->role_id = 3; // Student
+        $user->save();
+
+        # Attach to Team
+        if($invitation->team_id)
         {
-            $user = new User;
-            $user->name = $request->name;
-            $user->email = $request->email;
-            $user->avatar = 'users/default.png';
-            $user->password = bcrypt($request->password);
-            $user->role_id = 3; // Student
-            $user->save();
-
-            # Attach to Team
-
-            if($invitation->team_id)
-            {
-                $team = Team::find($invitation->team_id);
-                $team->users()->attach($user->id);
-            }
+            $team = Team::find($invitation->team_id);
+            $team->users()->attach($user->id);
         }
+
+        Auth::login($user->id);
 
         return redirect('dashboard');
     }

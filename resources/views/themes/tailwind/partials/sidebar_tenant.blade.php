@@ -74,6 +74,7 @@
           <div  class="flex flex-shrink-0 pt-6 pb-5 mt-6">
             <div class="flex-shrink-0 w-full px-2 space-y-1">
 
+              @if(auth()->user()->hasRole('admin'))
               <a href="{{ route('settings') }}"
                 class="flex items-center px-2 py-2 text-sm font-medium leading-6 text-gray-500 rounded-md group hover:bg-gray-100">
 
@@ -104,6 +105,7 @@
 
                 <span x-show="$store.sidebarExpanded.on">Billing </span>
               </a>
+              @endif
 
               <a href="{{ route('invitations.index') }}"
                 class="flex items-center px-2 py-2 text-sm font-medium leading-6 text-gray-500 rounded-md group hover:bg-gray-100">
@@ -115,6 +117,7 @@
 
                 <span class="flex items-center justify-center w-5 h-5 ml-4 text-xs text-white bg-red-500 rounded-full ">2</span>
               </a>
+              
               <a href="{{ route('support') }}"
                 class="flex items-center px-2 py-2 text-sm font-medium leading-6 text-gray-500 rounded-md group hover:bg-gray-100">
                 <svg class="flex-shrink-0 w-6 h-6 ml-1 mr-4 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
