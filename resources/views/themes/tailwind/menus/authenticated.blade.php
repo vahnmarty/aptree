@@ -4,7 +4,7 @@
 
     <div class="flex sm:ml-6 sm:items-center">
 
-        <a href="{{ route('wave.dashboard') }}" class="inline-flex items-center px-1 pt-1 text-sm font-medium leading-5 text-gray-500 transition duration-150 ease-in-out border-b-2 border-transparent focus:outline-none hover:border-gray-300 hover:text-gray-700 focus:text-gray-700 focus:border-gray-300">My Courses</a>
+        <a href="{{ route('wave.dashboard') }}" class="inline-flex items-center px-1 pt-1 text-sm font-medium leading-5 text-gray-500 transition duration-150 ease-in-out border-b-2 border-transparent focus:outline-none hover:border-gray-300 hover:text-gray-700 focus:text-gray-700 focus:border-gray-300">Dashboard</a>
         
         @if( auth()->user()->onTrial() )
             <div class="relative items-center justify-center hidden h-full md:flex">
@@ -33,13 +33,13 @@
                 class="absolute top-0 right-0 w-56 mt-20 origin-top-right transform rounded-xl" x-cloak>
 
                 <div class="bg-white border border-gray-100 shadow-md rounded-xl" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
-                    <a href="{{ route('wave.profile', auth()->user()->getUsername()) }}" class="block px-4 py-3 text-gray-700 hover:text-gray-800">
+                    <a href="{{ url('dashboard') }}" class="block px-4 py-3 text-gray-700 hover:text-gray-800">
 
                         <span class="block text-sm font-medium leading-tight truncate">
                             {{ auth()->user()->name }}
                         </span>
                         <span class="text-xs leading-5 text-gray-600">
-                            View Profile
+                            View Dashboard
                         </span>
                     </a>
                     @impersonating
@@ -57,7 +57,7 @@
                         @if( !auth()->guest() && auth()->user()->can('browse_admin') )
                             <a href="{{ route('voyager.dashboard') }}" class="block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900"><i class="fa fa-bolt"></i> Admin</a>
                         @endif
-                        <a href="{{ route('wave.profile', auth()->user()->getUsername()) }}" class="block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900">My Profile</a>
+                        
                         <a href="{{ route('wave.settings') }}" class="block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900">Settings</a>
 
                     </div>

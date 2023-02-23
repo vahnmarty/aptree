@@ -89,8 +89,13 @@
 
           </div>
 
+          
           <div  class="flex flex-shrink-0 pt-6 pb-5 mt-6">
             <div class="flex-shrink-0 w-full px-2 space-y-1">
+
+              <div class="flex justify-center py-1 text-xs font-bold border rounded-sm bg-emerald-50 text-emerald-900 border-emerald-500">
+                {{ Auth()->user()->role->display_name }}
+              </div>
 
               @if(auth()->user()->hasRole('admin'))
               <a href="{{ route('settings') }}"

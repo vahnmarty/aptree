@@ -56,7 +56,7 @@
                                 aria-current="page">
                                 Published
                                 <span
-                                    class="@if ($filter == 'published') text-indigo-600 bg-indigo-100 @else text-gray-900 bg-gray-200 @endif ml-1 hidden rounded-full py-0.5 px-2.5 text-xs font-medium md:inline-block">4</span>
+                                    class="@if ($filter == 'published') text-indigo-600 bg-indigo-100 @else text-gray-900 bg-gray-200 @endif ml-1 hidden rounded-full py-0.5 px-2.5 text-xs font-medium md:inline-block">{{ $counts['published'] }}</span>
                             </a>
 
                             <a href="?filter=draft"
@@ -64,7 +64,7 @@
                                 aria-current="page">
                                 Drafts
                                 <span
-                                    class="@if ($filter == 'draft') text-indigo-600 bg-indigo-100 @else text-gray-900 bg-gray-200 @endif ml-1 hidden rounded-full py-0.5 px-2.5 text-xs font-medium md:inline-block">4</span>
+                                    class="@if ($filter == 'draft') text-indigo-600 bg-indigo-100 @else text-gray-900 bg-gray-200 @endif ml-1 hidden rounded-full py-0.5 px-2.5 text-xs font-medium md:inline-block">{{ $counts['draft'] }}</span>
                             </a>
 
                             <a href="?filter=deleted"
@@ -72,7 +72,7 @@
                                 aria-current="page">
                                 Deleted
                                 <span
-                                    class="@if ($filter == 'deleted') text-indigo-600 bg-indigo-100 @else text-gray-900 bg-gray-200 @endif ml-1 hidden rounded-full py-0.5 px-2.5 text-xs font-medium md:inline-block">4</span>
+                                    class="@if ($filter == 'deleted') text-indigo-600 bg-indigo-100 @else text-gray-900 bg-gray-200 @endif ml-1 hidden rounded-full py-0.5 px-2.5 text-xs font-medium md:inline-block">{{ $counts['deleted'] }}</span>
                             </a>
 
                             <a href="?filter=template"
@@ -80,7 +80,7 @@
                                 aria-current="page">
                                 Template
                                 <span
-                                    class="@if ($filter == 'template') text-indigo-600 bg-indigo-100 @else text-gray-900 bg-gray-200 @endif ml-1 hidden rounded-full py-0.5 px-2.5 text-xs font-medium md:inline-block">4</span>
+                                    class="@if ($filter == 'template') text-indigo-600 bg-indigo-100 @else text-gray-900 bg-gray-200 @endif ml-1 hidden rounded-full py-0.5 px-2.5 text-xs font-medium md:inline-block">0</span>
                             </a>
                             @endif
                         </nav>

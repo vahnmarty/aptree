@@ -2,15 +2,17 @@
 
 namespace App\Models;
 
+use Storage;
 use Spatie\Tags\HasTags;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Storage;
 
 class Course extends Model
 {
     use HasFactory;
     use HasTags;
+    use SoftDeletes;
 
     protected $guarded = [];
 

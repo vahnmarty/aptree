@@ -2,13 +2,14 @@
 
 namespace App\Http\Livewire\Tenant\Courses;
 
+use Auth;
 use App\Models\Course;
 use Livewire\Component;
-use Auth;
+use App\Enums\CourseStatus;
 
 class ManageCourses extends Component
 {
-    public $filter;
+    public $filter = 'published', $counts = [];
 
     public $courses = [];
 
@@ -21,7 +22,27 @@ class ManageCourses extends Component
 
     public function mount()
     {
+        $this->getCourses();
+        
 
-        $this->courses = Course::latest()->get();
+        $this->counts['published'] = Course::where('status', CourseStatus::Published)->count();
+        $this->counts['draft'] = Course::where('status', CourseStatus::Draft)->count();
+        $this->counts['deleted'] = Course::withTrashed()->whereNotNull('deleted_at')->count();
+    }
+
+    public function getCourses()
+    {
+        if($this->filter == 'published'){
+            $this->courses = Course::where('status', CourseStatus::Published)->latest()->get();
+        }
+        elseif($this->filter == 'draft'){
+            $this->courses = Course::where('status', CourseStatus::Draft)->latest()->get();
+        }
+        elseif($this->filter == 'deleted'){
+            $this->courses = Course::withTrashed()->whereNotNull('deleted_at')->latest()->get();
+        }
+        else{
+            $this->courses = Course::latest()->get();
+        }
     }
 }

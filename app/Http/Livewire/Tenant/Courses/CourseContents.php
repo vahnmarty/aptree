@@ -6,17 +6,21 @@ use App\Models\Course;
 use App\Models\Module;
 use Livewire\Component;
 use App\Models\ModuleItem;
+use App\Enums\CourseStatus;
 use App\Enums\ModuleItemType;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class CourseContents extends Component
 {
+    use LivewireAlert;
+    
     public $course, $modules = [];
 
     public $module_id, $selected_module;
 
     protected $queryString = ['module_id'];
 
-    protected $listeners = [ 'refreshParent' => '$refresh'];
+    protected $listeners = [ 'refreshParent' => '$refresh', 'confirmPublish'];
 
     public function render()
     {
@@ -104,5 +108,23 @@ class CourseContents extends Component
     public function reorderModuleItems($data)
     {
         ModuleItem::setNewOrder($data);
+    }
+
+    public function publish()
+    {
+        $this->confirm("Are you sure you want to publish this course?", [
+            'position' => 'center',
+            'showConfirmButton' => true,
+            'confirmButtonText' => 'Yes, Publish this Course',
+            'onConfirmed' => 'confirmPublish' 
+        ]);
+    }
+
+    public function confirmPublish()
+    {
+        $this->course->status = CourseStatus::Published;
+        $this->course->save();
+
+        $this->alert('success', 'Course has been published!');
     }
 }
