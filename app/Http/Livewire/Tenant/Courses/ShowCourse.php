@@ -2,12 +2,15 @@
 
 namespace App\Http\Livewire\Tenant\Courses;
 
+use Auth;
 use App\Models\Course;
 use Livewire\Component;
-use Auth;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class ShowCourse extends Component
 {
+    use LivewireAlert;
+    
     public $course;
     public $is_enrolled;
     
@@ -25,11 +28,18 @@ class ShowCourse extends Component
 
     public function start()
     {
+
+        if(!$this->course->modules()->count()){
+            return $this->alert('error', 'This course has no modules');
+        }
+
         $pivot = Auth::user()->courses()->attach($this->course->id);
+        
+        
 
         // @TODO
         // Must redirect to pivot;
 
-        return redirect()->route('courses.player', $this->course->id);
+        return redirect()->route('courses.play', $this->course->id);
     }
 }

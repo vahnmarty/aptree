@@ -11,7 +11,7 @@
 
 @section('content')
 
-<div class="px-8 py-12 bg-gray-100">
+<div class="px-8 pt-6 pb-32 bg-gray-100">
 
 	@if(count($courses))
 	<section>
