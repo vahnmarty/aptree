@@ -3,7 +3,7 @@
         <div class="flex items-center justify-between h-24 border-gray-100 md:justify-start md:space-x-6">
             <div class="inline-flex">
                 @if(tenant())
-                <form class="flex w-full md:ml-0" action="#" method="GET">
+                <form class="hidden w-full md:flex md:ml-0" action="#" method="GET">
                     <label for="search-field" class="sr-only">Search</label>
                     <div class="relative w-full pl-4 text-gray-400 border focus-within:text-gray-600">
                       <div class="absolute inset-y-0 left-0 flex items-center pl-2 pointer-events-none" aria-hidden="true">
@@ -15,18 +15,18 @@
                       <input id="search-field" name="search-field" class="block w-full h-full py-4 pl-8 pr-3 text-gray-900 placeholder-gray-500 border-transparent focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm" placeholder="Search" type="search">
                     </div>
                   </form>
-                  @endif
-            </div>
-            <div class="flex justify-end flex-grow -my-2 -mr-2 md:hidden">
-                <button @click="mobileMenuOpen = true" type="button" class="inline-flex items-center justify-center p-2 text-gray-400 transition duration-150 ease-in-out rounded-md hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500">
+                  <button @click="mobileMenuOpen = true" type="button" class="inline-flex items-center justify-center p-2 text-gray-400 transition duration-150 ease-in-out bg-gray-100 rounded-md hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500">
                     <svg class="w-6 h-6" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8h16M4 16h16"></path></svg>
                 </button>
+                @endif
+            </div>
+            <div class="flex justify-end flex-grow -my-2 -mr-2 md:hidden">
+               
             </div>
 
-            <!-- This is the homepage nav when a user is not logged in -->
             @if(auth()->guest())
                 @include('theme::menus.guest')
-            @else <!-- Otherwise we want to show the menu for the logged in user -->
+            @else
                 @include('theme::menus.authenticated')
             @endif
 

@@ -1,16 +1,17 @@
-<div class="hidden w-64 min-h-screen bg-white border-r lg:block">
-    <div class="flex flex-col flex-grow min-h-screen py-5 overflow-y-auto bg-white">
-        <div class="px-4">
-            <div class="flex items-center p-2 bg-gray-200 rounded-md">
+<div x-data="{ open: true }"
+  class="min-h-screen bg-gray-600 border-r w-14 md:bg-white lg:w-64 lg:block">
+    <div class="flex flex-col flex-grow min-h-screen py-5 overflow-y-auto ">
+        <div class="flex justify-center md:block md:px-4">
+            <div class="flex items-center bg-transparent rounded-md md:bg-gray-200 md:p-2">
               <button x-on:click="$store.sidebarExpanded.toggle()" type="button">
                 <img class="flex-shrink-0 w-auto h-8" src="{{ global_asset('img/logo.png') }}" alt="Company name">
               </button>
-              <p class="ml-3">{{ tenancy()->tenant->name }}</p>
+              <p class="hidden ml-3 md:block">{{ tenancy()->tenant->name }}</p>
             </div>
         </div>
 
         <nav class="flex flex-col flex-1 mt-5 overflow-y-auto divide-y divide-gray-300" aria-label="Sidebar">
-          <div  class="flex-1 px-2 space-y-1">
+          <div  class="flex-1 space-y-1 md:px-2">
 
             <a href="{{ url('dashboard') }}"
                 class="{{ request()->is('dashboard*') ? 'border-l-4 border-orange-400 bg-gray-100 text-black' : 'text-gray-500 hover:bg-gray-100' }} group flex items-center px-2 py-2 text-sm leading-6 font-medium" aria-current="page">
@@ -20,7 +21,7 @@
                 </svg>
 
                 <!-- label here -->
-                <span x-show="$store.sidebarExpanded.on">Home</span>
+                <span class="hidden md:block">Home</span>
             </a>
 
             @if(auth()->user()->isAdmin())
@@ -34,7 +35,7 @@
                 </svg>
 
                 <!-- label here -->
-                <span x-show="$store.sidebarExpanded.on">Course Builder</span>
+                <span class="hidden md:block">Course Builder</span>
             </a>
 
             <a href="{{ route('template.library') }}"
@@ -46,7 +47,7 @@
                 </svg>
 
                 <!-- label here -->
-                <span x-show="$store.sidebarExpanded.on">Template Library</span>
+                <span class="hidden md:block">Template Library</span>
             </a>
             @else
 
@@ -60,7 +61,7 @@
                 </svg>
 
                 <!-- label here -->
-                <span x-show="$store.sidebarExpanded.on">Course Library</span>
+                <span class="hidden md:block">Course Library</span>
             </a>
             
             @endif
@@ -73,7 +74,7 @@
                 </svg>
 
                 <!-- label here -->
-                <span x-show="$store.sidebarExpanded.on">Teams </span>
+                <span class="hidden md:block">Teams </span>
             </a>
 
             <a href="{{ route('profile.index') }}"
@@ -83,7 +84,7 @@
                 </svg>
 
                 <!-- label here -->
-                <span x-show="$store.sidebarExpanded.on">My Profile </span>
+                <span class="hidden md:block">My Profile </span>
             </a>
             
 
@@ -91,9 +92,9 @@
 
           
           <div  class="flex flex-shrink-0 pt-6 pb-5 mt-6">
-            <div class="flex-shrink-0 w-full px-2 space-y-1">
+            <div class="flex-shrink-0 w-full space-y-1 lg:px-2">
 
-              <div class="flex justify-center py-1 text-xs font-bold border rounded-sm bg-emerald-50 text-emerald-900 border-emerald-500">
+              <div class="justify-center hidden py-1 text-xs font-bold border rounded-sm lg:flex bg-emerald-50 text-emerald-900 border-emerald-500">
                 {{ Auth()->user()->role->display_name }}
               </div>
 
@@ -106,7 +107,7 @@
                 </svg>
 
                 
-                <span x-show="$store.sidebarExpanded.on">Settings </span>
+                <span class="hidden md:block">Settings </span>
               </a>
 
               <a href="{{ route('users.index') }}"
@@ -116,7 +117,7 @@
                   <path d="M4.5 6.375a4.125 4.125 0 118.25 0 4.125 4.125 0 01-8.25 0zM14.25 8.625a3.375 3.375 0 116.75 0 3.375 3.375 0 01-6.75 0zM1.5 19.125a7.125 7.125 0 0114.25 0v.003l-.001.119a.75.75 0 01-.363.63 13.067 13.067 0 01-6.761 1.873c-2.472 0-4.786-.684-6.76-1.873a.75.75 0 01-.364-.63l-.001-.122zM17.25 19.128l-.001.144a2.25 2.25 0 01-.233.96 10.088 10.088 0 005.06-1.01.75.75 0 00.42-.643 4.875 4.875 0 00-6.957-4.611 8.586 8.586 0 011.71 5.157v.003z" />
                 </svg>
                 
-                <span x-show="$store.sidebarExpanded.on">Users </span>
+                <span class="hidden md:block">Users </span>
               </a>
 
               <a href="{{ route('billing.index') }}"
@@ -126,7 +127,7 @@
                     <path fill-rule="evenodd" d="M22.5 9.75h-21v7.5a3 3 0 003 3h15a3 3 0 003-3v-7.5zm-18 3.75a.75.75 0 01.75-.75h6a.75.75 0 010 1.5h-6a.75.75 0 01-.75-.75zm.75 2.25a.75.75 0 000 1.5h3a.75.75 0 000-1.5h-3z" clip-rule="evenodd" />
                 </svg>
 
-                <span x-show="$store.sidebarExpanded.on">Billing </span>
+                <span class="hidden md:block">Billing </span>
               </a>
               @endif
 
@@ -136,7 +137,7 @@
                     <path d="M3.478 2.405a.75.75 0 00-.926.94l2.432 7.905H13.5a.75.75 0 010 1.5H4.984l-2.432 7.905a.75.75 0 00.926.94 60.519 60.519 0 0018.445-8.986.75.75 0 000-1.218A60.517 60.517 0 003.478 2.405z" />
                 </svg>
 
-                <span x-show="$store.sidebarExpanded.on">Invitations </span>
+                <span class="hidden md:block">Invitations </span>
 
                 <span class="flex items-center justify-center w-5 h-5 ml-4 text-xs text-white bg-red-500 rounded-full ">2</span>
               </a>
@@ -148,7 +149,7 @@
                     <path d="M15.75 7.5c-1.376 0-2.739.057-4.086.169C10.124 7.797 9 9.103 9 10.609v4.285c0 1.507 1.128 2.814 2.67 2.94 1.243.102 2.5.157 3.768.165l2.782 2.781a.75.75 0 001.28-.53v-2.39l.33-.026c1.542-.125 2.67-1.433 2.67-2.94v-4.286c0-1.505-1.125-2.811-2.664-2.94A49.392 49.392 0 0015.75 7.5z" />
                 </svg>
 
-                <span x-show="$store.sidebarExpanded.on">Support </span>
+                <span class="hidden md:block">Support </span>
               </a>
 
             </div>
