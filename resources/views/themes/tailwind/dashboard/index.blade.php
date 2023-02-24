@@ -1,7 +1,7 @@
 @extends('theme::layouts.app')
 
 @section('header')
-<header class="px-8 py-6">
+<header class="px-8 py-6 bg-white">
 	<h1 class="text-4xl font-bold leading-7 text-emerald-900 sm:leading-9 sm:truncate">Welcome Back, {{ auth()->user()->name }}</h1>
 	<p class="mt-8 text-gray-700">
 		You're on a roll, you've taken {{ auth()->user()->latest_taken_course_title }} course, and {{ auth()->user()->enrolled_pathways_count }} Paths. Keep on studying!

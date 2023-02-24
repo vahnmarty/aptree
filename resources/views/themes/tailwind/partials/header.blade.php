@@ -2,6 +2,7 @@
     <div class="px-8">
         <div class="flex items-center justify-between h-24 border-gray-100 md:justify-start md:space-x-6">
             <div class="inline-flex">
+                @if(tenant())
                 <form class="flex w-full md:ml-0" action="#" method="GET">
                     <label for="search-field" class="sr-only">Search</label>
                     <div class="relative w-full pl-4 text-gray-400 border focus-within:text-gray-600">
@@ -14,6 +15,7 @@
                       <input id="search-field" name="search-field" class="block w-full h-full py-4 pl-8 pr-3 text-gray-900 placeholder-gray-500 border-transparent focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm" placeholder="Search" type="search">
                     </div>
                   </form>
+                  @endif
             </div>
             <div class="flex justify-end flex-grow -my-2 -mr-2 md:hidden">
                 <button @click="mobileMenuOpen = true" type="button" class="inline-flex items-center justify-center p-2 text-gray-400 transition duration-150 ease-in-out rounded-md hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500">

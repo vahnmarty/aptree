@@ -25,9 +25,13 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $courses = Auth::user()->courses()->latest()->get()->take(2);
-        $libraries = Course::latest()->get()->take(6);
+        if(tenant()){
+            $courses = Auth::user()->courses()->latest()->get()->take(2);
+            $libraries = Course::latest()->get()->take(6);
 
-        return view('theme::dashboard.index', compact('courses', 'libraries'));
+            return view('theme::dashboard.index', compact('courses', 'libraries'));
+        }
+
+        return view('theme::dashboard.central');
     }
 }
