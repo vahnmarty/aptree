@@ -5,6 +5,10 @@
             @if($course->status == '0')
             <button wire:click="publish" type="button" class="btn-primary">Publish Now</button>
             @endif
+
+            @if($course->status == '1')
+            <a href="{{ route('courses.show', $course->id) }}" class="btn-primary">Open Course</a>
+            @endif
         </div>
     </header>
     
