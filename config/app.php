@@ -203,8 +203,6 @@ return [
         Spatie\Permission\PermissionServiceProvider::class,
         App\Providers\TenancyServiceProvider::class,
 
-        Barryvdh\Debugbar\ServiceProvider::class,
-
     ],
 
     /*
