@@ -22,7 +22,7 @@ class InvitationController extends Controller
             $invitation->save();
 
             $existingUser = User::whereEmail($request->email)->first();
-
+            
             if($existingUser && $invitation->team_id)
             {
                 $team = Team::find($invitation->team_id);

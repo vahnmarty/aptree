@@ -10,6 +10,8 @@
 <div>
     <div class="px-8 py-12 space-y-8 bg-gray-100">
         
-
+        <h1>Leaderboards</h1>
+        <h1>Reports</h1>
+        <h1>Recommended</h1>
     </div>
 </div>
