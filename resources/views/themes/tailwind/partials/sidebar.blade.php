@@ -21,7 +21,7 @@
             </a>
 
             <a href="{{ route('organization') }}"
-                class="{{ request()->routeIs('organization*') ? 'border-l-4 border-orange-400 bg-gray-600 text-white' : 'text-gray-300 hover:bg-gray-700' }} group flex items-center px-2 py-2 text-sm leading-6 font-medium">
+                class="{{ request()->is('organization*') ? 'border-l-4 border-orange-400 bg-gray-600 text-white' : 'text-gray-300 hover:bg-gray-700' }} group flex items-center px-2 py-2 text-sm leading-6 font-medium">
 
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="flex-shrink-0 w-6 h-6 ml-1 mr-4 text-gray-300">
                   <path d="M15.75 8.25a.75.75 0 01.75.75c0 1.12-.492 2.126-1.27 2.812a.75.75 0 11-.992-1.124A2.243 2.243 0 0015 9a.75.75 0 01.75-.75z" />
@@ -33,8 +33,8 @@
                 <span x-show="$store.sidebarExpanded.on">Organization </span>
             </a>
             
-            <a href="{{ url('dashboard.administer.billing') }}"
-                class="flex items-center px-2 py-2 text-sm font-medium leading-6 text-gray-300 rounded-md group hover:bg-gray-700">
+            <a href="{{ route('billing') }}"
+                class="{{ request()->is('billing*') ? 'border-l-4 border-orange-400 bg-gray-600 text-white' : 'text-gray-300 hover:bg-gray-700' }} group flex items-center px-2 py-2 text-sm leading-6 font-medium">
                 <svg class="flex-shrink-0 w-6 h-6 ml-1 mr-4 text-gray-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M4.5 3.75a3 3 0 00-3 3v.75h21v-.75a3 3 0 00-3-3h-15z" />
                     <path fill-rule="evenodd" d="M22.5 9.75h-21v7.5a3 3 0 003 3h15a3 3 0 003-3v-7.5zm-18 3.75a.75.75 0 01.75-.75h6a.75.75 0 010 1.5h-6a.75.75 0 01-.75-.75zm.75 2.25a.75.75 0 000 1.5h3a.75.75 0 000-1.5h-3z" clip-rule="evenodd" />
@@ -43,14 +43,6 @@
                 <span x-show="$store.sidebarExpanded.on">Billing </span>
               </a>
 
-              <a href="{{ url('dashboard.administer.invitations') }}"
-                class="flex items-center px-2 py-2 text-sm font-medium leading-6 text-gray-300 rounded-md group hover:bg-gray-700">
-                <svg class="flex-shrink-0 w-6 h-6 ml-1 mr-4 text-gray-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M3.478 2.405a.75.75 0 00-.926.94l2.432 7.905H13.5a.75.75 0 010 1.5H4.984l-2.432 7.905a.75.75 0 00.926.94 60.519 60.519 0 0018.445-8.986.75.75 0 000-1.218A60.517 60.517 0 003.478 2.405z" />
-                </svg>
-
-                <span x-show="$store.sidebarExpanded.on">Invitations </span>
-              </a>
               <a href="#"
                 class="flex items-center px-2 py-2 text-sm font-medium leading-6 text-gray-300 rounded-md group hover:bg-gray-700">
                 <svg class="flex-shrink-0 w-6 h-6 ml-1 mr-4 text-gray-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">

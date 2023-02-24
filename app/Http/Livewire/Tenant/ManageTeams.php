@@ -2,8 +2,12 @@
 
 namespace App\Http\Livewire\Tenant;
 
+use Str;
+use Auth;
 use App\Models\Team;
 use Livewire\Component;
+use App\Models\Invitation;
+use App\Events\InvitationCreated;
 use Filament\Tables\Actions\Action;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\ComponentContainer;
@@ -18,7 +22,6 @@ use Filament\Tables\Actions\CreateAction;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Tables\Concerns\InteractsWithTable;
-use Auth;
 
 class ManageTeams extends Component implements HasForms, HasTable
 {
@@ -47,6 +50,10 @@ class ManageTeams extends Component implements HasForms, HasTable
         return [
             TextColumn::make('name'),
             TextColumn::make('users_count')->counts('users')->label('Members'),
+            TextColumn::make('invitations_count')
+                ->counts('invitations')
+                ->visible(fn():bool => auth()->user()->isAdmin())
+                ->label('Invites Sent'),
             TextColumn::make('owner.name')
         ];
     }
@@ -74,15 +81,25 @@ class ManageTeams extends Component implements HasForms, HasTable
     {
         return [
             ActionGroup::make([
+                CreateAction::make()
+                    ->label('Add Member')
+                    ->modalHeading('Add Member')
+                    ->form([
+                        TextInput::make('email')->email()->placeholder('Input a valid email address')
+                    ])
+                    ->action(function(Team $record, array $data){
+                        $email = $data['email'];
+
+                        $invitation = Invitation::firstOrCreate(
+                            [ 'team_id' => $record->id, 'email' => $email],
+                            [ 'token' => Str::random(40)]
+                        );
+
+                        InvitationCreated::dispatch($invitation);
+                    }),
+                    //->disableCreateAnother(),
                 Action::make('view_invitations')
                     ->url( fn($record) => route('teams.invitations', $record->id) ),
-                Action::make('invite_users')
-                    ->form([
-                        TagsInput::make('email')->placeholder('Input a valid email address')
-                    ])
-                    ->action(function(){
-
-                    })
             ])
             ->visible(fn(): bool => auth()->user()->isAdmin())
         ];

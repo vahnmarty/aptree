@@ -21,6 +21,16 @@ class InvitationController extends Controller
             $invitation->accepted_at = now();
             $invitation->save();
 
+            $existingUser = User::whereEmail($request->email)->first();
+
+            if($existingUser && $invitation->team_id)
+            {
+                $team = Team::find($invitation->team_id);
+                $team->users()->attach($existingUser->id);
+
+                return redirect('dashboard');
+            }
+
             
             # Create Account
             return redirect()->route('invitation.register', ['token' => $token, 'email' => $request->email]);

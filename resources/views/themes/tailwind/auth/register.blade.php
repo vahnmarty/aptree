@@ -9,7 +9,7 @@
         </h2>
         <p class="mt-4 text-sm leading-5 text-center text-gray-600 max-w">
             or, you can
-            <a href="{{ route('login') }}" class="font-medium transition duration-150 ease-in-out text-wave-600 hover:text-wave-500 focus:outline-none focus:underline">
+            <a href="{{ route('login') }}" class="font-medium transition duration-150 ease-in-out text-emerald-600 hover:text-emerald-500 focus:outline-none focus:underline">
                 login here
             </a>
         </p>
@@ -20,7 +20,7 @@
 
         <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
             <div class="px-4 py-8 bg-white border shadow border-gray-50 sm:rounded-lg sm:px-10">
-                <form role="form" method="POST" action="@if(setting('billing.card_upfront')){{ route('wave.register-subscribe') }}@else{{ route('register') }}@endif">
+                <form role="form" method="POST" action="@if(setting('billing.card_upfront')){{ route('emerald.register-subscribe') }}@else{{ route('register') }}@endif">
                     @csrf
                     <!-- If we want the user to purchase before they can create an account -->
 
@@ -109,11 +109,11 @@
 
                     <div class="flex flex-col items-center justify-center text-sm leading-5">
                         <span class="block w-full mt-5 rounded-md shadow-sm">
-                            <button type="submit" class="flex justify-center w-full px-4 py-2 text-sm font-medium text-white transition duration-150 ease-in-out border border-transparent rounded-md bg-wave-600 hover:bg-wave-500 focus:outline-none focus:border-wave-700 focus:shadow-outline-wave active:bg-wave-700">
+                            <button type="submit" class="flex justify-center w-full px-4 py-2 text-sm font-medium text-white transition duration-150 ease-in-out border border-transparent rounded-md bg-emerald-600 hover:bg-emerald-500 focus:outline-none focus:border-emerald-700 focus:shadow-outline-emerald active:bg-emerald-700">
                                 Register
                             </button>
                         </span>
-                        <a href="{{ route('login') }}" class="mt-3 font-medium transition duration-150 ease-in-out text-wave-600 hover:text-wave-500 focus:outline-none focus:underline">
+                        <a href="{{ route('login') }}" class="mt-3 font-medium transition duration-150 ease-in-out text-emerald-600 hover:text-emerald-500 focus:outline-none focus:underline">
                             Already have an account? Login here
                         </a>
                     </div>

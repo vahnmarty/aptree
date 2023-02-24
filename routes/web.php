@@ -15,7 +15,9 @@ use Wave\Facades\Wave;
 use TCG\Voyager\Facades\Voyager;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Livewire\Central\ManageBilling;
 use App\Http\Livewire\Central\MyOrganization;
+use App\Http\Livewire\Central\ManageTenantInvitation;
 
 // Authentication routes
 Auth::routes();
@@ -29,3 +31,4 @@ Route::group(['prefix' => 'admin'], function () {
 Wave::routes();
 
 Route::get('organization', MyOrganization::class)->name('organization');
+Route::get('billing', ManageBilling::class)->name('billing');
