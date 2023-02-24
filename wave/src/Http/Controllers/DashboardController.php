@@ -32,6 +32,12 @@ class DashboardController extends Controller
             return view('theme::dashboard.index', compact('courses', 'libraries'));
         }
 
+        $user = Auth::user();
+
+        if($user->role->id == 1){
+            return redirect('/admin');
+        }
+
         return view('theme::dashboard.central');
     }
 }
