@@ -20,6 +20,7 @@ return [
         '127.0.0.1',
         'localhost',
         'aptreev2.test',
+        'aptree.test'
     ],
 
     /**
