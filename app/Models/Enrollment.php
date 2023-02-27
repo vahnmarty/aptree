@@ -26,4 +26,9 @@ class Enrollment extends Model
     {
         return $this->hasMany(EnrollmentModule::class);
     }
+
+    public function isComplete()
+    {
+        return $this->completed_at ? true : false;
+    }
 }

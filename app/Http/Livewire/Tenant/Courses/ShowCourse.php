@@ -14,7 +14,7 @@ class ShowCourse extends Component
     use LivewireAlert;
     
     public $course;
-    public $is_enrolled;
+    public $enrollment_record;
     
     public function render()
     {
@@ -25,7 +25,7 @@ class ShowCourse extends Component
     {
         $this->course = Course::findOrFail($id);
 
-        $this->is_enrolled = Enrollment::whereUserId(Auth::id())->whereCourseId($id)->exists();
+        $this->enrollment_record = Enrollment::whereUserId(Auth::id())->whereCourseId($id)->first();
     }
 
     public function start()
@@ -35,8 +35,8 @@ class ShowCourse extends Component
             return $this->alert('error', 'This course has no modules');
         }
 
-        if($this->is_enrolled){
-            $enroll = Enrollment::whereUserId(Auth::id())->whereCourseId($this->course->id)->first();
+        if($this->enrollment_record){
+            $enroll = $this->enrollment_record;
         }else{
             $enroll = new Enrollment;
             $enroll->user_id = Auth::id();
