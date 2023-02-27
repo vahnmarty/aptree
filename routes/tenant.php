@@ -49,7 +49,7 @@ Route::middleware([
         Route::get('/{id}', ShowCourse::class)->name('courses.show');
         Route::get('/{id}/edit', EditCourse::class)->name('courses.edit');
         Route::get('/{id}/contents', CourseContents::class)->name('courses.contents');
-        Route::get('/{id}/play', CoursePlayer::class)->name('courses.play');
+        Route::get('/{uuid}/play', CoursePlayer::class)->name('courses.play');
         Route::get('/module-preview/{id}', ModuleItemPreview::class)->name('courses.module-preview');
     });
 

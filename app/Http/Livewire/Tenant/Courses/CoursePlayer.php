@@ -7,18 +7,25 @@ use App\Models\Answer;
 use App\Models\Course;
 use App\Models\Module;
 use Livewire\Component;
+use App\Models\Enrollment;
 use App\Models\ModuleItem;
+use App\Models\EnrollmentModule;
+use App\Models\EnrollmentModuleItem;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class CoursePlayer extends Component
 {
     use LivewireAlert;
     
-    public $course;
+    public Enrollment $enrollment;
+    public Course $course;
+
     public $module, $module_id;
     public $contents = [], $content_index = 0, $content;
     public $start = false, $end = false;
     public $selected_answer, $is_correct;
+
+    public EnrollmentModuleItem $episode;
 
     protected $queryString = ['module_id'];
 
@@ -29,87 +36,121 @@ class CoursePlayer extends Component
         return view('livewire.tenant.courses.course-player')->layout('theme::layouts.slider');
     }
 
-    public function mount($id)
+    public function mount($uuid)
     {
-        $this->course = Course::findOrFail($id);
+        $this->enrollment = Enrollment::whereUuid($uuid)->firstOrFail();
+
+        $this->course = $this->enrollment->course;
 
         $this->module = $this->course->modules()->ordered()->first();
 
         $this->module_id = $this->module->id;
 
-        $this->contents = $this->parseContents($this->module);
+        $this->contents = $this->module->items()->ordered()->get();
     }
 
-    public function parseContents(Module $module)
-    {
-        $data = [];
-
-        foreach($module->items()->ordered()->get() as $item)
-        {
-            $item['is_complete'] = $this->hasRecord($item);
-
-            $data[] = $item;
-        }
-
-        return $data;
-    }
-
-    public function hasRecord(ModuleItem $item)
-    {
-        return $item->users()->where('user_id', Auth::id())->first() ? true : false;
-    }
 
     public function start()
     {
         $this->start = true;
 
-        $content_id = $this->contents[$this->content_index]['id'];
+        # Init Module
+        $module_record = EnrollmentModule::firstOrCreate([
+                'enrollment_id' => $this->enrollment->id,
+                'module_id' => $this->module_id
+        ]);
 
-        $this->setContent($content_id);
+        # Update start_at
+        if($module_record){
+            $module_record->start_at = now();
+            $module_record->save();
+        }
+
+        # Start by going to first module
+        $this->showNext();
     }
 
-    public function next()
+    public function finish()
     {
-        $module_item = ModuleItem::find($this->content['id']);
+        $this->end = true;
 
-        $record = $module_item->users()->where('user_id', Auth::id())->first();
-    
-        if(!$record){
-            $module_item->users()->attach(Auth::id(), ['completed_at' => now()]);
+        # Init Module
+        $module_record = EnrollmentModule::where('enrollment_id', $this->enrollment->id)
+            ->where('module_id', $this->module_id)
+            ->first();
+
+        # Update start_at
+        if($module_record){
+            $module_record->completed_at = now();
+            $module_record->save();
         }
 
-        $this->content_index += 1;
+        # Start by going to first module
+        $this->showNext();
+    }
 
-        if(!empty($this->contents[$this->content_index]['id'])){
-            $content_id = $this->contents[$this->content_index]['id'];
+    public function showNext($module_item_id = null)
+    {
+        if(!$module_item_id){
+
+        # Start : Finding the first item
+            $module_item =  $this->module->items()->ordered()->first();
         }else{
-            return $this->end = true;
+            $module_item = ModuleItem::find($module_item_id);
         }
+
+        # Record
+        $record = EnrollmentModuleItem::with('moduleItem')->firstOrCreate([
+                'enrollment_id' => $this->enrollment->id, 
+                'module_item_id' => $module_item->id
+        ]);
         
-        
-        $this->setContent($content_id);
+        $this->episode = $record;
+
+        $this->content = $record->moduleItem;
         
     }
+
+    public function submitNext()
+    {
+        # Update completion
+        $record = EnrollmentModuleItem::find($this->episode['id']);
+        $record->completed_at = now();
+        $record->save();
+
+        # Check for next item
+        $index = $this->content_index += 1;
+
+        if(!empty($this->contents[$index]))
+        {   
+            $nextModuleItem = $this->contents[$index];
+
+            return $this->showNext($nextModuleItem['id']);
+        }
+
+        # Module Finish
+        return $this->finish();
+    }
+
 
     public function selectAnswer($answerId)
-    {
+    { 
+        # Answer  
         $answer = Answer::find($answerId);
 
-        $record = $answer->users()->where('user_id', Auth::id())->first();
+        # Save Result
+        $record = EnrollmentModuleItem::find($this->episode['id']);
+        $record->answer_id = $answer->id;
+        $record->is_correct = $answer->is_correct;
+        $record->completed_at = now();
+        $record->save();
         
-        if(!$record)
-        {
-            $answer->users()->attach(Auth::id(), ['is_correct' => $answer->is_correct, 'completed_at' => now()]);
-        }
-        
+        # Display
         $this->selected_answer = $answerId;
         $this->is_correct = $answer->is_correct;
     }
 
-    public function setContent($content_id)
-    {
-        $this->content = ModuleItem::find($content_id);
-    }
+    
 
     public function exit()
     {

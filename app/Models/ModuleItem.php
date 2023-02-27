@@ -40,4 +40,9 @@ class ModuleItem extends Model implements Sortable
     {
         return $this->belongsToMany(User::class, 'user_module_activity')->withPivot('completed_at');
     }
+
+    public function module()
+    {
+        return $this->belongsTo(Module::class);
+    }
 }

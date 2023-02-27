@@ -5,7 +5,9 @@ namespace App\Http\Livewire\Tenant\Courses;
 use Auth;
 use App\Models\Course;
 use Livewire\Component;
+use App\Models\Enrollment;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
+use Str;
 
 class ShowCourse extends Component
 {
@@ -23,7 +25,7 @@ class ShowCourse extends Component
     {
         $this->course = Course::findOrFail($id);
 
-        $this->is_enrolled = $this->course->users()->where('user_id', Auth::id())->exists();
+        $this->is_enrolled = Enrollment::whereUserId(Auth::id())->whereCourseId($id)->exists();
     }
 
     public function start()
@@ -33,13 +35,17 @@ class ShowCourse extends Component
             return $this->alert('error', 'This course has no modules');
         }
 
-        $pivot = Auth::user()->courses()->attach($this->course->id);
-        
+        if($this->is_enrolled){
+            $enroll = Enrollment::whereUserId(Auth::id())->whereCourseId($this->course->id)->first();
+        }else{
+            $enroll = new Enrollment;
+            $enroll->uuid = Str::uuid();
+            $enroll->user_id = Auth::id();
+            $enroll->course_id = $this->course->id;
+            $enroll->save();
+        }
         
 
-        // @TODO
-        // Must redirect to pivot;
-
-        return redirect()->route('courses.play', $this->course->id);
+        return redirect()->route('courses.play', $enroll->uuid);
     }
 }

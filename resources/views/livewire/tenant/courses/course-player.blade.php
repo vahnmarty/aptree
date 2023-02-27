@@ -54,7 +54,7 @@
             </section>
         </div>
         @else
-            @if($start)
+            @if($episode)
             <div class="mt-16">
                 <div>
                     @if ($content->type->value == \App\Enums\ModuleItemType::Content)
@@ -205,14 +205,14 @@
         @endif
     </div>
     <footer class="fixed bottom-0 left-0 right-0 z-20 py-6 bg-white border-t">
-        @if($start)
+        @if($episode)
         <div class="max-w-4xl px-6 mx-auto">
             @if($content->type->value == \App\Enums\ModuleItemType::Question )
             <div class="flex items-center justify-between">
                 <h3 class="font-bold text-emerald-900">Question</h3>
                 <div>
                     @if($selected_answer)
-                    <button wire:click="next" type="button" class="btn-primary">Next</button>
+                    <button wire:click="submitNext" type="button" class="btn-primary">Next</button>
                     @endif
                 </div>
             </div>
@@ -220,7 +220,7 @@
             <div class="flex items-center justify-between">
                 <h3 class="font-bold text-emerald-900">{{ $module->title }}</h3>
                 <div>
-                    <button wire:click="next" type="button" class="btn-primary">Next</button>
+                    <button wire:click="submitNext" type="button" class="btn-primary">Next</button>
                 </div>
             </div>
             @endif
