@@ -28,6 +28,8 @@ class CoursePlayer extends Component
     public EnrollmentModuleItem $episode;
     public $enrollment_module;
 
+    public $items_completed = 0, $items_missed = 0, $next_module;
+
     protected $queryString = ['module_id', 'enrollment_module'];
 
     protected $listeners = ['confirmedExit'];
@@ -88,16 +90,42 @@ class CoursePlayer extends Component
         $this->end = true;
 
         # Init Module
-        $module_record = EnrollmentModule::where('enrollment_id', $this->enrollment->id)
-            ->where('module_id', $this->module_id)
-            ->first();
+        $module_record = EnrollmentModule::whereUuid($this->enrollment_module)->first();
+        $module = $module_record->module;
+        $enrollment = $this->enrollment;
+        $course = $enrollment->course;
+        $course_modules = $course->modules->pluck('id');
 
         # Update start_at
         $module_record->completed_at = now();
         $module_record->save();
 
-        # Start by going to first module
-        //$this->showNext();
+        # Module Stats
+        $this->items_completed = $module_record->items()->whereNotNull('completed_at')->count();
+        $this->items_missed = $module_record->items()->where('is_correct', false)->count();
+
+        # Check for Available Modules
+
+        foreach($course_modules as $module_id)
+        {
+            $record = EnrollmentModule::where('enrollment_id', $enrollment->id)->where('module_id', $module_id)->first();
+
+            if(!$record){
+                $this->next_module = $this->nextModule($record->module_id);
+            }
+        }
+
+        if(!$this->next_module)
+        {
+            $enrollment->completed_at = now();
+            $enrollment->save();
+        }
+    }
+
+    public function nextModule(Module $module)
+    {
+        
+
     }
 
     public function showNext($module_item_id)
@@ -173,5 +201,10 @@ class CoursePlayer extends Component
     public function confirmedExit()
     {
         return redirect()->route('courses.show', $this->course->id);
+    }
+
+    public function close()
+    {
+        return $this->confirmedExit();
     }
 }

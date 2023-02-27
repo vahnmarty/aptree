@@ -21,4 +21,9 @@ class Enrollment extends Model
     {
         return $this->belongsToMany(ModuleItem::class, 'enrollment_module_items');
     }
+
+    public function enrollmentModules()
+    {
+        return $this->hasMany(EnrollmentModule::class);
+    }
 }
