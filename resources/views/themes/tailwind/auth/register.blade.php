@@ -1,10 +1,8 @@
 @extends('theme::layouts.guest')
 
 @section('content')
-
-
     <div class="sm:mx-auto sm:w-full sm:max-w-md sm:pt-10">
-        <h2 class="text-3xl font-extrabold leading-9 text-center text-gray-900 sm:mt-6 lg:text-5xl">
+        <h2 class="text-3xl font-extrabold leading-9 text-center text-gray-900 sm:mt-6 lg:text-3xl">
             Sign up Below
         </h2>
         <p class="mt-4 text-sm leading-5 text-center text-gray-600 max-w">
@@ -21,18 +19,6 @@
         <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
             <div class="px-4 py-8 bg-white border shadow border-gray-50 sm:rounded-lg sm:px-10">
                 <form role="form" method="POST" action="@if(setting('billing.card_upfront')){{ route('emerald.register-subscribe') }}@else{{ route('register') }}@endif">
-                    @csrf
-                    <!-- If we want the user to purchase before they can create an account -->
-
-                    <div class="pb-3 sm:border-b sm:border-gray-200">
-                        <h3 class="text-lg font-medium leading-6 text-gray-900">
-                            Profile
-                        </h3>
-                        <p class="max-w-2xl mt-1 text-sm leading-5 text-gray-500">
-                            Information about your account.
-                        </p>
-                    </div>
-
                     @csrf
 
                     <div class="mt-6">

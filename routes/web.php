@@ -30,5 +30,9 @@ Route::group(['prefix' => 'admin'], function () {
 // Wave routes
 Wave::routes();
 
-Route::get('organization', MyOrganization::class)->name('organization');
-Route::get('billing', ManageBilling::class)->name('billing');
+Route::group(['middleware' => 'auth'], function(){
+    Route::get('organization', MyOrganization::class)->name('organization');
+    Route::get('billing', ManageBilling::class)->name('billing');
+});
+
+
