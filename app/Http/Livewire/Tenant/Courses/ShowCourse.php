@@ -2,12 +2,14 @@
 
 namespace App\Http\Livewire\Tenant\Courses;
 
+use Str;
 use Auth;
 use App\Models\Course;
+use App\Models\Module;
 use Livewire\Component;
 use App\Models\Enrollment;
+use App\Models\EnrollmentModule;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
-use Str;
 
 class ShowCourse extends Component
 {
@@ -15,6 +17,7 @@ class ShowCourse extends Component
     
     public $course;
     public $enrollment_record;
+    public $modules = [];
     
     public function render()
     {
@@ -26,6 +29,32 @@ class ShowCourse extends Component
         $this->course = Course::findOrFail($id);
 
         $this->enrollment_record = Enrollment::whereUserId(Auth::id())->whereCourseId($id)->first();
+
+        $this->getModules();
+    }
+
+    public function getModules()
+    {
+        $course_modules = Module::withCount('items')->where('course_id', $this->course->id)->ordered()->get()->toArray();
+        $modules = [];
+        
+        foreach($course_modules as $moduleItem)
+        { 
+            if($this->enrollment_record)
+            {
+                $enrollmentModule = EnrollmentModule::where('enrollment_id', $this->enrollment_record->id)->where('module_id', $moduleItem['id'])->first();
+
+                if($enrollmentModule){
+                    $moduleItem['completed_count'] = $enrollmentModule->items()->count();
+                }
+            }else{
+                $moduleItem['completed_count'] = 0;
+            }
+
+            $modules[] = $moduleItem;
+        }
+
+        $this->modules = $modules;
     }
 
     public function start()

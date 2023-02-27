@@ -41,18 +41,18 @@
                 <div class="relative mt-12">
                     <div class="absolute top-0 bottom-0 translate-x-1/2 border-r-2 border-gray-300 left-1/2"></div>
                     <div class="space-y-6">
-                        @foreach($course->modules()->ordered()->get() as $module)
-                        <div wire:key="module-{{ $module->id }}"
+                        @foreach($modules as $module)
+                        <div wire:key="module-{{ $module['id'] }}"
                             class="relative z-20 p-4 bg-white border rounded-md shadow-lg">
                             <div class="flex items-center justify-between">
                                 <div class="flex items-center gap-1">
                                     <div class="p-2 bg-gray-100 rounded-md">
                                         <x-heroicon-o-template class="w-10 h-10 text-gray-400"/>
                                     </div>
-                                    <p class="ml-4 font-bold">{{ $module->title }}</p>
+                                    <p class="ml-4 font-bold">{{ $module['title'] }}</p>
                                 </div>
                                 <div class="flex items-center gap-2 pr-4">
-                                    <span>0/{{ $module->items()->count() }}</span>
+                                    <span>{{ $module['completed_count']  .' / ' .$module['items_count'] }}</span>
                                     <x-heroicon-s-check-circle class="w-5 h-5 text-blue-700"/>
                                 </div>
                             </div>
