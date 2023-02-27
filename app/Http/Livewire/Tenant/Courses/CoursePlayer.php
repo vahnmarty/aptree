@@ -26,8 +26,9 @@ class CoursePlayer extends Component
     public $selected_answer, $is_correct;
 
     public EnrollmentModuleItem $episode;
+    public $enrollment_module;
 
-    protected $queryString = ['module_id'];
+    protected $queryString = ['module_id', 'enrollment_module'];
 
     protected $listeners = ['confirmedExit'];
 
@@ -66,8 +67,20 @@ class CoursePlayer extends Component
             $module_record->save();
         }
 
-        # Start by going to first module
-        $this->showNext();
+        $this->enrollment_module = $module_record->uuid;
+
+        return $this->startFirstEpisode();
+    }
+    
+    public function startFirstEpisode()
+    {
+        $enrollment_module = EnrollmentModule::with('module')->whereUuid($this->enrollment_module)->firstOrFail();
+
+        $module = $enrollment_module->module;
+
+        $firstEpisode = $module->items()->ordered()->first();
+
+        return $this->showNext($firstEpisode->id);
     }
 
     public function finish()
@@ -80,28 +93,22 @@ class CoursePlayer extends Component
             ->first();
 
         # Update start_at
-        if($module_record){
-            $module_record->completed_at = now();
-            $module_record->save();
-        }
+        $module_record->completed_at = now();
+        $module_record->save();
 
         # Start by going to first module
-        $this->showNext();
+        //$this->showNext();
     }
 
-    public function showNext($module_item_id = null)
+    public function showNext($module_item_id)
     {
-        if(!$module_item_id){
-
-        # Start : Finding the first item
-            $module_item =  $this->module->items()->ordered()->first();
-        }else{
-            $module_item = ModuleItem::find($module_item_id);
-        }
+        $enrollment_module = EnrollmentModule::whereUuid($this->enrollment_module)->firstOrFail();
+        $module_item = ModuleItem::find($module_item_id);
 
         # Record
         $record = EnrollmentModuleItem::with('moduleItem')->firstOrCreate([
                 'enrollment_id' => $this->enrollment->id, 
+                'enrollment_module_id' => $enrollment_module->id,
                 'module_item_id' => $module_item->id
         ]);
         

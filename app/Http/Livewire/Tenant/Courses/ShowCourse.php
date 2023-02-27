@@ -39,7 +39,6 @@ class ShowCourse extends Component
             $enroll = Enrollment::whereUserId(Auth::id())->whereCourseId($this->course->id)->first();
         }else{
             $enroll = new Enrollment;
-            $enroll->uuid = Str::uuid();
             $enroll->user_id = Auth::id();
             $enroll->course_id = $this->course->id;
             $enroll->save();

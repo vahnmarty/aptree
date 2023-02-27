@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('enrollment_modules', function (Blueprint $table) {
             $table->id();
+            $table->uuid('uuid');
             $table->unsignedBigInteger('enrollment_id');
             $table->unsignedBigInteger('module_id');
             $table->timestamp('start_at')->nullable();
