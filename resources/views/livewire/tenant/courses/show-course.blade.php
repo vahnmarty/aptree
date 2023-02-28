@@ -61,6 +61,7 @@
                     </div>
                 </div>
             </section>
+            @if($enrollment_record)
             <section>
                 <div class="border rounded-md bg-yellow-500/30">
                     <div class="px-4 py-8">
@@ -81,6 +82,7 @@
                     </div>
                 </div>
             </section>
+            @endif
         </div>
         
     </div>

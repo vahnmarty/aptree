@@ -74,7 +74,7 @@ class InvitationController extends Controller
             $team->users()->attach($user->id);
         }
 
-        Auth::login($user->id);
+        Auth::login($user);
 
         return redirect('dashboard');
     }

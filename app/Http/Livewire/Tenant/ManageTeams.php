@@ -108,7 +108,7 @@ class ManageTeams extends Component implements HasForms, HasTable
     protected function getTableHeaderActions() : array
     {
         return [
-            CreateAction::make('create')
+            Action::make('create_team')
                 ->label('Create Team')
                 ->visible(fn(): bool => auth()->user()->isAdmin())
                 ->form([
