@@ -120,7 +120,9 @@
                 <span class="hidden md:block">Users </span>
               </a>
 
-              <a href="{{ route('billing.index') }}"
+              <a href="{{ config('app.url') . '/billing' }}"
+                onclick="return confirm('Will redirect you to the main page')"
+                target="_blank"
                 class="flex items-center px-2 py-2 text-sm font-medium leading-6 text-gray-500 rounded-md group hover:bg-gray-100">
                 <svg class="flex-shrink-0 w-6 h-6 ml-1 mr-4 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M4.5 3.75a3 3 0 00-3 3v.75h21v-.75a3 3 0 00-3-3h-15z" />
@@ -128,9 +130,12 @@
                 </svg>
 
                 <span class="hidden md:block">Billing </span>
+
+                <x-heroicon-s-external-link class="w-6 h-6 text-yellow-600 justify-self-end"/>
               </a>
               @endif
 
+              @if(null)
               <a href="{{ route('invitations.index') }}"
                 class="flex items-center px-2 py-2 text-sm font-medium leading-6 text-gray-500 rounded-md group hover:bg-gray-100">
                 <svg class="flex-shrink-0 w-6 h-6 ml-1 mr-4 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
@@ -141,6 +146,7 @@
 
                 <span class="flex items-center justify-center w-5 h-5 ml-4 text-xs text-white bg-red-500 rounded-full ">2</span>
               </a>
+              @endif
               
               <a href="{{ route('support') }}"
                 class="flex items-center px-2 py-2 text-sm font-medium leading-6 text-gray-500 rounded-md group hover:bg-gray-100">
