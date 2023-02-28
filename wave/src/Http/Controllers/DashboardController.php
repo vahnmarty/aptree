@@ -4,6 +4,7 @@ namespace Wave\Http\Controllers;
 
 use Auth;
 use App\Models\Course;
+use App\Models\Enrollment;
 use App\Http\Controllers\Controller;
 
 class DashboardController extends Controller
@@ -26,10 +27,10 @@ class DashboardController extends Controller
     public function index()
     {
         if(tenant()){
-            $courses = Auth::user()->courses()->latest()->get()->take(2);
+            $enrollments = Enrollment::with('course')->where('user_id', Auth::id())->latest()->get()->take(2);
             $libraries = Course::latest()->get()->take(6);
 
-            return view('theme::dashboard.index', compact('courses', 'libraries'));
+            return view('theme::dashboard.index', compact('enrollments', 'libraries'));
         }
 
         $user = Auth::user();
