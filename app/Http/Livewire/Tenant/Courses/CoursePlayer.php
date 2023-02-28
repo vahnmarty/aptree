@@ -17,18 +17,20 @@ class CoursePlayer extends Component
 {
     use LivewireAlert;
     
+    # Model attributes
     public Enrollment $enrollment;
     public Course $course;
+    public EnrollmentModuleItem $episode;
 
-    public $module, $module_id;
+    # Module attributes
+    public $module, $module_id, $enrollment_module;
     public $contents = [], $content_index = 0, $content;
+    public $items_completed = 0, $items_missed = 0, $next_module;
+
+    # Quiz attributes
     public $start = false, $end = false;
     public $selected_answer, $is_correct;
-
-    public EnrollmentModuleItem $episode;
-    public $enrollment_module;
-
-    public $items_completed = 0, $items_missed = 0, $next_module;
+    
 
     protected $queryString = ['module_id', 'enrollment_module'];
 
@@ -45,11 +47,21 @@ class CoursePlayer extends Component
 
         $this->course = $this->enrollment->course;
 
-        $this->module = $this->course->modules()->ordered()->first();
+        # Module URL
+        if($this->enrollment_module && $this->module_id)
+        {
+            $this->module = Module::find($this->module_id);
+            $this->contents = $this->module->items()->ordered()->get();
+        }
+        # Fresh start
+        else{
+            $this->module = $this->course->modules()->ordered()->first();
 
-        $this->module_id = $this->module->id;
+            $this->module_id = $this->module->id;
 
-        $this->contents = $this->module->items()->ordered()->get();
+            $this->contents = $this->module->items()->ordered()->get();
+        }
+        
     }
 
 
@@ -105,13 +117,17 @@ class CoursePlayer extends Component
         $this->items_missed = $module_record->items()->where('is_correct', false)->count();
 
         # Check for Available Modules
-
+        $array = [];
         foreach($course_modules as $module_id)
         {
-            $record = EnrollmentModule::where('enrollment_id', $enrollment->id)->where('module_id', $module_id)->first();
+            $record = EnrollmentModule::where('enrollment_id', $enrollment['id'])->where('module_id', $module_id)->first();
 
             if(!$record){
-                $this->next_module = $this->nextModule($record->module_id);
+                $this->next_module = $this->createNextModule($module_id);
+            }
+
+            if(!$record->completed_at){
+                $this->next_module = $this->createNextModule($module_id);
             }
         }
 
@@ -120,12 +136,33 @@ class CoursePlayer extends Component
             $enrollment->completed_at = now();
             $enrollment->save();
         }
+
+        
     }
 
-    public function nextModule(Module $module)
+    public function createNextModule($module_id)
     {
-        
+        $record = EnrollmentModule::firstOrCreate([
+            'enrollment_id' => $this->enrollment->id, 
+            'module_id' => $module_id
+        ]);
 
+        return $record->uuid;
+    }
+
+    public function nextModule()
+    {
+        $record = EnrollmentModule::whereUuid($this->next_module)->firstOrFail();
+
+        $this->enrollment_module = $record->uuid;
+        $this->module_id = $record->module_id;
+
+        return redirect()->route('courses.play', [
+            'uuid' => $this->enrollment->uuid,
+            'module_id' => $record->module_id,
+            'enrollment_module' => $record->uuid
+        ]);
+        
     }
 
     public function showNext($module_item_id)
